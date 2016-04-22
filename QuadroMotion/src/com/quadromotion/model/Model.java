@@ -2,9 +2,11 @@ package com.quadromotion.model;
 
 import java.util.Observable;
 
-import com.quadromotion.model.convertion.AngleToSpeedConverter;
-import com.quadromotion.config.OffsetConfig;
-
+/**
+ * This class holds the data
+ * @author Gabriel
+ *
+ */
 public class Model extends Observable {
 
 	private float speedX;
@@ -17,15 +19,11 @@ public class Model extends Observable {
 	private boolean isFlying;
 	private boolean isHovering;
 	private boolean isConnected;
-	private boolean oneHandControl;
 
-	private AngleToSpeedConverter convertX = null;
-	private AngleToSpeedConverter convertY = null;
-	private AngleToSpeedConverter convertZ = null;
-	private AngleToSpeedConverter convertSpin = null;
-
+	/**
+	 * Constructor
+	 */
 	public Model() {
-
 		super();
 		this.speedX = 0;
 		this.speedY = 0;
@@ -37,16 +35,6 @@ public class Model extends Observable {
 		this.isFlying = false;
 		this.isHovering = false;
 		this.isConnected = false;
-		this.oneHandControl = false;
-
-		convertX = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
-				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
-		convertY = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_Y, OffsetConfig.MAX_SPEED_Y,
-				OffsetConfig.SPEED_OFFSET_Y, OffsetConfig.ANGLE_OFFSET_Y, OffsetConfig.FUNCTION_EXP_Y);
-		convertZ = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_Z, OffsetConfig.MAX_SPEED_Z,
-				OffsetConfig.SPEED_OFFSET_Z, OffsetConfig.ANGLE_OFFSET_Z, OffsetConfig.FUNCTION_EXP_Z);
-		convertSpin = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_SPIN, OffsetConfig.MAX_SPEED_SPIN,
-				OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN);
 	}
 
 	public float getSpeedX() {
@@ -136,6 +124,10 @@ public class Model extends Observable {
 	public boolean isHovering() {
 		return isHovering;
 	}
+	
+	public void setIsHovering(boolean state) {
+		this.isHovering = state;
+	}
 
 	public boolean isFlying() {
 		return isFlying;
@@ -147,5 +139,9 @@ public class Model extends Observable {
 
 	public boolean isConnected() {
 		return isConnected;
+	}
+	
+	public void setIsConnected(boolean state) {
+		this.isConnected = state;
 	}
 }
