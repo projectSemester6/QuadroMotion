@@ -5,6 +5,11 @@ import com.quadromotion.controller.Controller;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.ConsolView;
 
+/**
+ * Diese Klasse enthaelt die boot() und die run() Methode
+ * @author Alexis
+ *
+ */
 public class App {
 
 	static Model model = null;

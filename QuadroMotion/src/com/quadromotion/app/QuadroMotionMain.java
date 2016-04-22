@@ -14,5 +14,4 @@ public class QuadroMotionMain {
 		app.boot();
 		app.run();
 	}
-
 }
