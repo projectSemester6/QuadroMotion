@@ -25,12 +25,12 @@ public class TestTheThread {
 		try
 		{
 			drone = new ARDrone();
-			drone.addExceptionListener(new IExceptionListener() {
-				public void exeptionOccurred(ARDroneException exc)
-				{
-					exc.printStackTrace();
-				}
-			});
+//			drone.addExceptionListener(new IExceptionListener() {
+//				public void exeptionOccurred(ARDroneException exc)
+//				{
+//					exc.printStackTrace();
+//				}
+//			});
 			
 			drone.start();
 			System.out.println("starte den " + st_name + "-Thread:");
@@ -60,7 +60,7 @@ public class TestTheThread {
 			} catch (Exception ignore) {
 
 			}
-			model.setSpeedSpin(16);
+			model.setSpeedSpin(1);
 			try {
 				Thread.sleep(1000);
 			} catch (Exception ignore) {

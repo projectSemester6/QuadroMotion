@@ -50,19 +50,19 @@ public class Controller {
 		this.consolView = consolView;
 	}
 
-	public void setSpeedX(double speed) {
+	public void setSpeedX(int speed) {
 		model.setSpeedX(speed);
 	}
 
-	public void setSpeedY(double speed) {
+	public void setSpeedY(int speed) {
 		model.setSpeedY(speed);
 	}
 
-	public void setSpeedZ(double speed) {
+	public void setSpeedZ(int speed) {
 		model.setSpeedZ(speed);
 	}
 
-	public void setSpeedSpin(double speed) {
+	public void setSpeedSpin(int speed) {
 		model.setSpeedSpin(speed);
 	}
 	

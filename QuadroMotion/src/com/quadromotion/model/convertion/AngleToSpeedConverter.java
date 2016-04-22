@@ -1,16 +1,13 @@
 package com.quadromotion.model.convertion;
 
 // converts the input angle value to the output speed 
-public class AngleToSpeedConverter implements IAngleToSpeedConverter{
+public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 
-	private double maxAngle = 0;
-	private double maxSpeed = 0;
-	private double speedOffset = 0;
-	private double angleOffset = 0;
-	private double functionExp = 0;
-
-	private double inputValue;
-	private double outputValue;
+	private float maxAngle;
+	private float maxSpeed;
+	private float speedOffset;
+	private float angleOffset;
+	private float functionExp;
 
 	/**
 	 * 
@@ -20,7 +17,8 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter{
 	 * @param angleOffset
 	 * @param functionExp
 	 */
-	public AngleToSpeedConverter(double maxAngle, double maxSpeed, double speedOffset, double angleOffset, double functionExp) {
+	public AngleToSpeedConverter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset,
+			float functionExp) {
 		super();
 		this.maxAngle = maxAngle;
 		this.maxSpeed = maxSpeed;
@@ -29,118 +27,108 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter{
 		this.functionExp = functionExp;
 	}
 
-
-
 	@Override
-	public double expConverter(double inputValue) {
+	public float expConverter(float inputValue) {
 		// TODO exponentielle umrechnung
 
-		boolean inputSign = false;		
+		boolean inputSign = false;
 
-		double functionSpeed = 0;
-		double functionMaxAngle = 0;
+		float functionSpeed = 0;
+		float functionMaxAngle = 0;
+		
 
-		if(inputValue < 0){
-			inputSign = true; // signe négatif
+		if (inputValue < 0) {
+			inputSign = true; // signe nï¿½gatif
 		}
 
 		inputValue = Math.abs(inputValue);
 
-		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)		
-		functionSpeed = Math.pow((inputValue - angleOffset)/functionMaxAngle, functionExp); // y(x) = ((x-d)/fMA)^p
-		functionSpeed = functionSpeed*(maxSpeed - speedOffset);// y(x) = y(x)*a
-		outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
+		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)
+		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, functionExp); // y(x)
+																								// =
+																								// ((x-d)/fMA)^p
+		functionSpeed = functionSpeed * (maxSpeed - speedOffset);// y(x) =
+																	// y(x)*a
+		float outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
 
-		/**changement de signe
-		 * */
+		/**
+		 * changement de signe
+		 */
 
-		if(inputSign){
+		if (inputSign) {
 			outputValue = -outputValue;// y(x) = -y(x)
 		}
 		return outputValue;
 	}
 
 	@Override
-	public double linearConverter(double inputValue) {
+	public float linearConverter(float inputValue) {
 		// TODO lineare umrechnung
 
-		double slope = 0;
-		double intercept = 0;
+		float slope = 0;
+		float intercept = 0;
 
-		slope = (maxSpeed - speedOffset)/(maxAngle - angleOffset); // a
-		intercept = speedOffset - slope*angleOffset; // b
+		slope = (maxSpeed - speedOffset) / (maxAngle - angleOffset); // a
+		intercept = speedOffset - slope * angleOffset; // b
 
-		outputValue = slope*inputValue + intercept;// y = a*x + b;
+		float outputValue = slope * inputValue + intercept;// y = a*x + b;
 
 		return outputValue;
 
 	}
 
 	@Override
-	public double HeavySideConverter(double inputValue){
+	public float HeavySideConverter(float inputValue) {
 
-		if(inputValue > angleOffset){
-			outputValue = maxSpeed;			
-		}else{
-			outputValue = 0;
-		}
-		return outputValue;
+		if (inputValue > angleOffset) {
+			return maxSpeed;
+		} 
+		return 0;
 
 	}
 
-	public double LogarithmConverter(double inputValue){
+	@Override
+	public float LogarithmConverter(float inputValue) {
 
-		boolean inputSign = false;		
+		boolean inputSign = false;
 
-		double functionSpeed = 0;
-		double functionMaxAngle = 0;
-		
+		float functionSpeed = 0;
+		float functionMaxAngle = 0;
+
 		/**
-		 * Ce bordel est a vérifié Mathématiquement
+		 * Ce bordel est a vï¿½rifiï¿½ Mathï¿½matiquement
 		 */
-		functionExp = 1/functionExp;
-		
-		if(inputValue < 0){
-			inputSign = true; // signe négatif
+		functionExp = 1 / functionExp;
+
+		if (inputValue < 0) {
+			inputSign = true; // signe nï¿½gatif
 		}
 
 		inputValue = Math.abs(inputValue);
 
-		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)		
-		functionSpeed = Math.pow((inputValue - angleOffset)/functionMaxAngle, functionExp); // y(x) = ((x-d)/fMA)^p
-		functionSpeed = functionSpeed*(maxSpeed - speedOffset);// y(x) = y(x)*a
-		outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
+		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)
+		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, functionExp); // y(x)
+																								// =
+																								// ((x-d)/fMA)^p
+		functionSpeed = functionSpeed * (maxSpeed - speedOffset);// y(x) =
+																	// y(x)*a
+		float outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
 
-		/**changement de signe
-		 * */
+		/**
+		 * changement de signe
+		 */
 
-		if(inputSign){
+		if (inputSign) {
 			outputValue = -outputValue;// y(x) = -y(x)
 		}
-		return outputValue;
+		return  outputValue;
 	}
 
-	@Override
-	public double getInputValue() {
-		return inputValue;
-	}
-
-	@Override
-	public void setInputValue(int inputValue) {
-		this.inputValue = inputValue;
-	}
-
-	@Override
-	public double getOutputValue() {
-		// TODO Auto-generated method stub
-		return outputValue;
-	}
-
-	public double getMaxAngle() {
+	public float getMaxAngle() {
 		return maxAngle;
 	}
 
-	public double getMaxSpeed() {
+	public float getMaxSpeed() {
 		return maxSpeed;
 	}
 

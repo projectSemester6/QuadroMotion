@@ -48,7 +48,7 @@ public class ARDroneCommander implements IARDroneCommander{
 	 * @param speedZ the speed in direction Z, can be positive or negative
 	 * @param speedSpin the speed to spin, can be positive or negative
 	 */
-	public void moveDrone(int speedX, int speedY, int speedZ, int speedSpin) {
+	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin) {
 		cmd.move(speedX, speedY,  speedZ, speedSpin);
 	}
 

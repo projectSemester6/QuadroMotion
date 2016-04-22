@@ -7,11 +7,10 @@ import com.quadromotion.config.OffsetConfig;
 
 public class Model extends Observable {
 
-	
-	private double speedX;
-	private double speedY;
-	private double speedZ;
-	private double speedSpin;
+	private float speedX;
+	private float speedY;
+	private float speedZ;
+	private float speedSpin;
 	private boolean takeOffCommand;
 	private boolean landingCommand;
 	private boolean hoverCommand;
@@ -19,12 +18,12 @@ public class Model extends Observable {
 	private boolean isHovering;
 	private boolean isConnected;
 	private boolean oneHandControl;
-		
+
 	private AngleToSpeedConverter convertX = null;
 	private AngleToSpeedConverter convertY = null;
 	private AngleToSpeedConverter convertZ = null;
 	private AngleToSpeedConverter convertSpin = null;
-	
+
 	public Model() {
 
 		super();
@@ -39,58 +38,59 @@ public class Model extends Observable {
 		this.isHovering = false;
 		this.isConnected = false;
 		this.oneHandControl = false;
-				
-		convertX = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X, OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
-		convertY = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_Y, OffsetConfig.SPEED_OFFSET_Y, OffsetConfig.ANGLE_OFFSET_Y, OffsetConfig.FUNCTION_EXP_Y);
-		convertZ = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_Z, OffsetConfig.MAX_SPEED_Z, OffsetConfig.SPEED_OFFSET_Z, OffsetConfig.ANGLE_OFFSET_Z, OffsetConfig.FUNCTION_EXP_Z);
-		convertSpin = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_SPIN, OffsetConfig.MAX_SPEED_SPIN, OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN);
-		
-		
+
+		convertX = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
+				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
+		convertY = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_Y, OffsetConfig.MAX_SPEED_Y,
+				OffsetConfig.SPEED_OFFSET_Y, OffsetConfig.ANGLE_OFFSET_Y, OffsetConfig.FUNCTION_EXP_Y);
+		convertZ = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_Z, OffsetConfig.MAX_SPEED_Z,
+				OffsetConfig.SPEED_OFFSET_Z, OffsetConfig.ANGLE_OFFSET_Z, OffsetConfig.FUNCTION_EXP_Z);
+		convertSpin = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_SPIN, OffsetConfig.MAX_SPEED_SPIN,
+				OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN);
 	}
 
-	public double getSpeedX() {
+	public float getSpeedX() {
 		return speedX;
 	}
 
-	public void setSpeedX(double speed) {
-		if(this.isFlying) this.speedX = convertX.expConverter(speed);
+	public void setSpeedX(float speed) {
+		this.speedX = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedX);
 		}
 	}
 
-	public double getSpeedY() {
+	public float getSpeedY() {
 		return speedY;
 	}
 
-	public void setSpeedY(double speed) {
-		if(this.isFlying) this.speedY = convertY.expConverter(speed);
+	public void setSpeedY(float speed) {
+			this.speedY = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedY);
 		}
 	}
 
-	public double getSpeedZ() {
+	public float getSpeedZ() {
 		return speedZ;
 	}
 
-	public void setSpeedZ(double speed) {
-		if(this.isFlying) this.speedZ = convertZ.expConverter(speed);
+	public void setSpeedZ(float speed) {
+			this.speedZ = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedZ);
 		}
 	}
 
-	public double getSpeedSpin() {
+	public float getSpeedSpin() {
 		return speedSpin;
 	}
 
-	public void setSpeedSpin(double speed) {
-		
-		if(this.isFlying) this.speedSpin = convertSpin.expConverter(speed);
+	public void setSpeedSpin(float speed) {
+			this.speedSpin = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedSpin);
@@ -140,8 +140,8 @@ public class Model extends Observable {
 	public boolean isFlying() {
 		return isFlying;
 	}
-	
-	public void setIsFlying(boolean state){
+
+	public void setIsFlying(boolean state) {
 		this.isFlying = state;
 	}
 

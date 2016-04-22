@@ -19,8 +19,8 @@ import com.quadromotion.model.Model;
 
 public class ConsolView extends JFrame implements Observer, KeyListener {
 
-	private double speed = 15;
-	private final double ZERO = 0;
+	private int speed = 15;
+	private final int ZERO = 0;
 	private Model model;
 	private Controller controller;
 	private Object gestures;
