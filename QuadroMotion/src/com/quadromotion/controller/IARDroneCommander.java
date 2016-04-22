@@ -5,7 +5,7 @@ package com.quadromotion.controller;
  * @author Gabriel
  *
  */
-public interface IARDroneController {
+public interface IARDroneCommander {
 	
 	/**
 	 * This method is needed to move the drone in every direction
@@ -14,7 +14,7 @@ public interface IARDroneController {
 	 * @param speedZ the speed in direction Z, can be positive or negative
 	 * @param speedSpin the speed to spin, can be positive or negative
 	 */
-	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin);
+	public void moveDrone(int speedX, int speedY, int speedZ, int speedSpin);
 	
 	/**
 	 * This method is needed to send the hover command

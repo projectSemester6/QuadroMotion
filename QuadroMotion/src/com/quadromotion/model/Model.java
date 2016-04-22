@@ -25,8 +25,6 @@ public class Model extends Observable {
 	private AngleToSpeedConverter convertZ = null;
 	private AngleToSpeedConverter convertSpin = null;
 	
-	// FinaleStateMachine fsm = null;
-	
 	public Model() {
 
 		super();
@@ -55,7 +53,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedX(double speed) {
-		this.speedX = convertX.expConverter(speed);
+		if(this.isFlying) this.speedX = convertX.expConverter(speed);
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedX);
@@ -67,7 +65,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedY(double speed) {
-		this.speedY = convertY.expConverter(speed);
+		if(this.isFlying) this.speedY = convertY.expConverter(speed);
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedY);
@@ -79,7 +77,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedZ(double speed) {
-		this.speedZ = convertZ.expConverter(speed);
+		if(this.isFlying) this.speedZ = convertZ.expConverter(speed);
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedZ);
@@ -91,14 +89,15 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedSpin(double speed) {
-		this.speedSpin = convertSpin.expConverter(speed);
+		
+		if(this.isFlying) this.speedSpin = convertSpin.expConverter(speed);
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedSpin);
 		}
 	}
 
-	public boolean isTakeOff() {
+	public boolean getTakeOffCommand() {
 		return takeOffCommand;
 	}
 
@@ -108,10 +107,9 @@ public class Model extends Observable {
 			setChanged();
 			notifyObservers(this.takeOffCommand);
 		}
-		if(command) isFlying = true;
 	}
 
-	public boolean isLanding() {
+	public boolean getLandingCommand() {
 		return landingCommand;
 	}
 
@@ -121,7 +119,6 @@ public class Model extends Observable {
 			setChanged();
 			notifyObservers(this.landingCommand);
 		}
-		if(command) isFlying = false;
 	}
 
 	public boolean getHoverCommand() {
@@ -142,6 +139,10 @@ public class Model extends Observable {
 
 	public boolean isFlying() {
 		return isFlying;
+	}
+	
+	public void setIsFlying(boolean state){
+		this.isFlying = state;
 	}
 
 	public boolean isConnected() {

@@ -117,7 +117,7 @@ public class ConsolView extends JFrame implements Observer, KeyListener {
 		int keyCode = e.getKeyCode();
 		switch (keyCode) {
 		case KeyEvent.VK_ENTER:
-			if(!model.isTakeOff()) {
+			if(!model.getTakeOffCommand()) {
 				controller.setTakeOffCommand(true);
 				printToConsole("start = true");
 			}
@@ -172,7 +172,7 @@ public class ConsolView extends JFrame implements Observer, KeyListener {
 		
 		switch (keyCode) {
 		case KeyEvent.VK_ENTER:
-			if(model.isTakeOff()) {
+			if(model.getTakeOffCommand()) {
 				controller.setTakeOffCommand(false);
 				printToConsole("start = false");
 			}
