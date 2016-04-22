@@ -6,7 +6,7 @@ import com.quadromotion.model.Model;
 import com.quadromotion.view.ConsolView;
 
 /**
- * Diese Klasse enthaelt die boot() und die run() Methode und steuert den Programmablauf
+ * Diese Klasse enthaelt die boot() und die run() Methode und steuert den Programmablauf..
  * @author Alexis
  *
  */
