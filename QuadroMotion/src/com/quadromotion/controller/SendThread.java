@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import com.quadromotion.model.Model;
 
+import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 
@@ -22,11 +23,27 @@ public class SendThread extends Thread implements Observer {
 	private Model model = null;
 	private Model m = null;
 	private ARDroneCommander droneCommander = null;
-	private IARDrone drone = null;
-	private CommandManager cmd = null;
+//	private IARDrone drone = null;
+//	private CommandManager cmd = null;
 
 	/**
-	 * Constructor
+	 * Constructor I
+	 * 
+	 * @param threadName
+	 *            the thread name
+	 * @param model
+	 *            the model
+	 */
+	public SendThread(String threadName, Model model) {
+		this.threadName = threadName;
+		this.model = model;
+		this.m = new Model();
+		this.droneCommander = new ARDroneCommander();
+		model.addObserver(this);
+	}
+	
+	/**
+	 * Constructor II
 	 * 
 	 * @param threadName
 	 *            the thread name
@@ -39,7 +56,7 @@ public class SendThread extends Thread implements Observer {
 		this.threadName = threadName;
 		this.model = model;
 		this.m = new Model();
-		this.drone = drone;
+//		this.drone = drone;
 		this.droneCommander = new ARDroneCommander(drone);
 		model.addObserver(this);
 	}

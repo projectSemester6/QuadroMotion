@@ -1,5 +1,6 @@
 package com.quadromotion.controller;
 
+import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 import de.yadrone.base.command.LEDAnimation;
@@ -27,6 +28,18 @@ public class ARDroneCommander implements IARDroneCommander {
 
 	/**
 	 * Constructor I
+	 * 
+	 * @param drone
+	 *            the drone
+	 */
+	public ARDroneCommander() {
+		this.drone = new ARDrone();
+		drone.start();
+		initialize();
+	}
+	
+	/**
+	 * Constructor II
 	 * 
 	 * @param drone
 	 *            the drone
