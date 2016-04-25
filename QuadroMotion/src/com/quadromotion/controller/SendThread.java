@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import com.quadromotion.model.Model;
 
-import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 
@@ -17,7 +16,7 @@ import de.yadrone.base.command.CommandManager;
  */
 public class SendThread extends Thread implements Observer {
 
-	private static final int SLEEP = 200;
+	private static final int SLEEP = 100;
 	private String threadName;
 
 	private Model model = null;
@@ -29,9 +28,12 @@ public class SendThread extends Thread implements Observer {
 	/**
 	 * Constructor
 	 * 
-	 * @param threadName the thread name
-	 * @param model the model
-	 * @param drone the ardrone
+	 * @param threadName
+	 *            the thread name
+	 * @param model
+	 *            the model
+	 * @param drone
+	 *            the ardrone
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.threadName = threadName;
@@ -45,17 +47,21 @@ public class SendThread extends Thread implements Observer {
 	@Override
 	public void run() {
 		System.out.println("Ich bin der Thread " + threadName);
-
+		int c = 0;
+		long startTime = System.currentTimeMillis();
 		do {
-			sendCommands();
-			// yield();
-			try {
-				Thread.sleep(SLEEP);
-			}
-
-			catch (InterruptedException ie) {
-				System.out.println("Thread " + threadName + " interrupted...");
-			}
+			c++;
+			System.out.println(c+"er Durchlauf");
+			System.out.println("Zeit seit start: " + (System.currentTimeMillis() - startTime));
+			sendCommand();
+			yield();
+			 try {
+			 Thread.sleep(SLEEP);
+			 }
+			
+			 catch (InterruptedException ie) {
+			 System.out.println("Thread " + threadName + " interrupted...");
+			 }
 		} while (!this.isInterrupted());
 
 	}
@@ -63,8 +69,9 @@ public class SendThread extends Thread implements Observer {
 	/**
 	 * sends the commands to the droneCommander
 	 */
-	private void sendCommands() {
+	private synchronized void sendCommand() {
 		// TODO FinaleStateMachine
+
 		if (!m.isFlying()) {
 			if (m.getTakeOffCommand()) {
 				droneCommander.takeOff();
@@ -81,8 +88,7 @@ public class SendThread extends Thread implements Observer {
 				System.out.println("drone is landing!");
 				model.setIsFlying(false);
 			} else if (m.getSpeedX() != 0 || m.getSpeedY() != 0 || m.getSpeedZ() != 0 || m.getSpeedSpin() != 0) {
-				droneCommander.moveDrone((int) m.getSpeedX(), (int) m.getSpeedY(), (int) m.getSpeedZ(),
-						(int) m.getSpeedSpin());
+				droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
 				System.out.println("drone is moving");
 
 			} else {
@@ -96,6 +102,7 @@ public class SendThread extends Thread implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		m = (Model) o;
+//		sendCommand();
 	}
 
 }

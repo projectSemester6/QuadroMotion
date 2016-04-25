@@ -1,6 +1,8 @@
 package com.quadromotion.FinalStateMachine;
 
-class Ready extends State {
+import de.yadrone.base.IARDrone;
+
+public class Ready extends State {
 	
 	public void takeOff(){
 		System.out.println("Ready + command take off = Hovering");

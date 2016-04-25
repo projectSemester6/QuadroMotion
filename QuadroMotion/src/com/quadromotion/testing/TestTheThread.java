@@ -44,7 +44,7 @@ public class TestTheThread {
 			}
 			model.setTakeOffCommand(true);
 			try {
-				Thread.sleep(300);
+				Thread.sleep(100);
 			} catch (Exception ignore) {
 
 			}
@@ -54,13 +54,19 @@ public class TestTheThread {
 			} catch (Exception ignore) {
 
 			}
-			model.setSpeedSpin(16);
+			model.setSpeedX(10);
+			model.setSpeedY(20);
+			model.setSpeedZ(-70);
+			model.setSpeedSpin(10);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(200);
 			} catch (Exception ignore) {
 
 			}
-			model.setSpeedSpin(1);
+			model.setSpeedX(0);
+			model.setSpeedY(0);
+			model.setSpeedZ(0);
+			model.setSpeedSpin(0);
 			try {
 				Thread.sleep(1000);
 			} catch (Exception ignore) {
@@ -73,11 +79,11 @@ public class TestTheThread {
 
 			}
 			model.setLandingCommand(false);
-			try {
-				Thread.sleep(2000);
-			} catch (Exception ignore) {
-
-			}
+//			try {
+//				Thread.sleep(2000);
+//			} catch (Exception ignore) {
+//
+//			}
 			//st1.interrupt();
 			//st1.stop();
 			

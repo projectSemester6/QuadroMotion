@@ -4,6 +4,7 @@ import com.quadromotion.FinalStateMachine.FSM;
 
 public class StateDemo {
 	public static void main(String[] args) {
+	    
 		FSM fsm = new FSM();
 
 		String[] msgs = { "on", "noHands", "handsOk", "takeOff", "noCommand", "noHands", "commandMove", 
@@ -39,7 +40,6 @@ public class StateDemo {
 				break;
 			default:
 				break;
-
 			}
 	}
 }

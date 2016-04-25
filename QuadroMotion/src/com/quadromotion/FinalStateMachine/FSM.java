@@ -2,6 +2,7 @@ package com.quadromotion.FinalStateMachine;
 
 //1. Create a "wrapper" class that models the state machine
 public class FSM {
+
 	private State[] states = { new Off(), new Init(), new Ready(), new Hovering(), new Flying() }; // 2.
 	// states
 	private String[][] transitionString = { { "Off", "Init", "Off", "Off", "Off", "Off", "Off", "Off" },
