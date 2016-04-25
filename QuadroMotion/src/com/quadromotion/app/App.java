@@ -6,48 +6,52 @@ import com.quadromotion.controller.SendThread;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.ConsolView;
 
+import de.yadrone.base.ARDrone;
+import de.yadrone.base.IARDrone;
+
 /**
- * Diese Klasse enthaelt die boot() und die run() Methode und steuert den Programmablauf
+ * Diese Klasse enthaelt die boot() und die run() Methode und steuert den
+ * Programmablauf
+ * 
  * @author Alexis
  *
  */
 public class App {
 
 	private Model model = null;
-	//static ConsolView view = null;
+	// static ConsolView view = null;
 	private Controller controller = null;
-	private SendThread sendThread = null;
-	
-	//static Boot boot = null;
+	private SendThread sender = null;
+	private IARDrone drone = null;
 
-	
+	// static Boot boot = null;
+
 	public void boot() {
-		// TODO: Gesteneingabe der View mitgeben
-		//boot = new Boot();
+		drone = new ARDrone();
 		model = new Model();
-//		view = new ConsolView(model);
-//		controller =  view.getController();
-//		view.printToConsole("Boot done...");
+		sender = new SendThread("Sender", model);
+		// view = new ConsolView(model);
+		// controller = view.getController();
+		// view.printToConsole("Boot done...");
 	}
 
-	public void run(){
-		controller.showView();
-//		view.printToConsole("run...");
-		
-		try{
+	public void run() {
+		// controller.showView();
+		// view.printToConsole("run...");
+		sender.start();
+		try {
 			System.in.read();
-		} catch(Exception ignore){
-			
-		}
-		finally{
-//			view.printToConsole("exit...");
+		} catch (Exception ignore) {
+
+		} finally {
+			// view.printToConsole("exit...");
 		}
 	}
-	
-	public void cleanup(){
-//		view.printToConsole("cleanup...");
+
+	public void cleanup() {
+		// view.printToConsole("cleanup...");
 		model = null;
 		controller = null;
-//		view = null;
+		// view = null;
 	}
 }
