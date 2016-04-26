@@ -26,9 +26,17 @@ public class App {
 
 	// static Boot boot = null;
 
+	public App(){
+		this(new Model());
+	}
+	
+	public App(Model model){
+		this.model = model;
+	}
+	
 	public void boot() {
 		drone = new ARDrone();
-		model = new Model();
+//		model = new Model();
 		sender = new SendThread("Sender", model);
 		// view = new ConsolView(model);
 		// controller = view.getController();
