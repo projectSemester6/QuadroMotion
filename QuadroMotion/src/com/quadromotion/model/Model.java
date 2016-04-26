@@ -1,9 +1,12 @@
 package com.quadromotion.model;
 
 import java.util.Observable;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 
 /**
  * This class holds the data
+ * 
  * @author Gabriel
  *
  */
@@ -25,6 +28,7 @@ public class Model extends Observable {
 	 */
 	public Model() {
 		super();
+
 		this.speedX = 0;
 		this.speedY = 0;
 		this.speedZ = 0;
@@ -54,7 +58,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedY(float speed) {
-			this.speedY = speed;
+		this.speedY = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedY);
@@ -66,7 +70,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedZ(float speed) {
-			this.speedZ = speed;
+		this.speedZ = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedZ);
@@ -78,7 +82,7 @@ public class Model extends Observable {
 	}
 
 	public void setSpeedSpin(float speed) {
-			this.speedSpin = speed;
+		this.speedSpin = speed;
 		if (countObservers() > 0) {
 			setChanged();
 			notifyObservers(this.speedSpin);
@@ -124,7 +128,7 @@ public class Model extends Observable {
 	public boolean isHovering() {
 		return isHovering;
 	}
-	
+
 	public void setIsHovering(boolean state) {
 		this.isHovering = state;
 	}
@@ -140,8 +144,9 @@ public class Model extends Observable {
 	public boolean isConnected() {
 		return isConnected;
 	}
-	
+
 	public void setIsConnected(boolean state) {
 		this.isConnected = state;
 	}
+
 }
