@@ -26,6 +26,8 @@ public class OffsetConfig {
 	public static final float ANGLE_OFFSET_SPIN = 15;
 	public static final float FUNCTION_EXP_SPIN = 2.1F;
 	
+	public static final float MAX_HAND_YAW = 35;
+	
 	/**
 	 * 
 	 */
