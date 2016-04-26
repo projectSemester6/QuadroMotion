@@ -58,6 +58,9 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		if (inputSign) {
 			outputValue = -outputValue;// y(x) = -y(x)
 		}
+		
+		if(inputValue < angleOffset) outputValue = 0;
+		
 		return outputValue;
 	}
 
@@ -72,6 +75,8 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		intercept = speedOffset - slope * angleOffset; // b
 
 		float outputValue = slope * inputValue + intercept;// y = a*x + b;
+		
+		if(inputValue < angleOffset) outputValue = 0;
 
 		return outputValue;
 
@@ -121,6 +126,9 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		if (inputSign) {
 			outputValue = -outputValue;// y(x) = -y(x)
 		}
+		
+		if(inputValue < angleOffset) outputValue = 0;
+		
 		return  outputValue;
 	}
 

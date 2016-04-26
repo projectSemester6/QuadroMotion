@@ -24,17 +24,17 @@ public class LeapMotion extends Observable implements IGestures {
 
 	private int anzahlHaenden = 0;
 	
-	private double rechtPitch = 0;
-	private double rechtYaw = 0;
-	private double rechtRoll = 0;
-	private double rechtSphereRadius = 0;
-	private double rechtThrust = 0;
+	private float rechtPitch = 0;
+	private float rechtYaw = 0;
+	private float rechtRoll = 0;
+	private float rechtSphereRadius = 0;
+	private float rechtThrust = 0;
 	
-	private double linkPitch = 0;
-	private double linkYaw = 0;
-	private double linkRoll= 0;
-	private double linkSphereRadius = 0;
-	private double linkThrust = 0;
+	private float linkPitch = 0;
+	private float linkYaw = 0;
+	private float linkRoll= 0;
+	private float linkSphereRadius = 0;
+	private float linkThrust = 0;
 
 	
 	public void onInit(Controller controller) {
@@ -83,9 +83,9 @@ public class LeapMotion extends Observable implements IGestures {
 
 				if (handType == "Right hand") {
 
-					rechtPitch = Math.toDegrees(direction.pitch());
-					rechtYaw = Math.toDegrees(direction.yaw());
-					rechtRoll = Math.toDegrees(normal.roll());
+					rechtPitch = (float) Math.toDegrees(direction.pitch());
+					rechtYaw = (float) Math.toDegrees(direction.yaw());
+					rechtRoll = (float) Math.toDegrees(normal.roll());
 
 					rechtSphereRadius = hand.sphereRadius();
 
@@ -93,9 +93,9 @@ public class LeapMotion extends Observable implements IGestures {
 				}
 				if (handType == "Left hand") {
 
-					linkPitch = Math.toDegrees(direction.pitch());
-					linkRoll = Math.toDegrees(normal.roll());
-					linkYaw = Math.toDegrees(direction.yaw());
+					linkPitch = (float) Math.toDegrees(direction.pitch());
+					linkRoll = (float) Math.toDegrees(normal.roll());
+					linkYaw = (float) Math.toDegrees(direction.yaw());
 
 					linkSphereRadius = hand.sphereRadius();
 
@@ -113,61 +113,61 @@ public class LeapMotion extends Observable implements IGestures {
 	}
 
 	@Override
-	public double getPitchRightHand() {
+	public float getPitchRightHand() {
 		// TODO Auto-generated method stub
 		return rechtPitch;
 	}
 
 	@Override
-	public double getRollRightHand() {
+	public float getRollRightHand() {
 		// TODO Auto-generated method stub
 		return rechtRoll;
 	}
 
 	@Override
-	public double getYawRightHand() {
+	public float getYawRightHand() {
 		// TODO Auto-generated method stub
 		return rechtYaw;
 	}
 
 	@Override
-	public double getThrustRightHand() {
+	public float getThrustRightHand() {
 		// TODO Auto-generated method stub
 		return rechtThrust;
 	}
 
 	@Override
-	public double getSphereRadiusRightHand() {
+	public float getSphereRadiusRightHand() {
 		// TODO Auto-generated method stub
 		return rechtSphereRadius;
 	}
 
 	@Override
-	public double getPitchLeftHand() {
+	public float getPitchLeftHand() {
 		// TODO Auto-generated method stub
 		return linkPitch;
 	}
 
 	@Override
-	public double getRollLeftHand() {
+	public float getRollLeftHand() {
 		// TODO Auto-generated method stub
 		return linkRoll;
 	}
 
 	@Override
-	public double getYawLeftHand() {
+	public float getYawLeftHand() {
 		// TODO Auto-generated method stub
 		return linkYaw;
 	}
 
 	@Override
-	public double getThrustLeftHand() {
+	public float getThrustLeftHand() {
 		// TODO Auto-generated method stub
 		return linkThrust;
 	}
 
 	@Override
-	public double getSpehreRadiusLeftHand() {
+	public float getSpehreRadiusLeftHand() {
 		// TODO Auto-generated method stub
 		return linkSphereRadius;
 	}
