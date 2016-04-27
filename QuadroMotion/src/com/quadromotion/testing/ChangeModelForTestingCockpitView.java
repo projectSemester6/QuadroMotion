@@ -20,6 +20,7 @@ public class ChangeModelForTestingCockpitView extends Thread {
 
 	@Override
 	public void run() {
+		model.setTakeOffCommand(true);
 		while (!this.isInterrupted()) {
 			int i;
 			for(i=-100;i<=100; i+=10){

@@ -7,6 +7,8 @@ import com.quadromotion.model.Model;
 import com.quadromotion.testing.ChangeModelForTestingCockpitView;
 import com.quadromotion.view.CockpitViewController;
 
+import de.yadrone.base.ARDrone;
+import de.yadrone.base.IARDrone;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +23,11 @@ public class MainApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-//	private App app = null;
+	private App app = null;
 	private static Model model = null;
 	private ChangeModelForTestingCockpitView cmt;
 	private static CockpitViewController controller = null;
+	private static IARDrone drone=null;
 
 	/**
 	 * The data as an observable list of Model.
@@ -38,8 +41,12 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-//		this.app = new App(model);
-//		app.boot();
+		this.drone = new ARDrone();
+		this.app = new App(model);
+		app.setDrone(drone);
+		app.boot();
+		
+		app.run();
 		this.cmt = new ChangeModelForTestingCockpitView("Change model test", model);
 		cmt.start();
 		this.primaryStage = primaryStage;
@@ -85,7 +92,6 @@ public class MainApp extends Application {
 			controller = loader.getController();
 	        controller.setMainApp(this);
 	        controller.setModel(model);
-//	        controller.loadGreenImage(); // sets the x_right image to green
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

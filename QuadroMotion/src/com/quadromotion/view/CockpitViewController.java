@@ -339,7 +339,7 @@ public class CockpitViewController implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		Model m = (Model) o;
-		updateView(m);
+//		Model m = (Model) o;
+		updateView((Model) o);
 	}
 }
