@@ -1,11 +1,12 @@
 package com.quadromotion.testing;
 
 import com.quadromotion.FinalStateMachine.FSM;
+import com.quadromotion.model.Model;
 
 public class StateDemo {
 	public static void main(String[] args) {
-	    
-		FSM fsm = new FSM();
+	    Model model = new Model();
+		FSM fsm = new FSM(model);
 
 		String[] msgs = { "on", "noHands", "handsOk", "takeOff", "noCommand", "noHands", "commandMove", 
 				"commandMove", "noHands", "commandMove","on", "noCommand", "commandMove", "land", "noHands",

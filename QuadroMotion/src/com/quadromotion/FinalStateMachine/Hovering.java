@@ -1,6 +1,15 @@
 package com.quadromotion.FinalStateMachine;
 
+import com.quadromotion.model.Model;
+
 class Hovering extends State {
+	
+private Model model;
+	
+	public Hovering(Model model){
+		super(model);
+		this.model = model;
+	}
 	
 	public void land(){
 		System.out.println("Hovering + land  = Ready");

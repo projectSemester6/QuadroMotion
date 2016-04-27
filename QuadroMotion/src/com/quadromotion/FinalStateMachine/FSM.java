@@ -1,9 +1,14 @@
 package com.quadromotion.FinalStateMachine;
 
+import com.quadromotion.model.Model;
+
 //1. Create a "wrapper" class that models the state machine
 public class FSM {
-
-	private State[] states = { new Off(), new Init(), new Ready(), new Hovering(), new Flying() }; // 2.
+private Model model;
+public FSM(Model model){
+	this.model = model;
+}
+	private State[] states = { new Off(model), new Init(model), new Ready(model), new Hovering(model), new Flying(model) }; // 2.
 	// states
 	private String[][] transitionString = { { "Off", "Init", "Off", "Off", "Off", "Off", "Off", "Off" },
 
@@ -63,7 +68,7 @@ public class FSM {
 	}
 
 	public void commandMove() {
-		states[current].commandMove();
+		states[current].commandMove(40,30,20,10);
 		next(6);
 	}
 

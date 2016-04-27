@@ -1,6 +1,13 @@
 package com.quadromotion.FinalStateMachine;
 
+import com.quadromotion.model.Model;
+
 class Init extends State {
+
+	public Init(Model model) {
+		super(model);
+		// TODO Auto-generated constructor stub
+	}
 
 	public void handsOk() {
 		System.out.println("Init + handsOk = Ready");
