@@ -67,7 +67,7 @@ public class LeapMotion extends Observable implements IGestures {
 
 		Frame frame = controller.frame();
 
-		anzahlHaenden = frame.hands().count();
+		setAnzahlHaenden(frame.hands().count());
 		GestureList gestures = frame.gestures();
 
 		if (anzahlHaenden > 1) {
@@ -83,23 +83,20 @@ public class LeapMotion extends Observable implements IGestures {
 
 				if (handType == "Right hand") {
 
-					rechtPitch = (float) Math.toDegrees(direction.pitch());
-					rechtYaw = (float) Math.toDegrees(direction.yaw());
-					rechtRoll = (float) Math.toDegrees(normal.roll());
+					setRechtPitch((float) Math.toDegrees(direction.pitch()));
+					setRechtYaw((float) Math.toDegrees(direction.yaw()));
+					setRechtRoll((float) Math.toDegrees(normal.roll()));
 
-					rechtSphereRadius = hand.sphereRadius();
+					setRechtSphereRadius(hand.sphereRadius());
 
 					
 				}
 				if (handType == "Left hand") {
 
-					linkPitch = (float) Math.toDegrees(direction.pitch());
-					linkRoll = (float) Math.toDegrees(normal.roll());
-					linkYaw = (float) Math.toDegrees(direction.yaw());
-
-					linkSphereRadius = hand.sphereRadius();
-
-
+					setLinkPitch((float) Math.toDegrees(direction.pitch()));
+					setLinkRoll((float) Math.toDegrees(normal.roll()));
+					setLinkYaw ((float) Math.toDegrees(direction.yaw()));
+					setLinkSphereRadius(hand.sphereRadius());
 				}
 
 				if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
@@ -170,6 +167,94 @@ public class LeapMotion extends Observable implements IGestures {
 	public float getSpehreRadiusLeftHand() {
 		// TODO Auto-generated method stub
 		return linkSphereRadius;
+	}
+
+	public void setAnzahlHaenden(int anzahlHaenden) {
+		this.anzahlHaenden = anzahlHaenden;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.anzahlHaenden);
+		}
+	}
+
+	public void setRechtPitch(float rechtPitch) {
+		this.rechtPitch = rechtPitch;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.rechtPitch);
+		}
+	}
+
+	public void setRechtYaw(float rechtYaw) {
+		this.rechtYaw = rechtYaw;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.rechtYaw);
+		}
+	}
+
+	public void setRechtRoll(float rechtRoll) {
+		this.rechtRoll = rechtRoll;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.rechtRoll);
+		}
+	}
+
+	public void setRechtSphereRadius(float rechtSphereRadius) {
+		this.rechtSphereRadius = rechtSphereRadius;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.rechtSphereRadius);
+		}
+	}
+
+	public void setRechtThrust(float rechtThrust) {
+		this.rechtThrust = rechtThrust;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.rechtThrust);
+		}
+	}
+
+	public void setLinkPitch(float linkPitch) {
+		this.linkPitch = linkPitch;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.linkPitch);
+		}
+	}
+
+	public void setLinkYaw(float linkYaw) {
+		this.linkYaw = linkYaw;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.linkYaw);
+		}
+	}
+
+	public void setLinkRoll(float linkRoll) {
+		this.linkRoll = linkRoll;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.linkRoll);
+		}
+	}
+
+	public void setLinkSphereRadius(float linkSphereRadius) {
+		this.linkSphereRadius = linkSphereRadius;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.linkSphereRadius);
+		}
+	}
+
+	public void setLinkThrust(float linkThrust) {
+		this.linkThrust = linkThrust;
+		if(countObservers()>0){
+			setChanged();
+			notifyObservers(this.linkThrust);
+		}
 	}
 
 
