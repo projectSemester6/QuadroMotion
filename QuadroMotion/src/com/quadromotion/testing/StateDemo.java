@@ -8,7 +8,7 @@ public class StateDemo {
 		FSM fsm = new FSM();
 
 		String[] msgs = { "on", "noHands", "handsOk", "takeOff", "noCommand", "noHands", "commandMove", 
-				"commandMove", "noHands", "commandMove", "noCommand", "commandMove", "land", "noHands",
+				"commandMove", "noHands", "commandMove","on", "noCommand", "commandMove", "land", "noHands",
 				"off"};
 
 		for (int i = 0; i < msgs.length; i++)

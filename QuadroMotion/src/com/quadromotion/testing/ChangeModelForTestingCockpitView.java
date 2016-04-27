@@ -21,23 +21,40 @@ public class ChangeModelForTestingCockpitView extends Thread {
 	@Override
 	public void run() {
 		while (!this.isInterrupted()) {
-			float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float nspin = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			model.setSpeedX(nx);
-			model.setSpeedY(ny);
-			model.setSpeedZ(nz);
-			model.setSpeedSpin(nspin);
+			int i;
+			for(i=-100;i<=100; i+=10){
+				model.setSpeedX(i);
+				model.setSpeedY(i);
+				model.setSpeedZ(i);
+				model.setSpeedSpin(i);
+//				System.out.println("speed:\t"+i);
+//				System.out.println("");
+			}
+			for(i=100;i>=-100; i-=10){
+				model.setSpeedX(i);
+				model.setSpeedY(i);
+				model.setSpeedZ(i);
+				model.setSpeedSpin(i);
+//				System.out.println("speed x:\t"+i);
+//				System.out.println("speed y:\t"+i);
+//				System.out.println("speed z:\t"+i);
+//				System.out.println("speed spin:\t"+i);
+//				System.out.println("");
+			}
 			
-			System.out.println("speed x:\t"+nx);
-			System.out.println("speed y:\t"+ny);
-			System.out.println("speed z:\t"+nz);
-			System.out.println("speed spin:\t"+nspin);
-			System.out.println("");
+//			float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+//			float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+//			float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+//			float nspin = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+			
+//			System.out.println("speed x:\t"+i);
+//			System.out.println("speed y:\t"+ny);
+//			System.out.println("speed z:\t"+nz);
+//			System.out.println("speed spin:\t"+nspin);
+//			System.out.println("");
 			// yield();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			}
 
 			catch (InterruptedException ie) {

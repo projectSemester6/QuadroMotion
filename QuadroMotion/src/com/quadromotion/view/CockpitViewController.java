@@ -17,7 +17,7 @@ public class CockpitViewController implements Observer {
 	/**
 	 * The data as an observable list of Model.
 	 */
-	private ObservableList<Model> modelData = FXCollections.observableArrayList();
+//	private ObservableList<Model> modelData = FXCollections.observableArrayList();
 
 	@FXML
 	private ImageView x_right;
@@ -36,11 +36,11 @@ public class CockpitViewController implements Observer {
 
 	private float minLimit = -15f;
 	private float maxLimit = 15f;
-	
+
 	private Util util;
 
 	private Model model;
-	
+
 	// Reference to the main application.
 	private MainApp mainApp;
 
@@ -52,87 +52,230 @@ public class CockpitViewController implements Observer {
 
 	}
 
-	@FXML
-	public void changeXRightImage(String color) {
+	public void changeXRightImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben.png"));
-			break;
-		case "black":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-bl.png"));
-			break;
-		}
+
+		if (percent >= 90)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
+
+//		else if (percent >= 80)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+
+		else if (percent >= 70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
+
+//		else if (percent >= 60)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+
+		else if (percent >= 50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
+//
+//		else if (percent >= 40)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+
+		else if (percent >= 30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
+//
+//		else if (percent >= 20)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+
+		else if (percent >= 1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
+//
+//		else if (percent >= 1)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+
+		else
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
+
 		x_right.setImage(image);
+
 	}
 
-	@FXML
-	public void changeXLeftImage(String color) {
+	public void changeXLeftImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben.png"));
-			break;
-		case "black":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-bl.png"));
-			break;
-		}
+		if (percent <= -90)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
+
+//		else if (percent <= -80)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+
+		else if (percent <= -70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
+
+//		else if (percent <= -60)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+
+		else if (percent <= -50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
+
+//		else if (percent <= -40)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+
+		else if (percent <= -30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
+
+//		else if (percent <= -20)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+
+		else if (percent <= -1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
+
+//		else if (percent <= -1)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+
+		else
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
 		x_left.setImage(image);
 	}
 
-	@FXML
-	public void changeYTopImage(String color) {
+	public void changeYTopImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-			break;
-		case "black":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts-bl.png"));
-			break;
-		}
+		if (percent >= 90)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
+
+//		else if (percent >= 80)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+
+		else if (percent >= 70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
+
+//		else if (percent >= 60)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+
+		else if (percent >= 50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
+
+//		else if (percent >= 40)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+
+		else if (percent >= 30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
+
+//		else if (percent >= 20)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+
+		else if (percent >= 1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
+
+//		else if (percent >= 1)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+
+		else
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
 		y_top.setImage(image);
 	}
 
-	@FXML
-	public void changeYBottomImage(String color) {
+	
+	public void changeYBottomImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
+		if (percent <= -90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-			break;
-		case "black":
+
+		else if (percent <= -80)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -60)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -40)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -20)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -10)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else if (percent <= -1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
+		
+		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts-bl.png"));
-			break;
-		}
 		y_bottom.setImage(image);
 	}
 
-	@FXML
-	public void changeZTopImage(String color) {
+	
+	public void changeZTopImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben.png"));
-			break;
-		case "black":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-bl.png"));
-			break;
-		}
+		if (percent >= 90)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
+
+//		else if (percent >= 80)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+
+		else if (percent >= 70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
+
+//		else if (percent >= 60)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+
+		else if (percent >= 50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
+
+//		else if (percent >= 40)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+
+		else if (percent >= 30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
+
+//		else if (percent >= 20)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+
+		else if (percent >= 1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
+
+//		else if (percent >= 1)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+
+		else
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
 		z_top.setImage(image);
 	}
 
-	@FXML
-	public void changeZBottomImage(String color) {
+	public void changeZBottomImage(int percent) {
 		Image image = null;
-		switch (color) {
-		case "green":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben.png"));
-			break;
-		case "black":
-			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-bl.png"));
-			break;
-		}
+		if (percent <= -90)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
+
+//		else if (percent <= -80)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+
+		else if (percent <= -70)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
+
+//		else if (percent <= -60)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+
+		else if (percent <= -50)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
+
+//		else if (percent <= -40)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+
+		else if (percent <= -30)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
+
+//		else if (percent <= -20)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+
+		else if (percent <= -1)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
+
+//		else if (percent <= -1)
+//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+
+		else
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
 		z_bottom.setImage(image);
 	}
 
@@ -176,44 +319,27 @@ public class CockpitViewController implements Observer {
 		model.addObserver(this);
 	}
 
+	private void updateView(Model m) {
+
+		changeXRightImage((int) m.getSpeedX());
+		changeXLeftImage((int) m.getSpeedX());
+
+		changeYTopImage((int) m.getSpeedY());
+		changeYBottomImage((int) m.getSpeedY());
+
+		changeZTopImage((int) m.getSpeedZ());
+		changeZBottomImage((int) m.getSpeedZ());
+
+		if (m.getSpeedSpin() > maxLimit || m.getSpeedSpin() < minLimit)
+			changeSpinImage("green");
+		else
+			changeSpinImage("black");
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		Model m = (Model) o;
-		if (m.getSpeedX() > maxLimit)
-			changeXRightImage("green");
-		else
-			changeXRightImage("black");
-		
-		if (m.getSpeedY() > maxLimit)
-			changeYTopImage("green");
-		else
-			changeYTopImage("black");
-		
-		if (m.getSpeedZ() > maxLimit)
-			changeZTopImage("green");
-		else
-			changeZTopImage("black");
-		
-		if (m.getSpeedSpin() > maxLimit||m.getSpeedSpin()<minLimit)
-			changeSpinImage("green");
-		else
-			changeSpinImage("black");
-		
-		
-		if (m.getSpeedX() < minLimit)
-			changeXLeftImage("green");
-		else
-			changeXLeftImage("black");
-		
-		if (m.getSpeedY() < minLimit)
-			changeYBottomImage("green");
-		else
-			changeYBottomImage("black");
-		
-		if (m.getSpeedZ() < minLimit)
-			changeZBottomImage("green");
-		else
-			changeZBottomImage("black");
+		updateView(m);
 	}
 }
