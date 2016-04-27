@@ -31,52 +31,52 @@ public class Gestures extends Observable implements IGestures{
 		}
 	}
 	@Override
-	public double getPitchRightHand() {
+	public float getPitchRightHand() {
 		// TODO Auto-generated method stub
 		return pitchRightHand;
 	}
 	@Override
-	public double getRollRightHand() {
+	public float getRollRightHand() {
 		// TODO Auto-generated method stub
 		return rollRightHand;
 	}
 	@Override
-	public double getYawRightHand() {
+	public float getYawRightHand() {
 		// TODO Auto-generated method stub
 		return yawRightHand;
 	}
 	@Override
-	public double getThrustRightHand() {
+	public float getThrustRightHand() {
 		// TODO Auto-generated method stub
 		return thrustRightHand;
 	}
 	@Override
-	public double getSphereRadiusRightHand() {
+	public float getSphereRadiusRightHand() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
-	public double getPitchLeftHand() {
+	public float getPitchLeftHand() {
 		// TODO Auto-generated method stub
 		return pitchLeftHand;
 	}
 	@Override
-	public double getRollLeftHand() {
+	public float getRollLeftHand() {
 		// TODO Auto-generated method stub
 		return rollLeftHand;
 	}
 	@Override
-	public double getYawLeftHand() {
+	public float getYawLeftHand() {
 		// TODO Auto-generated method stub
 		return yawLeftHand;
 	}
 	@Override
-	public double getThrustLeftHand() {
+	public float getThrustLeftHand() {
 		// TODO Auto-generated method stub
 		return thrustLeftHand;
 	}
 	@Override
-	public double getSpehreRadiusLeftHand() {
+	public float getSpehreRadiusLeftHand() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
