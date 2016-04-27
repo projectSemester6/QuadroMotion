@@ -4,7 +4,7 @@ import com.quadromotion.gestures.KeyBoardCommands;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.ConsolView;
 
-public class Controller {
+public class ConsolViewController {
 
 	private Model model = null;
 	private ConsolView consolView = null;
@@ -17,7 +17,7 @@ public class Controller {
 	 * @param consolView
 	 *            the view
 	 */
-	public Controller() {
+	public ConsolViewController() {
 
 		this.model = new Model();
 		this.consolView = new ConsolView(model);
@@ -31,7 +31,7 @@ public class Controller {
 	 * @param consolView
 	 *            the view
 	 */
-	public Controller(Model model) {
+	public ConsolViewController(Model model) {
 
 		this.setModel(model);
 		this.consolView = new ConsolView(model);
@@ -45,7 +45,7 @@ public class Controller {
 	 * @param consolView
 	 *            the view
 	 */
-	public Controller(Model model, ConsolView consolView) {
+	public ConsolViewController(Model model, ConsolView consolView) {
 		this.model = model;
 		this.consolView = consolView;
 	}

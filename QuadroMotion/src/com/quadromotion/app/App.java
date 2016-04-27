@@ -1,7 +1,7 @@
 package com.quadromotion.app;
 
 //import com.quadromotion.boot.Boot;
-import com.quadromotion.controller.Controller;
+import com.quadromotion.controller.ConsolViewController;
 import com.quadromotion.controller.SendThread;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.ConsolView;
@@ -20,7 +20,7 @@ public class App {
 
 	private Model model = null;
 	// static ConsolView view = null;
-	private Controller controller = null;
+	private ConsolViewController controller = null;
 	private SendThread sender = null;
 	private IARDrone drone = null;
 

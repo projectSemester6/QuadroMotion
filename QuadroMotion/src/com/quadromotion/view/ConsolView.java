@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import com.quadromotion.controller.Controller;
+import com.quadromotion.controller.ConsolViewController;
 import com.quadromotion.gestures.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
@@ -22,7 +22,7 @@ public class ConsolView extends JFrame implements Observer, KeyListener {
 	private int speed = 15;
 	private final int ZERO = 0;
 	private Model model;
-	private Controller controller;
+	private ConsolViewController controller;
 	private Object gestures;
 	JLabel labelTitle;
 	JLabel labelLeft;
@@ -84,15 +84,15 @@ public class ConsolView extends JFrame implements Observer, KeyListener {
 		System.out.println(inputString);
 	}
 
-	public Controller makeController() {
-		return new Controller(model, this);
+	public ConsolViewController makeController() {
+		return new ConsolViewController(model, this);
 	}
 
-	public Controller getController() {
+	public ConsolViewController getController() {
 		return controller;
 	}
 
-	public void setController(Controller controller) {
+	public void setController(ConsolViewController controller) {
 		this.controller = controller;
 	}
 
