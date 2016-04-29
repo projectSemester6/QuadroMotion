@@ -6,17 +6,14 @@ import com.leapmotion.leap.Controller;
 import com.quadromotion.app.App;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
-import com.quadromotion.testing.ChangeModelForTestingCockpitView;
+import com.quadromotion.model.Services;
 import com.quadromotion.view.CockpitViewController;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -27,7 +24,6 @@ public class MainApp extends Application {
 	private BorderPane rootLayout;
 	private App app = null;
 	private static Model model = null;
-	private ChangeModelForTestingCockpitView cmt;
 	private static CockpitViewController controller = null;
 	private static IARDrone drone = null;
 	
@@ -48,8 +44,9 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.drone = new ARDrone();
-//		this.leap = new LeapMotion();
-//		this.leapController = new Controller();
+		this.leap = new LeapMotion(new Services(model));
+		this.leapController = new Controller();
+		leapController.addListener(leap);
 		this.app = new App(model);
 		app.setDrone(drone);
 		app.boot();
@@ -61,7 +58,7 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("QuadroMotionApp");
 
-		 initRootLayout();
+//		 initRootLayout();
 
 		// showCockpipView();
 	}

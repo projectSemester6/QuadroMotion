@@ -23,8 +23,9 @@ import com.quadromotion.model.Services;
 
 public class LeapMotion extends Listener implements IGestures {
 	
-	public LeapMotion(){
+	public LeapMotion(Services s){
 		super();
+		this.services = s;
 	}
 
 	private int anzahlHaenden = 0;
@@ -70,12 +71,11 @@ public class LeapMotion extends Listener implements IGestures {
 	 */
 	public void onFrame(Controller controller) {
 
-
 		Frame frame = controller.frame();
 
 		setAnzahlHaenden(frame.hands().count());
 		GestureList gestures = frame.gestures();
-
+//		System.out.println("Anzahl Hände: "+ anzahlHaenden);
 		if (anzahlHaenden > 1) {
 
 			// Get hands
@@ -103,13 +103,11 @@ public class LeapMotion extends Listener implements IGestures {
 				}
 
 				if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
-					System.out.println();
+//					System.out.println();
 				}
 			}
-			
-			services.ServicesGesturesConfig_1(this);
-
 		}
+		services.ServicesGesturesConfig_1(this);
 	}
 
 	@Override
@@ -225,6 +223,10 @@ public class LeapMotion extends Listener implements IGestures {
 	public void setLinkThrust(float linkThrust) {
 		this.linkThrust = linkThrust;
 		
+	}
+
+	public int getAnzahlHaenden() {
+		return anzahlHaenden;
 	}
 
 

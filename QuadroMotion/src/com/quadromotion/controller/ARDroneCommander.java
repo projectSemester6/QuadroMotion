@@ -111,7 +111,7 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * animates the LEDs
 	 */
 	public void animateLEDs() {
-		cmd.setLedsAnimation(LEDAnimation.BLINK_RED, 6, 2);
+		cmd.setLedsAnimation(LEDAnimation.BLINK_ORANGE, 6, 2);
 	}
 
 	/**

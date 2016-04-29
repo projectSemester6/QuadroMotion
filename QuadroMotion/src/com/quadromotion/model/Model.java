@@ -22,6 +22,10 @@ public class Model extends Observable {
 	private boolean isFlying;
 	private boolean isHovering;
 	private boolean isConnected;
+	private boolean isTakingOff;
+	private boolean isLanding;
+	
+	private String state = "init";
 
 	/**
 	 * Constructor
@@ -131,6 +135,10 @@ public class Model extends Observable {
 
 	public void setIsHovering(boolean state) {
 		this.isHovering = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
 	}
 
 	public boolean isFlying() {
@@ -139,6 +147,10 @@ public class Model extends Observable {
 
 	public void setIsFlying(boolean state) {
 		this.isFlying = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
 	}
 
 	public boolean isConnected() {
@@ -147,6 +159,45 @@ public class Model extends Observable {
 
 	public void setIsConnected(boolean state) {
 		this.isConnected = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
 	}
 
+	public boolean isTakingOff() {
+		return isTakingOff;
+	}
+
+	public void setTakingOff(boolean state) {
+		this.isTakingOff = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
+	}
+
+	public boolean isLanding() {
+		return isLanding;
+	}
+
+	public void setLanding(boolean state) {
+		this.isLanding = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(state);
+		}
+	}
 }

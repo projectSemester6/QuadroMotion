@@ -18,14 +18,18 @@ public class Services {
 	private AngleToSpeedConverter convertZ = null;
 	private AngleToSpeedConverter convertSpin = null;
 
-	private LeapMotion leap = null;
 	private Model model = null;
 
-	private String state = "ready";
+	private String state = "init";
 
-	public Services(Model model, LeapMotion leap) {
+	private long startTime = 0;
+	private long startStateTime = 0;
 
-		this.leap = leap;
+	private final int TAKE_OFF_DELAY = 2000;
+	private long timeUntilTakeOff = 0;
+
+	public Services(Model model) {
+
 		this.model = model;
 
 		convertX = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
@@ -41,69 +45,97 @@ public class Services {
 
 	public void ServicesGesturesConfig_1(LeapMotion leap) {
 
-		switch (state) {
+		float speedY = convertY.expConverter(leap.getPitchRightHand());
+		float speedX = convertX.expConverter(leap.getRollRightHand());
+		float speedZ = convertZ.expConverter(leap.getPitchLeftHand());
+		float speedSpin = convertSpin.expConverter(leap.getRollLeftHand());
+		float takeOffCommand = leap.getYawRightHand();
+		int countHands = leap.getAnzahlHaenden();
+
+		print("Service: " + model.getState());
+
+		switch (model.getState()) {
+		case "init":
+			if (countHands > 1)
+				model.setState("ready");
+			break;
 		case "ready":
+			if (countHands < 2)
+				model.setState("init");
 			if (model.getLandingCommand())
 				model.setLandingCommand(false);
-			if (leap.getYawRightHand() < -35) {
-				print("next state is: takingOff\n");
-				state = "takingOff";
+
+			if (takeOffCommand < -35) {
+				if (startTime == 0)
+					startTime = System.currentTimeMillis();
+				timeUntilTakeOff = TAKE_OFF_DELAY - (System.currentTimeMillis() - startTime);
+				if (timeUntilTakeOff <= 0) {
+					print("next state is: takingOff\n");
+					model.setState("takingOff");
+				}
+			} else if (takeOffCommand >= -35) {
+				timeUntilTakeOff = TAKE_OFF_DELAY;
+				startTime = 0;
 			}
+
+			print("time until take off: " + String.valueOf(timeUntilTakeOff));
 			break;
+
 		case "takingOff":
-			print("next state is: hovering\n");
-			model.setTakeOffCommand(true);
-			state = "hovering";
+			startTime = 0;
+			if (!model.getTakeOffCommand())
+				model.setTakeOffCommand(true);
+			if (takeOffCommand > -10)
+				model.setState("hovering");
 			break;
+
 		case "hovering":
-			if (model.getHoverCommand())
-				model.setTakeOffCommand(false);
+
+			model.setHoverCommand(true);
+
 			if (leap.getYawLeftHand() > 35) {
-				print("next state is: landing\n");
-				state = "landing";
-				break;
-			}
-			if (leap.getPitchRightHand() != 0 || leap.getRollRightHand() != 0 || leap.getYawLeftHand() != 0
-					|| leap.getRollLeftHand() != 0) {
-				print("next state is: flying\n");
-				state = "flying";
+				model.setState("landing");
 				break;
 			}
 
-			model.setHoverCommand(true);
+			if (countHands == 2 && (speedX != 0 || speedY != 0 || speedZ != 0 || speedSpin != 0)) {
+				model.setState("flying");
+				break;
+			}
+
 			break;
 		case "flying":
-			if (leap.getPitchRightHand() == 0 || leap.getRollRightHand() == 0 || leap.getYawLeftHand() == 0
-					|| leap.getRollLeftHand() == 0) {
-				print("next state is: hovering\n");
-				state = "hovering";
+			if (countHands < 2) {
+				model.setState("hovering");
 				break;
 			}
-			// model.setSpeedX(convertX.expConverter(leap.getPitchRightHand()));
-			// model.setSpeedY(convertY.expConverter(leap.getRollRightHand()));
-			// model.setSpeedZ(convertZ.HeavySideConverter(leap.getYawLeftHand()));
-			// model.setSpeedSpin(convertSpin.linearConverter(leap.getRollLeftHand()));
+
 			if (leap.getYawLeftHand() > 35) {
-				print("next state is: landing\n");
-				state = "landing";
+				model.setState("landing");
 				break;
 			}
+			
+			model.setSpeedX(-speedX);
+			model.setSpeedY(-speedY);
+			model.setSpeedZ(-speedZ);
+			model.setSpeedSpin(-speedSpin);
+			
 			break;
 		case "landing":
-			print("drone is landing");
-			print("next state is: ready\n");
 			model.setLandingCommand(true);
-			state = "ready";
+//			model.setState("ready");
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void print(String input){
+	public void print(String input) {
 		System.out.println(input);
 	}
-	public void ServicesGesturesConfig_2() { // l'inverse de la config_1
+
+	public void ServicesGesturesConfig_2(LeapMotion leap) { // l'inverse de la
+															// config_1
 
 		model.setSpeedX(convertX.expConverter(leap.getPitchLeftHand()));
 		model.setSpeedY(convertY.expConverter(leap.getRollLeftHand()));
@@ -119,7 +151,7 @@ public class Services {
 
 	}
 
-	public void ServicesGesturesConfig_3() {
+	public void ServicesGesturesConfig_3(LeapMotion leap) {
 
 		model.setSpeedX(convertX.expConverter(leap.getPitchRightHand()));
 		model.setSpeedY(convertY.expConverter(leap.getRollLeftHand()));
