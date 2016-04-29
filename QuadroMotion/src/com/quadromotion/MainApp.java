@@ -2,7 +2,9 @@ package com.quadromotion;
 
 import java.io.IOException;
 
+import com.leapmotion.leap.Controller;
 import com.quadromotion.app.App;
+import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.testing.ChangeModelForTestingCockpitView;
 import com.quadromotion.view.CockpitViewController;
@@ -17,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+
 public class MainApp extends Application {
 
 	private Stage primaryStage;
@@ -25,6 +28,8 @@ public class MainApp extends Application {
 	private static Model model = null;
 	private ChangeModelForTestingCockpitView cmt;
 	private static CockpitViewController controller = null;
+	private static Controller leapController = null;
+	private static LeapMotion leap = null;
 
 	/**
 	 * The data as an observable list of Model.
