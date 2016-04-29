@@ -92,10 +92,7 @@ public class LeapMotion extends Listener implements IGestures {
 					setRechtPitch((float) Math.toDegrees(direction.pitch()));
 					setRechtYaw((float) Math.toDegrees(direction.yaw()));
 					setRechtRoll((float) Math.toDegrees(normal.roll()));
-
 					setRechtSphereRadius(hand.sphereRadius());
-
-					
 				}
 				if (handType == "Left hand") {
 

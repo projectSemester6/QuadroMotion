@@ -11,7 +11,7 @@ import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.AngleToSpeedConverter;
 import com.quadromotion.model.*;
 
-public class Services implements Observer {
+public class Services {
 
 	private AngleToSpeedConverter convertX = null;
 	private AngleToSpeedConverter convertY = null;
@@ -39,37 +39,59 @@ public class Services implements Observer {
 
 	}
 
-	public void ServicesGesturesConfig_1() {
+	public void ServicesGesturesConfig_1(LeapMotion leap) {
 
 		switch (state) {
 		case "ready":
+			if (model.getLandingCommand())
+				model.setLandingCommand(false);
 			if (leap.getYawRightHand() < -35) {
+				print("next state is: takingOff\n");
 				state = "takingOff";
 			}
 			break;
 		case "takingOff":
+			print("next state is: hovering\n");
 			model.setTakeOffCommand(true);
 			state = "hovering";
 			break;
 		case "hovering":
-			model.setTakeOffCommand(false);
-			model.setHoverCommand(true);
+			if (model.getHoverCommand())
+				model.setTakeOffCommand(false);
+			if (leap.getYawLeftHand() > 35) {
+				print("next state is: landing\n");
+				state = "landing";
+				break;
+			}
 			if (leap.getPitchRightHand() != 0 || leap.getRollRightHand() != 0 || leap.getYawLeftHand() != 0
 					|| leap.getRollLeftHand() != 0) {
+				print("next state is: flying\n");
 				state = "flying";
+				break;
 			}
 
+			model.setHoverCommand(true);
 			break;
 		case "flying":
-			model.setSpeedX(convertX.expConverter(leap.getPitchRightHand()));
-			model.setSpeedY(convertY.expConverter(leap.getRollRightHand()));
-			model.setSpeedZ(convertZ.HeavySideConverter(leap.getYawLeftHand()));
-			model.setSpeedSpin(convertSpin.linearConverter(leap.getRollLeftHand()));
-			if(leap.getYawLeftHand() > 35){
+			if (leap.getPitchRightHand() == 0 || leap.getRollRightHand() == 0 || leap.getYawLeftHand() == 0
+					|| leap.getRollLeftHand() == 0) {
+				print("next state is: hovering\n");
+				state = "hovering";
+				break;
+			}
+			// model.setSpeedX(convertX.expConverter(leap.getPitchRightHand()));
+			// model.setSpeedY(convertY.expConverter(leap.getRollRightHand()));
+			// model.setSpeedZ(convertZ.HeavySideConverter(leap.getYawLeftHand()));
+			// model.setSpeedSpin(convertSpin.linearConverter(leap.getRollLeftHand()));
+			if (leap.getYawLeftHand() > 35) {
+				print("next state is: landing\n");
 				state = "landing";
+				break;
 			}
 			break;
 		case "landing":
+			print("drone is landing");
+			print("next state is: ready\n");
 			model.setLandingCommand(true);
 			state = "ready";
 			break;
@@ -78,6 +100,9 @@ public class Services implements Observer {
 		}
 	}
 
+	private void print(String input){
+		System.out.println(input);
+	}
 	public void ServicesGesturesConfig_2() { // l'inverse de la config_1
 
 		model.setSpeedX(convertX.expConverter(leap.getPitchLeftHand()));
@@ -111,12 +136,5 @@ public class Services implements Observer {
 
 	private void updateModel(LeapMotion l) {
 
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		LeapMotion l = (LeapMotion) o;
-		updateModel(l);
 	}
 }

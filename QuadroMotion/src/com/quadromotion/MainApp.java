@@ -2,7 +2,9 @@ package com.quadromotion;
 
 import java.io.IOException;
 
+import com.leapmotion.leap.Controller;
 import com.quadromotion.app.App;
+import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.testing.ChangeModelForTestingCockpitView;
 import com.quadromotion.view.CockpitViewController;
@@ -46,6 +48,8 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.drone = new ARDrone();
+		this.leap = new LeapMotion();
+		this.leapController = new Controller();
 		this.app = new App(model);
 		app.setDrone(drone);
 		app.boot();
