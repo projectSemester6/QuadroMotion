@@ -122,7 +122,7 @@ public class Services {
 			
 			break;
 		case "landing":
-			model.setLandingCommand(true);
+//			model.setLandingCommand(true);
 //			model.setState("ready");
 			break;
 		default:

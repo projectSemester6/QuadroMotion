@@ -68,20 +68,20 @@ public class SendThread extends Thread implements Observer {
 //		int c = 0;
 //		long startTime = System.currentTimeMillis();
 		droneCommander.animateLEDs();
-		do {
-//			c++;
-//			System.out.println(c + "er Durchlauf");
-//			System.out.println("Zeit seit start: " + (System.currentTimeMillis() - startTime));
-			sendCommand();
-//			yield();
-			try {
-				Thread.sleep(SLEEP);
-			}
-
-			catch (InterruptedException ie) {
-				System.out.println("Thread " + threadName + " interrupted...");
-			}
-		} while (!this.isInterrupted());
+//		do {
+////			c++;
+////			System.out.println(c + "er Durchlauf");
+////			System.out.println("Zeit seit start: " + (System.currentTimeMillis() - startTime));
+//			sendCommand();
+////			yield();
+//			try {
+//				Thread.sleep(SLEEP);
+//			}
+//
+//			catch (InterruptedException ie) {
+//				System.out.println("Thread " + threadName + " interrupted...");
+//			}
+//		} while (!this.isInterrupted());
 
 	}
 
@@ -126,6 +126,6 @@ public class SendThread extends Thread implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		m = (Model) o;
-		// sendCommand();
+		 sendCommand();
 	}
 }
