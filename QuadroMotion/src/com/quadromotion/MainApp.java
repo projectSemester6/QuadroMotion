@@ -48,8 +48,8 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.drone = new ARDrone();
-		this.leap = new LeapMotion();
-		this.leapController = new Controller();
+//		this.leap = new LeapMotion();
+//		this.leapController = new Controller();
 		this.app = new App(model);
 		app.setDrone(drone);
 		app.boot();
@@ -61,7 +61,7 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("QuadroMotionApp");
 
-		// initRootLayout();
+		 initRootLayout();
 
 		// showCockpipView();
 	}
