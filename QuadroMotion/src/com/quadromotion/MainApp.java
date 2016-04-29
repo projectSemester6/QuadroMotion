@@ -29,6 +29,8 @@ public class MainApp extends Application {
 	private static CockpitViewController controller = null;
 	private static IARDrone drone = null;
 	
+	private static Controller leapController = null;
+	private static LeapMotion leap = null;
 
 	/**
 	 * The data as an observable list of Model.

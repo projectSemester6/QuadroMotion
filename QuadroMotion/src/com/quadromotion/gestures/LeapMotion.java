@@ -17,10 +17,15 @@ import com.leapmotion.leap.Listener;
 //import com.leapmotion.leap.SwipeGesture;
 //import com.leapmotion.leap.Tool;
 import com.leapmotion.leap.Vector;
+import com.quadromotion.model.Services;
 //import com.leapmotion.leap.Gesture.State;
 
 
-public class LeapMotion extends Observable implements IGestures {
+public class LeapMotion extends Listener implements IGestures {
+	
+	public LeapMotion(){
+		super();
+	}
 
 	private int anzahlHaenden = 0;
 	
@@ -36,6 +41,7 @@ public class LeapMotion extends Observable implements IGestures {
 	private float linkSphereRadius = 0;
 	private float linkThrust = 0;
 
+	private Services services=null;
 	
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");
@@ -103,6 +109,8 @@ public class LeapMotion extends Observable implements IGestures {
 					System.out.println();
 				}
 			}
+			
+			services.ServicesGesturesConfig_1(this);
 
 		}
 	}
@@ -169,90 +177,57 @@ public class LeapMotion extends Observable implements IGestures {
 
 	public void setAnzahlHaenden(int anzahlHaenden) {
 		this.anzahlHaenden = anzahlHaenden;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.anzahlHaenden);
-		}
+		
 	}
 
 	public void setRechtPitch(float rechtPitch) {
 		this.rechtPitch = rechtPitch;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.rechtPitch);
-		}
+		
 	}
 
 	public void setRechtYaw(float rechtYaw) {
 		this.rechtYaw = rechtYaw;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.rechtYaw);
-		}
+		
 	}
 
 	public void setRechtRoll(float rechtRoll) {
 		this.rechtRoll = rechtRoll;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.rechtRoll);
-		}
+		
 	}
 
 	public void setRechtSphereRadius(float rechtSphereRadius) {
 		this.rechtSphereRadius = rechtSphereRadius;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.rechtSphereRadius);
-		}
+		
 	}
 
 	public void setRechtThrust(float rechtThrust) {
 		this.rechtThrust = rechtThrust;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.rechtThrust);
-		}
+		
 	}
 
 	public void setLinkPitch(float linkPitch) {
 		this.linkPitch = linkPitch;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.linkPitch);
-		}
+		
 	}
 
 	public void setLinkYaw(float linkYaw) {
 		this.linkYaw = linkYaw;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.linkYaw);
-		}
+		
 	}
 
 	public void setLinkRoll(float linkRoll) {
 		this.linkRoll = linkRoll;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.linkRoll);
-		}
+		
 	}
 
 	public void setLinkSphereRadius(float linkSphereRadius) {
 		this.linkSphereRadius = linkSphereRadius;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.linkSphereRadius);
-		}
+		
 	}
 
 	public void setLinkThrust(float linkThrust) {
 		this.linkThrust = linkThrust;
-		if(countObservers()>0){
-			setChanged();
-			notifyObservers(this.linkThrust);
-		}
+		
 	}
 
 

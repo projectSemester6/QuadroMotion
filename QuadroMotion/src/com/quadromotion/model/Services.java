@@ -23,10 +23,10 @@ public class Services implements Observer {
 
 	private String state = "ready";
 
-	public Services() {
+	public Services(Model model, LeapMotion leap) {
 
-		leap = new LeapMotion();
-		model = new Model();
+		this.leap = leap;
+		this.model = model;
 
 		convertX = new AngleToSpeedConverter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
 				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
