@@ -27,16 +27,18 @@ public class MainApp extends Application {
 	private static Model model = null;
 	private ChangeModelForTestingCockpitView cmt;
 	private static CockpitViewController controller = null;
-	private static IARDrone drone=null;
+	private static IARDrone drone = null;
+	
 
 	/**
 	 * The data as an observable list of Model.
 	 */
-//	private ObservableList<Model> modelData = FXCollections.observableArrayList();
+	// private ObservableList<Model> modelData =
+	// FXCollections.observableArrayList();
 
 	public MainApp() {
 		MainApp.model = new Model();
-//		modelData.add(model);
+		// modelData.add(model);
 	}
 
 	@Override
@@ -45,16 +47,17 @@ public class MainApp extends Application {
 		this.app = new App(model);
 		app.setDrone(drone);
 		app.boot();
-		
+
 		app.run();
-		this.cmt = new ChangeModelForTestingCockpitView("Change model test", model);
-		cmt.start();
+		// this.cmt = new ChangeModelForTestingCockpitView("Change model test",
+		// model);
+		// cmt.start();
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("QuadroMotionApp");
 
-		initRootLayout();
+		// initRootLayout();
 
-		showCockpipView();
+		// showCockpipView();
 	}
 
 	/**
@@ -88,10 +91,10 @@ public class MainApp extends Application {
 
 			// Set cockpit view into the center of root layout.
 			rootLayout.setCenter(cockpitView);
-			 // Give the controller access to the main app.
+			// Give the controller access to the main app.
 			controller = loader.getController();
-	        controller.setMainApp(this);
-	        controller.setModel(model);
+			controller.setMainApp(this);
+			controller.setModel(model);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

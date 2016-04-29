@@ -105,8 +105,6 @@ public class LeapMotion extends Observable implements IGestures {
 			}
 
 		}
-
-
 	}
 
 	@Override
