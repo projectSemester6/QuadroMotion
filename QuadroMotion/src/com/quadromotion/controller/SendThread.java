@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.quadromotion.model.Model;
-
+import com.quadromotion.navdata.*;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
@@ -23,6 +23,7 @@ public class SendThread extends Thread implements Observer {
 	private Model model = null;
 	private Model m = null;
 	private ARDroneCommander droneCommander = null;
+	private NavDataController ndc = null;
 
 	// private IARDrone drone = null;
 	// private CommandManager cmd = null;
@@ -59,6 +60,7 @@ public class SendThread extends Thread implements Observer {
 		this.m = new Model();
 		// this.drone = drone;
 		this.droneCommander = new ARDroneCommander(drone);
+		this.ndc = new NavDataController(drone);
 		model.addObserver(this);
 	}
 
