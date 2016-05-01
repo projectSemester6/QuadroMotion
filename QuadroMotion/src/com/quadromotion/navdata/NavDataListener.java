@@ -1,14 +1,16 @@
 package com.quadromotion.navdata;
 
+import com.quadromotion.model.Model;
+
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.navdata.Altitude;
 import de.yadrone.base.navdata.AltitudeListener;
 import de.yadrone.base.navdata.AttitudeListener;
 import de.yadrone.base.navdata.BatteryListener;
 
-public class NavDataController {
+public class NavDataListener {
 
-	public NavDataController(IARDrone drone) {
+	public NavDataListener(IARDrone drone, Model model) {
 
 		/**
 		 * Attitude Listener
@@ -33,6 +35,7 @@ public class NavDataController {
 
 			public void batteryLevelChanged(int percentage) {
 				System.out.println("Battery: " + percentage + " %");
+				model.setBatLevel(percentage);
 			}
 
 			public void voltageChanged(int vbat_raw) {
@@ -46,6 +49,7 @@ public class NavDataController {
 		drone.getNavDataManager().addAltitudeListener(new AltitudeListener() {
 			public void receivedAltitude(int altitude) {
 				System.out.println("Altitude: " + altitude);
+				model.setAltitude(altitude);
 			}
 
 			public void receivedExtendedAltitude(Altitude d) {

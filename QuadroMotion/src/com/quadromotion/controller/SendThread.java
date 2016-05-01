@@ -8,6 +8,8 @@ import com.quadromotion.navdata.*;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
+import javafx.beans.binding.Bindings;
+import javafx.scene.control.Label;
 
 /**
  * This class sends the latest commands permanently to the drone
@@ -19,14 +21,11 @@ public class SendThread extends Thread implements Observer {
 
 	private static final int SLEEP = 200;
 	private String threadName;
+	private Label state;
 
 	private Model model = null;
 	private Model m = null;
 	private ARDroneCommander droneCommander = null;
-	private NavDataController ndc = null;
-
-	// private IARDrone drone = null;
-	// private CommandManager cmd = null;
 
 	/**
 	 * Constructor I
@@ -41,6 +40,7 @@ public class SendThread extends Thread implements Observer {
 		this.model = model;
 		this.m = new Model();
 		this.droneCommander = new ARDroneCommander();
+
 		model.addObserver(this);
 	}
 
@@ -58,48 +58,52 @@ public class SendThread extends Thread implements Observer {
 		this.threadName = threadName;
 		this.model = model;
 		this.m = new Model();
-		// this.drone = drone;
 		this.droneCommander = new ARDroneCommander(drone);
-		this.ndc = new NavDataController(drone);
+		new NavDataListener(drone, model);
 		model.addObserver(this);
 	}
 
 	@Override
 	public void run() {
 		System.out.println("Ich bin der Thread " + threadName);
-//		int c = 0;
-//		long startTime = System.currentTimeMillis();
+		// int c = 0;
+		// long startTime = System.currentTimeMillis();
 		droneCommander.animateLEDs();
-//		do {
-////			c++;
-////			System.out.println(c + "er Durchlauf");
-////			System.out.println("Zeit seit start: " + (System.currentTimeMillis() - startTime));
-//			sendCommand();
-////			yield();
-//			try {
-//				Thread.sleep(SLEEP);
-//			}
-//
-//			catch (InterruptedException ie) {
-//				System.out.println("Thread " + threadName + " interrupted...");
-//			}
-//		} while (!this.isInterrupted());
+		do {
+			// sendCommandProperty();
+			//// c++;
+			//// System.out.println(c + "er Durchlauf");
+			//// System.out.println("Zeit seit start: " +
+			// (System.currentTimeMillis() - startTime));
+			// sendCommand();
+			//// yield();
+			try {
+				Thread.sleep(SLEEP);
+			}
+
+			catch (InterruptedException ie) {
+				System.out.println("Thread " + threadName + " interrupted...");
+			}
+		} while (!this.isInterrupted());
 
 	}
 
 	/**
 	 * sends the commands to the droneCommander
 	 */
-	private synchronized void sendCommand() {
+	private synchronized void sendCommand(Model m) {
 		// TODO FinaleStateMachine
 
-		System.out.println("\nSender: " + model.getState());
-		
+		if (model.getPrevState() != model.getState()){
+			System.out.println("\nSender: " + model.getState());
+			model.setPrevState(model.getState());
+		}
+
 		switch (model.getState()) {
 		case "init":
 			break;
 		case "ready":
-//			droneCommander.animateLEDs();
+			// droneCommander.animateLEDs();
 			break;
 		case "takingOff":
 			droneCommander.takeOff();
@@ -108,8 +112,8 @@ public class SendThread extends Thread implements Observer {
 			droneCommander.hover();
 			break;
 		case "flying":
-			droneCommander.moveDrone(m.getSpeedX(),m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
-			
+			droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
+
 			System.out.println(m.getSpeedX());
 			System.out.println(m.getSpeedY());
 			System.out.println(m.getSpeedZ());
@@ -128,6 +132,6 @@ public class SendThread extends Thread implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		m = (Model) o;
-		 sendCommand();
+		sendCommand((Model) o);
 	}
 }

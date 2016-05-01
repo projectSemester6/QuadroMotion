@@ -1,9 +1,6 @@
 package com.quadromotion.model;
 
 import java.util.Observable;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.SimpleFloatProperty;
-
 /**
  * This class holds the data
  * 
@@ -24,8 +21,11 @@ public class Model extends Observable {
 	private boolean isConnected;
 	private boolean isTakingOff;
 	private boolean isLanding;
-	
+	private float batLevel;
+	private float altitude;
+
 	private String state = "init";
+	private String prevState;
 
 	/**
 	 * Constructor
@@ -43,6 +43,9 @@ public class Model extends Observable {
 		this.isFlying = false;
 		this.isHovering = false;
 		this.isConnected = false;
+//		this.batLevel = new SimpleFloatProperty();
+//		this.altutude = new SimpleFloatProperty();
+//		this.status = new SimpleFloatProperty();
 	}
 
 	public float getSpeedX() {
@@ -199,5 +202,37 @@ public class Model extends Observable {
 			setChanged();
 			notifyObservers(state);
 		}
+	}
+	
+	public float getBatLevel() {
+		return batLevel;
+	}
+
+	public void setBatLevel(float value) {
+		this.batLevel = value;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(value);
+		}
+	}
+	
+	public float getAltitude() {
+		return altitude;
+	}
+
+	public void setAltitude(float value) {
+		this.altitude = value;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(value);
+		}
+	}
+
+	public String getPrevState() {
+		return prevState;
+	}
+
+	public void setPrevState(String prevState) {
+		this.prevState = prevState;
 	}
 }

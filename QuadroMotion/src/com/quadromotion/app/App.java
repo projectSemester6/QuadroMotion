@@ -36,6 +36,7 @@ public class App {
 	public void run() {
 		sender.start();
 		drone.start();
+		sender.setPriority(Thread.MAX_PRIORITY);
 	}
 
 	public void cleanup() {

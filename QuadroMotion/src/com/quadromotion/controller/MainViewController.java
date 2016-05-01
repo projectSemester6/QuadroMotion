@@ -2,12 +2,12 @@ package com.quadromotion.controller;
 
 import com.quadromotion.gestures.KeyBoardCommands;
 import com.quadromotion.model.Model;
-import com.quadromotion.view.ConsolView;
+import com.quadromotion.view.MainView;
 
-public class ConsolViewController {
+public class MainViewController {
 
 	private Model model = null;
-	private ConsolView consolView = null;
+	private MainView consolView = null;
 
 	/**
 	 * Constructor I
@@ -17,10 +17,10 @@ public class ConsolViewController {
 	 * @param consolView
 	 *            the view
 	 */
-	public ConsolViewController() {
+	public MainViewController() {
 
 		this.model = new Model();
-		this.consolView = new ConsolView(model);
+		this.consolView = new MainView(model);
 	}
 
 	/**
@@ -31,10 +31,10 @@ public class ConsolViewController {
 	 * @param consolView
 	 *            the view
 	 */
-	public ConsolViewController(Model model) {
+	public MainViewController(Model model) {
 
 		this.setModel(model);
-		this.consolView = new ConsolView(model);
+		this.consolView = new MainView(model);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class ConsolViewController {
 	 * @param consolView
 	 *            the view
 	 */
-	public ConsolViewController(Model model, ConsolView consolView) {
+	public MainViewController(Model model, MainView consolView) {
 		this.model = model;
 		this.consolView = consolView;
 	}
@@ -90,11 +90,11 @@ public class ConsolViewController {
 		this.model = model;
 	}
 
-	public ConsolView getView() {
+	public MainView getView() {
 		return consolView;
 	}
 
-	public void setView(ConsolView view) {
+	public void setView(MainView view) {
 		this.consolView = view;
 	}
 }
