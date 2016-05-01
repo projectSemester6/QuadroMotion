@@ -217,6 +217,7 @@ public class Model extends Observable {
 	}
 	
 	public float getAltitude() {
+		
 		return altitude;
 	}
 
@@ -234,5 +235,9 @@ public class Model extends Observable {
 
 	public void setPrevState(String prevState) {
 		this.prevState = prevState;
+	}
+	
+	public String toString(float value){
+		return String.valueOf(value);
 	}
 }

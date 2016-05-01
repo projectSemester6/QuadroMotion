@@ -4,7 +4,7 @@ import com.quadromotion.controller.ARDroneCommander;
 import com.quadromotion.model.Model;
 import com.quadromotion.util.Util;
 
-public class ChangeModelForTestingCockpitView extends Thread {
+public class ChangeModel extends Thread {
 
 	private String threadName;
 	private Model model;
@@ -13,7 +13,7 @@ public class ChangeModelForTestingCockpitView extends Thread {
 	private Util util = null;
 	private long sleep = 100;
 
-	public ChangeModelForTestingCockpitView(String threadName, Model model) {
+	public ChangeModel(String threadName, Model model) {
 		this.threadName = threadName;
 		this.model = model;
 		this.util = new Util();
@@ -29,45 +29,6 @@ public class ChangeModelForTestingCockpitView extends Thread {
 		while (true) {
 			long startTimeLoop = System.currentTimeMillis();
 
-//			for (i = -100; i <= 100; i += 10) {
-//				long startTimeLoop = System.currentTimeMillis();
-//				model.setSpeedX(i);
-//				model.setSpeedY(i);
-//				model.setSpeedZ(i);
-//				model.setSpeedSpin(i);
-//				// System.out.println("speed up:\t" + i);
-//				// System.out.println("");
-//				try {
-//					Thread.sleep(sleep);
-//				}
-//
-//				catch (InterruptedException ie) {
-//					System.out.println("Thread " + threadName + " interrupted...");
-//				}
-//				loop1 = (System.currentTimeMillis() - startTimeLoop);
-//			}
-
-//			for (i = 100; i >= -100; i -= 10) {
-//				long startTimeLoop = System.currentTimeMillis();
-//				model.setSpeedX(i);
-//				model.setSpeedY(i);
-//				model.setSpeedZ(i);
-//				model.setSpeedSpin(i);
-//				// System.out.println("speed down:\t" + i);
-//				// System.out.println("speed y:\t"+i);
-//				// System.out.println("speed z:\t"+i);
-//				// System.out.println("speed spin:\t"+i);
-//				// System.out.println("");
-//				try {
-//					Thread.sleep(sleep);
-//				}
-//
-//				catch (InterruptedException ie) {
-//					System.out.println("Thread " + threadName + " interrupted...");
-//				}
-//				loop2 = (System.currentTimeMillis() - startTimeLoop);
-//			}
-
 			float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 			float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 			float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
@@ -76,14 +37,30 @@ public class ChangeModelForTestingCockpitView extends Thread {
 			model.setSpeedY(ny);
 			model.setSpeedZ(nz);
 			model.setSpeedSpin(nspin);
-			model.setBatLevel(nx);
-			model.setAltitude(ny);
+			model.setBatLevel(util.limit(util.randomWithRange(0, 100), 0, 100));
+			model.setAltitude(util.limit(util.randomWithRange(0, 1500), 0, 1500));
+
+			if (i >= 60)
+				i = 0;
+			else if (i >= 50)
+				model.setState("landing");
+			else if (i >= 40)
+				model.setState("flying");
+			else if (i >= 30)
+				model.setState("hovering");
+			else if (i >= 20)
+				model.setState("takingOff");
+			else if (i >= 10)
+				model.setState("ready");
+			else
+				model.setState("init");
+			i++;
 			loop1 = (System.currentTimeMillis() - startTimeLoop);
 
-			if (loop1 >= (sleep + (sleep*0.1)))
+			if (loop1 >= (sleep + (sleep * 0.1)))
 				System.out.println("Dauer: " + loop1);
-//			if (loop2 >= sleep + 10)
-//				System.out.println("loop2: " + loop2);
+			// if (loop2 >= sleep + 10)
+			// System.out.println("loop2: " + loop2);
 			// System.out.println("speed x:\t"+i);
 			// System.out.println("speed y:\t"+ny);
 			// System.out.println("speed z:\t"+nz);

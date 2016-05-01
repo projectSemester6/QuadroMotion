@@ -7,7 +7,7 @@ import com.quadromotion.app.App;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
-import com.quadromotion.testing.ChangeModelForTestingCockpitView;
+import com.quadromotion.testing.ChangeModel;
 import com.quadromotion.util.Util;
 import com.quadromotion.view.CockpitViewController;
 
@@ -37,7 +37,7 @@ public class MainApp extends Application {
 	private static Controller leapController = null;
 	private static LeapMotion leap = null;
 
-	private static ChangeModelForTestingCockpitView cmt;
+	private static ChangeModel cmt;
 
 	/**
 	 * The data as an observable list of Model.
@@ -61,7 +61,7 @@ public class MainApp extends Application {
 		// app.boot();
 		// app.run();
 		
-		 this.cmt = new ChangeModelForTestingCockpitView("Change model test",
+		 this.cmt = new ChangeModel("Change model test",
 		 model);
 		 cmt.setPriority(Thread.MAX_PRIORITY);
 		 cmt.start();

@@ -6,7 +6,7 @@ import com.quadromotion.controller.SendThread;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
-import com.quadromotion.testing.ChangeModelForTestingCockpitView;
+import com.quadromotion.testing.ChangeModel;
 import com.quadromotion.view.CockpitViewController;
 import com.quadromotion.view.MainView;
 
@@ -21,7 +21,7 @@ import de.yadrone.base.IARDrone;
  */
 public class QuadroMotionMain {
 
-	private App app = null;
+	private static App app = null;
 	private static Model model = null;
 	private static IARDrone drone = null;
 	private static SendThread sender = null;
@@ -33,25 +33,23 @@ public class QuadroMotionMain {
 	private static MainViewController c = null;
 	private static MainView view = null;
 
-	private static ChangeModelForTestingCockpitView cmt;
+	private static ChangeModel cmt;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		model = new Model();
-		service = new Services(model);
-		leap = new LeapMotion(service);
-		leapController = new Controller(leap);
-		c = new MainViewController(model);
-		cmt = new ChangeModelForTestingCockpitView("bla", model);
-		drone = new ARDrone();
-		sender = new SendThread("sender", model, drone);
-		view = c.getView();
+		app = new App();
+		model =app.getModel();
+//		service = app.getService();
+//		leap = app.getLeapMotion();
+//		leapController = new Controller(leap);
 		
-		c.showView();
-		cmt.start();
-		sender.start();
+		cmt = new ChangeModel("bla", model);
+		drone = app.getDrone();
+		sender = app.getSender();
+		
 		try{
-			drone.start();
+			app.boot();
+			app.run();
 			System.in.read();
 		}
 		catch (Exception exc)
@@ -61,9 +59,8 @@ public class QuadroMotionMain {
 		}
 		finally
 		{
-			if (drone != null)
-				drone.stop();
-
+			app.cleanup();
+			drone.stop();
 			System.exit(0);
 		}
 	}

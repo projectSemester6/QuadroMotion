@@ -1,26 +1,29 @@
 package com.quadromotion.controller;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.quadromotion.gestures.KeyBoardCommands;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.MainView;
 
-public class MainViewController {
+public class MainViewController{
 
 	private Model model = null;
-	private MainView consolView = null;
+	private MainView mainView = null;
 
 	/**
 	 * Constructor I
 	 * 
 	 * @param model
 	 *            the model
-	 * @param consolView
+	 * @param mainView
 	 *            the view
 	 */
 	public MainViewController() {
 
 		this.model = new Model();
-		this.consolView = new MainView(model);
+		this.mainView = new MainView(model);
 	}
 
 	/**
@@ -28,26 +31,13 @@ public class MainViewController {
 	 * 
 	 * @param model
 	 *            the model
-	 * @param consolView
+	 * @param mainView
 	 *            the view
 	 */
 	public MainViewController(Model model) {
 
 		this.setModel(model);
-		this.consolView = new MainView(model);
-	}
-
-	/**
-	 * Constructor III
-	 * 
-	 * @param model
-	 *            the model
-	 * @param consolView
-	 *            the view
-	 */
-	public MainViewController(Model model, MainView consolView) {
-		this.model = model;
-		this.consolView = consolView;
+		this.mainView = new MainView(model);
 	}
 
 	public void setSpeedX(int speed) {
@@ -79,7 +69,7 @@ public class MainViewController {
 	}
 
 	public void showView() {
-		consolView.setVisible(true);
+		mainView.setVisible(true);
 	}
 
 	public Model getModel() {
@@ -91,10 +81,10 @@ public class MainViewController {
 	}
 
 	public MainView getView() {
-		return consolView;
+		return mainView;
 	}
 
 	public void setView(MainView view) {
-		this.consolView = view;
+		this.mainView = view;
 	}
 }
