@@ -20,23 +20,18 @@ import de.yadrone.base.IARDrone;
  */
 public class App {
 
-	private static QuadroMotionMain qmm = null;
-	private static Model model = null;
+	private Model model = null;
 	private static SendThread sender = null;
 	private static IARDrone drone = null;
 	private static Controller leapController = null;
 	private static LeapMotion leap = null;
 	private static Services service = null;
 
-	private MainViewController c = null;
+	private MainViewController viewController = null;
 	private MainView view = null;
 
 	public App() {
-		this(new Model());
-	}
-
-	public App(Model model) {
-		this.model = model;
+		this.model = new Model();
 	}
 
 	public void boot() {
@@ -48,38 +43,36 @@ public class App {
 	private void initLeap() {
 		service = new Services(model);
 		leap = new LeapMotion(service);
-		leapController = new Controller(leap);
+		setLeapController(new Controller(leap));
 	}
 
 	private void initView() {
-		c = new MainViewController(model);
-		view = c.getView();
+		viewController = new MainViewController(model);
+		setView(viewController.getView());
 	}
 
 	private void initDrone() {
 		drone = new ARDrone();
 		sender = new SendThread("Sender", model, drone);
-	
 	}
 
 	public void run() {
-		sender.start();
 		drone.start();
-		sender.setPriority(Thread.MAX_PRIORITY);
-		this.c.showView();
+		sender.start();
+//		sender.setPriority(Thread.MAX_PRIORITY);
+		viewController.showView();
 	}
 
 	public void cleanup() {
 		if (model != null)
 			model = null;
-		
+
 		if (drone != null)
 			drone.stop();
 	}
 
 	public void setDrone(IARDrone drone) {
-		// TODO Auto-generated method stub
-		this.drone = drone;
+		App.drone = drone;
 	}
 
 	public Model getModel() {
@@ -102,7 +95,19 @@ public class App {
 		return leap;
 	}
 
-	public void setQuadroMotionMain(QuadroMotionMain qmm) {
-		this.qmm = qmm;
+	public MainView getView() {
+		return view;
+	}
+
+	public void setView(MainView view) {
+		this.view = view;
+	}
+
+	public static Controller getLeapController() {
+		return leapController;
+	}
+
+	public static void setLeapController(Controller leapController) {
+		App.leapController = leapController;
 	}
 }

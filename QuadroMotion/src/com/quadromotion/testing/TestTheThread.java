@@ -24,10 +24,10 @@ public class TestTheThread {
 		IARDrone drone = null;
 		Model model = new Model();
 		try {
-		if (!MODE) {
-			System.out.println("MODE = false");
+			if (!MODE) {
+				System.out.println("MODE = false");
 				System.out.println("starte den " + st_name + "-Thread:");
-				SendThread st1 = new SendThread(st_name, model);
+				SendThread st1 = new SendThread(st_name, model, new ARDrone());
 
 				st1.start();
 				try {
@@ -53,10 +53,10 @@ public class TestTheThread {
 				System.out.println("next state: hovering");
 
 				model.setState("hovering");
-//				model.setSpeedX(10);
-//				model.setSpeedY(20);
-//				model.setSpeedZ(-70);
-//				model.setSpeedSpin(10);
+				// model.setSpeedX(10);
+				// model.setSpeedY(20);
+				// model.setSpeedZ(-70);
+				// model.setSpeedSpin(10);
 				try {
 					Thread.sleep(1000);
 				} catch (Exception ignore) {
@@ -110,8 +110,8 @@ public class TestTheThread {
 				} catch (Exception ignore) {
 
 				}
-		} else if (MODE) {
-			System.out.println("MODE = true");
+			} else if (MODE) {
+				System.out.println("MODE = true");
 				drone = new ARDrone();
 				// drone.addExceptionListener(new IExceptionListener() {
 				// public void exeptionOccurred(ARDroneException exc)
@@ -125,18 +125,6 @@ public class TestTheThread {
 				SendThread st1 = new SendThread(st_name, model, drone);
 
 				st1.start();
-				try {
-					Thread.sleep(5000);
-				} catch (Exception ignore) {
-
-				}
-				model.setTakeOffCommand(true);
-				try {
-					Thread.sleep(100);
-				} catch (Exception ignore) {
-
-				}
-				model.setTakeOffCommand(false);
 				try {
 					Thread.sleep(5000);
 				} catch (Exception ignore) {
@@ -160,13 +148,7 @@ public class TestTheThread {
 				} catch (Exception ignore) {
 
 				}
-				model.setLandingCommand(true);
-				try {
-					Thread.sleep(300);
-				} catch (Exception ignore) {
-
-				}
-				model.setLandingCommand(false);
+			
 				// try {
 				// Thread.sleep(2000);
 				// } catch (Exception ignore) {
@@ -175,20 +157,18 @@ public class TestTheThread {
 				// st1.interrupt();
 				// st1.stop();
 
-			
-		}
-		
-		
-		}//try
+			}
+
+		} // try
 		catch (Exception exc) {
 			exc.printStackTrace();
-		}// catch
+		} // catch
 		finally {
 			if (drone != null)
 				drone.stop();
 
 			System.exit(0);
-		}//finallly
-		
-	}//main
-}//class
+		} // finallly
+
+	}// main
+}// class

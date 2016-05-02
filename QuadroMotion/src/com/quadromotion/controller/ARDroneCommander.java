@@ -104,7 +104,7 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * sends the landing command
 	 */
 	public void landing() {
-		cmd.landing().doFor(5000);
+		cmd.landing();
 	}
 
 	/**

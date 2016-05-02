@@ -1,15 +1,8 @@
 package com.quadromotion.model;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import com.quadromotion.app.App;
-import com.quadromotion.app.QuadroMotionMain;
 import com.quadromotion.config.OffsetConfig;
-import com.quadromotion.gestures.Gestures;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.AngleToSpeedConverter;
-import com.quadromotion.model.*;
 
 public class Services {
 
@@ -20,13 +13,8 @@ public class Services {
 
 	private Model model = null;
 
-	private String state = "init";
-
 	private long startTime = 0;
 	private long startStateTime = 0;
-
-	private final int TAKE_OFF_DELAY = 2000;
-	private long timeUntilTakeOff = 0;
 
 	public Services(Model model) {
 
@@ -45,14 +33,19 @@ public class Services {
 
 	public void ServicesGesturesConfig_1(LeapMotion leap) {
 
-		float speedY = convertY.expConverter(leap.getPitchRightHand());
 		float speedX = convertX.expConverter(leap.getRollRightHand());
+		float speedY = convertY.expConverter(leap.getPitchRightHand());
 		float speedZ = convertZ.expConverter(leap.getPitchLeftHand());
 		float speedSpin = convertSpin.expConverter(leap.getRollLeftHand());
-		float takeOffCommand = leap.getYawRightHand();
+		float takeOffGesture = leap.getYawRightHand();
 		int countHands = leap.getAnzahlHaenden();
+		float landingGesture = leap.getYawLeftHand();
 
-		print("Service: " + model.getState());
+		fsm(speedX, speedY, speedZ, speedSpin, takeOffGesture, landingGesture, countHands);
+	}
+
+	private void fsm(float speedX, float speedY, float speedZ, float speedSpin, float takeOffGesture,
+			float landingGesture, int countHands) {
 
 		switch (model.getState()) {
 		case "init":
@@ -62,38 +55,32 @@ public class Services {
 		case "ready":
 			if (countHands < 2)
 				model.setState("init");
-			if (model.getLandingCommand())
-				model.setLandingCommand(false);
 
-			if (takeOffCommand < -35) {
+			if (takeOffGesture < -35) {
 				if (startTime == 0)
 					startTime = System.currentTimeMillis();
-				timeUntilTakeOff = TAKE_OFF_DELAY - (System.currentTimeMillis() - startTime);
-				if (timeUntilTakeOff <= 0) {
-					print("next state is: takingOff\n");
+				model.setTimeUntilTakeOff((int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTime)));
+				if (model.getTimeUntilTakeOff() <= 0) {
 					model.setState("takingOff");
 				}
-			} else if (takeOffCommand >= -35) {
-				timeUntilTakeOff = TAKE_OFF_DELAY;
+			} else if (takeOffGesture >= -35) {
+				model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
 				startTime = 0;
 			}
 
-			print("time until take off: " + String.valueOf(timeUntilTakeOff));
 			break;
 
 		case "takingOff":
 			startTime = 0;
-			if (!model.getTakeOffCommand())
-				model.setTakeOffCommand(true);
-			if (takeOffCommand > -10)
+			model.setState("waitingTakeOff");
+			break;
+		case "waitingTakeOff":
+			if (takeOffGesture > -10 && model.getAltitude() > 0)
 				model.setState("hovering");
 			break;
-
 		case "hovering":
 
-			model.setHoverCommand(true);
-
-			if (leap.getYawLeftHand() > 35) {
+			if (landingGesture > 35) {
 				model.setState("landing");
 				break;
 			}
@@ -105,68 +92,62 @@ public class Services {
 
 			break;
 		case "flying":
-			if (countHands < 2) {
-				model.setState("hovering");
-				break;
-			}
-
-			if (leap.getYawLeftHand() > 35) {
+			if (landingGesture > 35) {
 				model.setState("landing");
 				break;
 			}
 			
+			if (countHands < 2) {
+				model.setState("hovering");
+				model.setSpeedX(0);
+				model.setSpeedY(0);
+				model.setSpeedZ(0);
+				model.setSpeedSpin(0);
+				break;
+			}
+
 			model.setSpeedX(-speedX);
 			model.setSpeedY(-speedY);
 			model.setSpeedZ(-speedZ);
 			model.setSpeedSpin(-speedSpin);
-			
+
 			break;
 		case "landing":
-//			model.setLandingCommand(true);
-//			model.setState("ready");
+			model.setState("waitingLanding");
+			break;
+		case "waitingLanding":
+			if (model.getAltitude() <= 10)
+				model.setState("ready");
 			break;
 		default:
 			break;
 		}
 	}
 
-	public void print(String input) {
-		System.out.println(input);
-	}
-
 	public void ServicesGesturesConfig_2(LeapMotion leap) { // l'inverse de la
 															// config_1
+		float speedX = convertX.expConverter(leap.getRollLeftHand());
+		float speedY = convertY.expConverter(leap.getPitchLeftHand());
+		float speedZ = convertZ.expConverter(leap.getPitchRightHand());
+		float speedSpin = convertSpin.expConverter(leap.getRollRightHand());
+		float takeOffGesture = leap.getYawRightHand();
+		float landingGesture = leap.getYawLeftHand();
+		int countHands = leap.getAnzahlHaenden();
 
-		model.setSpeedX(convertX.expConverter(leap.getPitchLeftHand()));
-		model.setSpeedY(convertY.expConverter(leap.getRollLeftHand()));
-		model.setSpeedZ(convertZ.HeavySideConverter(leap.getYawRightHand()));
-		model.setSpeedSpin(convertSpin.linearConverter(leap.getRollRightHand()));
-
-		if ((model.getTakeOffCommand() == false) && (model.isFlying() == false) && (leap.getYawLeftHand() < 35)) {
-			model.setTakeOffCommand(true);
-		}
-		if ((model.getLandingCommand() == false) && (model.isFlying() == true) && (leap.getYawRightHand() < -35)) {
-			model.setLandingCommand(true);
-		}
+		fsm(speedX, speedY, speedZ, speedSpin, takeOffGesture, landingGesture, countHands);
 
 	}
 
 	public void ServicesGesturesConfig_3(LeapMotion leap) {
-
-		model.setSpeedX(convertX.expConverter(leap.getPitchRightHand()));
-		model.setSpeedY(convertY.expConverter(leap.getRollLeftHand()));
-		model.setSpeedZ(convertZ.HeavySideConverter(leap.getYawLeftHand()));
-		model.setSpeedSpin(convertSpin.linearConverter(leap.getRollRightHand()));
-
-		if ((model.getTakeOffCommand() == false) && (model.isFlying() == false) && (leap.getYawRightHand() < -35)) {
-			model.setTakeOffCommand(true);
-		}
-		if ((model.getLandingCommand() == false) && (model.isFlying() == true) && (leap.getYawLeftHand() < 35)) {
-			model.setLandingCommand(true);
-		}
-	}
-
-	private void updateModel(LeapMotion l) {
+		// TODO à definir!!!
+		float speedX = convertX.expConverter(leap.getRollLeftHand());
+		float speedY = convertY.expConverter(leap.getPitchLeftHand());
+		float speedZ = convertZ.expConverter(leap.getPitchRightHand());
+		float speedSpin = convertSpin.expConverter(leap.getRollRightHand());
+		float takeOffGesture = leap.getYawRightHand();
+		float landingGesture = leap.getYawLeftHand();
+		int countHands = leap.getAnzahlHaenden();
+		fsm(speedX, speedY, speedZ, speedSpin, takeOffGesture, landingGesture, countHands);
 
 	}
 }

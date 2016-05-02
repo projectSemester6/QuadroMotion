@@ -1,6 +1,5 @@
 package com.quadromotion.testing;
 
-import com.quadromotion.controller.ARDroneCommander;
 import com.quadromotion.model.Model;
 import com.quadromotion.util.Util;
 
@@ -11,7 +10,7 @@ public class ChangeModel extends Thread {
 	private final float minLimit = -50f;
 	private final float maxLimit = 50f;
 	private Util util = null;
-	private long sleep = 100;
+	private long sleep = 500;
 
 	public ChangeModel(String threadName, Model model) {
 		this.threadName = threadName;
@@ -19,54 +18,105 @@ public class ChangeModel extends Thread {
 		this.util = new Util();
 	}
 
-	int i;
+	int i = 0;
 	long loop1 = 0;
 	long loop2 = 0;
 
+	int time = 10;
+
 	@Override
 	public void run() {
-		model.setTakeOffCommand(true);
 		while (true) {
 			long startTimeLoop = System.currentTimeMillis();
 
-			float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			float nspin = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
-			model.setSpeedX(nx);
-			model.setSpeedY(ny);
-			model.setSpeedZ(nz);
-			model.setSpeedSpin(nspin);
-			model.setBatLevel(util.limit(util.randomWithRange(0, 100), 0, 100));
-			model.setAltitude(util.limit(util.randomWithRange(0, 1500), 0, 1500));
-
-			if (i >= 60)
-				i = 0;
-			else if (i >= 50)
-				model.setState("landing");
-			else if (i >= 40)
-				model.setState("flying");
-			else if (i >= 30)
-				model.setState("hovering");
-			else if (i >= 20)
-				model.setState("takingOff");
-			else if (i >= 10)
-				model.setState("ready");
-			else
+			switch (i) {
+			case 0:
 				model.setState("init");
-			i++;
+				model.setBatLevel(util.limit(util.randomWithRange(0, 100), 0, 100));
+				time--;
+				if (time == 0) {
+					time = 10;
+					i = 1;
+				}
+				break;
+			case 1:
+				model.setState("ready");
+
+				for (int j = 2000; j >= 0; j--) {
+					
+					try {
+						model.setTimeUntilTakeOff(j);
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				i = 2;
+
+				break;
+			case 2:
+				model.setState("takingOff");
+				model.setState("waitingTakeOff");
+				for (int j = 0; j <= 100; j++) {
+					model.setAltitude(j);
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				i = 3;
+				break;
+			case 3:
+				model.setState("hovering");
+				i = 4;
+				if (time == 0){
+					i = 5;
+					time = 10;
+					break;
+				}
+				time--;
+				
+				break;
+			case 4:
+				model.setState("flying");
+				float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+				float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+				float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+				float nspin = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
+
+				model.setSpeedX(nx);
+				model.setSpeedY(ny);
+				model.setSpeedZ(nz);
+				model.setSpeedSpin(nspin);
+
+				if (time == 0)
+					i = 5;
+				time--;
+				break;
+			case 5:
+				model.setState("landing");
+				model.setState("waitingLanding");
+				for (int j = 100; j >= 0; j--) {
+					model.setAltitude(j);
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				i = 0;
+				time = 5;
+				break;
+			default:
+				break;
+			}
+
 			loop1 = (System.currentTimeMillis() - startTimeLoop);
 
 			if (loop1 >= (sleep + (sleep * 0.1)))
 				System.out.println("Dauer: " + loop1);
-			// if (loop2 >= sleep + 10)
-			// System.out.println("loop2: " + loop2);
-			// System.out.println("speed x:\t"+i);
-			// System.out.println("speed y:\t"+ny);
-			// System.out.println("speed z:\t"+nz);
-			// System.out.println("speed spin:\t"+nspin);
-			// System.out.println("");
-			// yield();
+
 			try {
 				Thread.sleep(sleep);
 			}

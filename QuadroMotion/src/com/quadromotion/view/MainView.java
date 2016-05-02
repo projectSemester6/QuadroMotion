@@ -1,6 +1,5 @@
 package com.quadromotion.view;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,22 +12,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
-import com.quadromotion.controller.MainViewController;
+
 import com.quadromotion.model.Model;
 
 public class MainView extends JFrame implements Observer {
 
-	private int speed = 15;
-	private final int ZERO = 0;
-	private Model model;
-	private MainViewController controller;
-	private Object gestures;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8860617118897090898L;
 
-	JProgressBar batteryLevel;
-	JLabel speedX;
-	JLabel speedY;
-	JLabel speedZ;
-	JLabel speedSpin;
+	private Model model;
+
+	JProgressBar batteryLevelValue;
+	JLabel speedXValue;
+	JLabel speedYValue;
+	JLabel speedZValue;
+	JLabel speedSpinValue;
+	JLabel altitudeLabel;
+	JLabel altitudeValue;
+	JLabel timeUntilTakeOffLabel;
+	JLabel timeUntilTakeOffValue;
 
 	JRadioButton initState;
 	JRadioButton readyState;
@@ -36,20 +40,18 @@ public class MainView extends JFrame implements Observer {
 	JRadioButton hoveringState;
 	JRadioButton flyingState;
 	JRadioButton landingState;
-	
-	JLabel altitudeLabel;
-	JLabel altitudeValue;
 
 	/**
 	 * Constructor I
 	 * 
 	 * @param model
+	 * @param droneAttitude 
 	 */
 	public MainView(Model model) {
 
 		this.model = model;
 		this.model.addObserver(this);
-		
+
 		initGUI();
 	}
 
@@ -73,7 +75,7 @@ public class MainView extends JFrame implements Observer {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 2;
-		gbc.insets = new Insets(2, 2, 2, 2);
+//		gbc.insets = new Insets(2, 2, 2, 2);
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		panel.add(statePanel, gbc);
 
@@ -86,7 +88,7 @@ public class MainView extends JFrame implements Observer {
 		gbc.anchor = GridBagConstraints.WEST;
 		this.pack();
 
-		this.setVisible(true);
+		// this.setVisible(true);
 	}
 
 	public JPanel createStatePanel() {
@@ -110,6 +112,7 @@ public class MainView extends JFrame implements Observer {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
+		gbc.anchor = GridBagConstraints.WEST;
 		int i = 0;
 
 		gbc.gridx = 0;
@@ -148,16 +151,18 @@ public class MainView extends JFrame implements Observer {
 
 		JPanel panel = new JPanel();
 
-		speedX = new JLabel(model.toString(model.getSpeedX())+ "%");
-		speedY = new JLabel(model.toString(model.getSpeedY())+ "%");
-		speedZ = new JLabel(model.toString(model.getSpeedZ())+ "%");
-		speedSpin = new JLabel(model.toString(model.getSpeedSpin())+ "%");
-		batteryLevel = createProgressBar("Battery level:", (int) model.getBatLevel());
-		
+		speedXValue = new JLabel(model.toString(model.getSpeedX()) + " %");
+		speedYValue = new JLabel(model.toString(model.getSpeedY()) + " %");
+		speedZValue = new JLabel(model.toString(model.getSpeedZ()) + " %");
+		speedSpinValue = new JLabel(model.toString(model.getSpeedSpin()) + " %");
+		batteryLevelValue = createProgressBar("Battery level:", (int) model.getBatLevel());
+
 		altitudeLabel = new JLabel("Höhe: ");
 		altitudeValue = new JLabel("0 mm");
 
-		JLabel DroneDataLabel = new JLabel("Drone Data");
+		timeUntilTakeOffLabel = new JLabel("Zeit bis Start:");
+		timeUntilTakeOffValue = new JLabel(String.valueOf(model.getTimeUntilTakeOff()) + " ms");
+
 		JLabel emptySpaceLabel = new JLabel(" ");
 		JLabel speedXLabel = new JLabel("Speed X:");
 		JLabel speedYLabel = new JLabel("Speed Y:");
@@ -168,72 +173,90 @@ public class MainView extends JFrame implements Observer {
 		panel.setLayout(new GridBagLayout());
 
 		GridBagConstraints gbc = new GridBagConstraints();
-
+		gbc.anchor = GridBagConstraints.WEST;
 		int i = 0;
 
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(speedXLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
-		panel.add(speedX, gbc);
+		panel.add(speedXValue, gbc);
 
 		i++;
-
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(speedYLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
-		panel.add(speedY, gbc);
+		panel.add(speedYValue, gbc);
 
 		i++;
-
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(speedZLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
-		panel.add(speedZ, gbc);
+		panel.add(speedZValue, gbc);
 
 		i++;
-
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(speedSpinLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
-		panel.add(speedSpin, gbc);
+		panel.add(speedSpinValue, gbc);
 
 		i++;
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(emptySpaceLabel, gbc);
 
 		i++;
-
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(batteryLevelLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
-		panel.add(batteryLevel, gbc);
+		panel.add(batteryLevelValue, gbc);
 
 		i++;
-
+		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = i;
 		panel.add(altitudeLabel, gbc);
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 1;
 		gbc.gridy = i;
 		panel.add(altitudeValue, gbc);
-		
+
+		i++;
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = i;
+		panel.add(timeUntilTakeOffLabel, gbc);
+
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.gridx = 1;
+		gbc.gridy = i;
+		panel.add(timeUntilTakeOffValue, gbc);
+
 		return panel;
 	}
 
@@ -241,8 +264,6 @@ public class MainView extends JFrame implements Observer {
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setValue(value);
 		progressBar.setStringPainted(true);
-		// Border border = BorderFactory.createTitledBorder(title);
-		// progressBar.setBorder(border);
 		return progressBar;
 	}
 
@@ -255,32 +276,37 @@ public class MainView extends JFrame implements Observer {
 		System.out.println(inputString);
 	}
 
-	public void setController(MainViewController controller) {
-		this.controller = controller;
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Elemente der View aktualisieren
 		Model m = (Model) o;
-		altitudeValue.setText(m.toString(m.getAltitude())+" mm");
-		batteryLevel.setValue((int) m.getBatLevel());
-		speedX.setText(m.toString(m.getSpeedX())+ " %");
-		speedY.setText(m.toString(m.getSpeedY())+ " %");
-		speedZ.setText(m.toString(m.getSpeedZ())+ " %");
-		speedSpin.setText(m.toString(m.getSpeedSpin())+ " %");
 		
+		speedXValue.setText(m.toString((int) m.getSpeedX()) + " %");
+		speedYValue.setText(m.toString((int) m.getSpeedY()) + " %");
+		speedZValue.setText(m.toString((int) m.getSpeedZ()) + " %");
+		speedSpinValue.setText(m.toString((int) m.getSpeedSpin()) + " %");
+		batteryLevelValue.setValue((int) m.getBatLevel());
+		altitudeValue.setText(m.getAltitudeString() + " mm");
+		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff())+ " ms");
+
 		initState.setSelected(checkState(m.getState(), "init"));
 		readyState.setSelected(checkState(m.getState(), "ready"));
-		takingOffState.setSelected(checkState(m.getState(), "takingOff"));
+		takingOffState.setSelected(checkState(m.getState(), "takingOff", "waitingTakeOff"));
 		hoveringState.setSelected(checkState(m.getState(), "hovering"));
 		flyingState.setSelected(checkState(m.getState(), "flying"));
-		landingState.setSelected(checkState(m.getState(), "landing"));
+		landingState.setSelected(checkState(m.getState(), "landing", "waitingLanding"));
 
 	}
+
+	private boolean checkState(String currentState, String state) {
+		if (currentState.equals(state))
+			return true;
+		return false;
+	}
 	
-	private boolean checkState(String currentState, String state){
-		if(currentState.equals(state)) return true;
-		return false; 
+	private boolean checkState(String currentState, String state1, String state2) {
+		if (currentState.equals(state1)||currentState.equals(state2))
+			return true;
+		return false;
 	}
 }
