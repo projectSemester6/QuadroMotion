@@ -1,7 +1,6 @@
 package com.quadromotion.app;
 
 import com.leapmotion.leap.Controller;
-import com.quadromotion.controller.MainViewController;
 import com.quadromotion.controller.SendThread;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
@@ -9,7 +8,6 @@ import com.quadromotion.model.Services;
 import com.quadromotion.view.MainView;
 import com.quadromotion.view.VideoListener;
 
-import de.yadrone.apps.tutorial.TutorialVideoListener;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
@@ -23,11 +21,11 @@ import de.yadrone.base.IARDrone;
 public class App {
 
 	private Model model = null;
-	private static SendThread sender = null;
-	private static IARDrone drone = null;
-	private static Controller leapController = null;
-	private static LeapMotion leap = null;
-	private static Services service = null;
+	private SendThread sender = null;
+	private IARDrone drone = null;
+	private Controller leapController = null;
+	private LeapMotion leap = null;
+	private Services service = null;
 
 	public App() {
 		this.model = new Model();
@@ -42,7 +40,8 @@ public class App {
 	private void initLeap() {
 		service = new Services(model);
 		leap = new LeapMotion(service);
-		setLeapController(new Controller(leap));
+		leapController = new Controller();
+		leapController.addListener(leap);
 	}
 
 	private void initView() {
@@ -66,45 +65,5 @@ public class App {
 
 		if (drone != null)
 			drone.stop();
-	}
-
-	public void setDrone(IARDrone drone) {
-		App.drone = drone;
-	}
-
-	public Model getModel() {
-		return model;
-	}
-
-	public IARDrone getDrone() {
-		return drone;
-	}
-
-	public SendThread getSender() {
-		return sender;
-	}
-
-	public Services getService() {
-		return service;
-	}
-
-	public LeapMotion getLeapMotion() {
-		return leap;
-	}
-
-	// public MainView getView() {
-	// return view;
-	// }
-	//
-	// public void setView(MainView view) {
-	// this.view = view;
-	// }
-
-	public static Controller getLeapController() {
-		return leapController;
-	}
-
-	public static void setLeapController(Controller leapController) {
-		App.leapController = leapController;
 	}
 }

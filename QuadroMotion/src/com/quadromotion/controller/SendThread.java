@@ -14,7 +14,6 @@ import de.yadrone.base.IARDrone;
  *
  */
 public class SendThread extends Thread implements Observer {
-	private String threadName;
 	private Model model = null;
 	private Model m = null;
 
@@ -34,12 +33,6 @@ public class SendThread extends Thread implements Observer {
 		this.droneCommander = new ARDroneCommander(drone);
 		new NavDataListener(drone, model);
 		this.model = model;
-		this.model.addObserver(this);
-	}
-
-	public SendThread(Model m2) {
-		// TODO Auto-generated constructor stub
-		this.model = m2;
 		this.model.addObserver(this);
 	}
 
