@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 
 import com.quadromotion.model.Model;
 
+import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
 public class MainView extends JFrame implements Observer {
@@ -44,12 +45,15 @@ public class MainView extends JFrame implements Observer {
 	JRadioButton flyingState;
 	JRadioButton landingState;
 
+	public MainView(Model m){
+		this(m, new ARDrone());
+	}
+	
 	/**
-	 * Constructor I
+	 * Constructor II
 	 * 
 	 * @param model
 	 * @param drone
-	 * @param droneAttitude
 	 */
 	public MainView(Model model, IARDrone drone) {
 
