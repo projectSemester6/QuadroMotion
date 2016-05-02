@@ -11,11 +11,6 @@ import com.quadromotion.model.Services;
 
 public class LeapMotion extends Listener implements IGestures {
 
-	public LeapMotion(Services s) {
-		super();
-		this.services = s;
-	}
-
 	private int anzahlHaenden = 0;
 
 	private float rechtPitch = 0;
@@ -31,6 +26,11 @@ public class LeapMotion extends Listener implements IGestures {
 	private float linkThrust = 0;
 
 	private Services services = null;
+	
+	public LeapMotion(Services s) {
+		super();
+		this.services = s;
+	}
 
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");

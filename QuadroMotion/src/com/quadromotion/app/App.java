@@ -36,6 +36,11 @@ public class App {
 		initDrone();
 		initView();
 	}
+	
+	public void run() {
+		drone.start();
+		sender.start();
+	}
 
 	private void initLeap() {
 		service = new Services(model);
@@ -52,11 +57,6 @@ public class App {
 	private void initDrone() {
 		drone = new ARDrone();
 		sender = new SendThread("Sender", model, drone);
-	}
-
-	public void run() {
-		drone.start();
-		sender.start();
 	}
 
 	public void cleanup() {
