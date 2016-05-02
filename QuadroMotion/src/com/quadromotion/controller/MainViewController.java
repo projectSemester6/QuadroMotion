@@ -20,7 +20,7 @@ public class MainViewController {
 	public MainViewController(Model model) {
 		
 		this.setModel(model);
-		this.mainView = new MainView(model);
+//		this.mainView = new MainView(model);
 	}
 
 	public void showView() {

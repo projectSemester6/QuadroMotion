@@ -7,7 +7,9 @@ import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
 import com.quadromotion.view.MainView;
+import com.quadromotion.view.VideoListener;
 
+import de.yadrone.apps.tutorial.TutorialVideoListener;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
@@ -27,9 +29,6 @@ public class App {
 	private static LeapMotion leap = null;
 	private static Services service = null;
 
-	private MainViewController viewController = null;
-	private MainView view = null;
-
 	public App() {
 		this.model = new Model();
 	}
@@ -47,9 +46,8 @@ public class App {
 	}
 
 	private void initView() {
-		viewController = new MainViewController(model);
-		setView(viewController.getView());
-		view.setDrone(drone);
+		new VideoListener(drone);
+		new MainView(model, drone);
 	}
 
 	private void initDrone() {
@@ -60,8 +58,6 @@ public class App {
 	public void run() {
 		drone.start();
 		sender.start();
-//		sender.setPriority(Thread.MAX_PRIORITY);
-		viewController.showView();
 	}
 
 	public void cleanup() {
@@ -96,13 +92,13 @@ public class App {
 		return leap;
 	}
 
-	public MainView getView() {
-		return view;
-	}
-
-	public void setView(MainView view) {
-		this.view = view;
-	}
+	// public MainView getView() {
+	// return view;
+	// }
+	//
+	// public void setView(MainView view) {
+	// this.view = view;
+	// }
 
 	public static Controller getLeapController() {
 		return leapController;

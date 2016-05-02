@@ -10,17 +10,26 @@ public class QuadroMotion {
 
 	private static App app = null;
 
-	public static void main(String[] args) {
+	public QuadroMotion() {
+		initialize();
+	}
+
+	private void initialize() {
 		try {
 			app = new App();
 			app.boot();
 			app.run();
-			System.in.read();
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
-		} finally {
+
 			app.cleanup();
-			System.exit(0);
+			System.exit(-1);
 		}
+
+	}
+
+	public static void main(String[] args) {
+		new QuadroMotion();
 	}
 }

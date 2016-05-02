@@ -27,8 +27,7 @@ public class MainView extends JFrame implements Observer {
 	private static final long serialVersionUID = 8860617118897090898L;
 
 	private Model model = null;
-	private IARDrone drone = null;
-
+	
 	JProgressBar batteryLevelValue;
 	JLabel speedXValue;
 	JLabel speedYValue;
@@ -50,9 +49,10 @@ public class MainView extends JFrame implements Observer {
 	 * Constructor I
 	 * 
 	 * @param model
+	 * @param drone 
 	 * @param droneAttitude 
 	 */
-	public MainView(Model model) {
+	public MainView(Model model, IARDrone drone) {
 
 		this.model = model;
 		this.model.addObserver(this);
@@ -107,7 +107,7 @@ addWindowListener(new WindowListener() {
 		gbc.anchor = GridBagConstraints.WEST;
 		this.pack();
 
-		// this.setVisible(true);
+		 this.setVisible(true);
 	}
 
 	public JPanel createStatePanel() {
@@ -327,9 +327,5 @@ addWindowListener(new WindowListener() {
 		if (currentState.equals(state1)||currentState.equals(state2))
 			return true;
 		return false;
-	}
-	
-	public void setDrone(IARDrone drone){
-		this.drone = drone;
 	}
 }
