@@ -2,7 +2,6 @@ package com.quadromotion.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Observable;
@@ -27,7 +26,7 @@ public class MainView extends JFrame implements Observer {
 	private static final long serialVersionUID = 8860617118897090898L;
 
 	private Model model = null;
-	
+
 	JProgressBar batteryLevelValue;
 	JLabel speedXValue;
 	JLabel speedYValue;
@@ -49,26 +48,38 @@ public class MainView extends JFrame implements Observer {
 	 * Constructor I
 	 * 
 	 * @param model
-	 * @param drone 
-	 * @param droneAttitude 
+	 * @param drone
+	 * @param droneAttitude
 	 */
 	public MainView(Model model, IARDrone drone) {
 
 		this.model = model;
 		this.model.addObserver(this);
 
-addWindowListener(new WindowListener() {
-			
-			public void windowOpened(WindowEvent e) { }
-			public void windowIconified(WindowEvent e) { }
-			public void windowDeiconified(WindowEvent e) { }
-			public void windowActivated(WindowEvent e) { }
-			public void windowDeactivated(WindowEvent e) { }
+		addWindowListener(new WindowListener() {
+
+			public void windowOpened(WindowEvent e) {
+			}
+
+			public void windowIconified(WindowEvent e) {
+			}
+
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			public void windowActivated(WindowEvent e) {
+			}
+
+			public void windowDeactivated(WindowEvent e) {
+			}
+
 			public void windowClosing(WindowEvent e) {
 				drone.stop();
 				System.exit(0);
 			}
-			public void windowClosed(WindowEvent e) { }
+
+			public void windowClosed(WindowEvent e) {
+			}
 		});
 		initGUI();
 	}
@@ -94,7 +105,7 @@ addWindowListener(new WindowListener() {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 2;
-//		gbc.insets = new Insets(2, 2, 2, 2);
+		// gbc.insets = new Insets(2, 2, 2, 2);
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		panel.add(statePanel, gbc);
 
@@ -107,7 +118,7 @@ addWindowListener(new WindowListener() {
 		gbc.anchor = GridBagConstraints.WEST;
 		this.pack();
 
-		 this.setVisible(true);
+		this.setVisible(true);
 	}
 
 	public JPanel createStatePanel() {
@@ -286,27 +297,17 @@ addWindowListener(new WindowListener() {
 		return progressBar;
 	}
 
-	/**
-	 * Prints a string to the console
-	 * 
-	 * @param inputString
-	 */
-	public void printToConsole(String inputString) {
-		System.out.println(inputString);
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Elemente der View aktualisieren
 		Model m = (Model) o;
-		
+
 		speedXValue.setText(m.toString((int) m.getSpeedX()) + " %");
 		speedYValue.setText(m.toString((int) m.getSpeedY()) + " %");
 		speedZValue.setText(m.toString((int) m.getSpeedZ()) + " %");
 		speedSpinValue.setText(m.toString((int) m.getSpeedSpin()) + " %");
 		batteryLevelValue.setValue((int) m.getBatLevel());
 		altitudeValue.setText(m.getAltitudeString() + " mm");
-		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff())+ " ms");
+		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
 
 		initState.setSelected(checkState(m.getState(), "init"));
 		readyState.setSelected(checkState(m.getState(), "ready"));
@@ -322,9 +323,9 @@ addWindowListener(new WindowListener() {
 			return true;
 		return false;
 	}
-	
+
 	private boolean checkState(String currentState, String state1, String state2) {
-		if (currentState.equals(state1)||currentState.equals(state2))
+		if (currentState.equals(state1) || currentState.equals(state2))
 			return true;
 		return false;
 	}

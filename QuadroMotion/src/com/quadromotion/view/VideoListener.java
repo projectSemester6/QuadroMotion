@@ -49,8 +49,6 @@ public class VideoListener extends JFrame {
 		// close the
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-//				drone.stop();
-//				System.exit(0);
 			}
 		});
 	}

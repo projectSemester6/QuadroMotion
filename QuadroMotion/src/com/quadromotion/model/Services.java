@@ -14,7 +14,6 @@ public class Services {
 	private Model model = null;
 
 	private long startTime = 0;
-	private long startStateTime = 0;
 
 	public Services(Model model) {
 
