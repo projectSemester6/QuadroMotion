@@ -1,4 +1,6 @@
-package com.quadromotion.app;
+package com.quadromotion;
+
+import com.quadromotion.app.App;
 
 /**
  * This class is the main entry of the QuadroMotion app
