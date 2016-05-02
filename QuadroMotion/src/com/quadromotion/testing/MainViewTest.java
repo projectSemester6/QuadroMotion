@@ -1,6 +1,7 @@
 package com.quadromotion.testing;
 
 import com.quadromotion.controller.MainViewController;
+import com.quadromotion.controller.SendThread;
 import com.quadromotion.model.Model;
 import com.quadromotion.view.MainView;
 
@@ -12,6 +13,8 @@ public class MainViewTest {
 		MainViewController c = new MainViewController(m);
 		MainView view = c.getView();
 		ChangeModel cm = new ChangeModel("cm",m);
+		SendThread sender = new SendThread(m);
+		sender.start();
 		c.showView();
 		cm.start();
 		try{

@@ -61,9 +61,9 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * move the drone in every direction
 	 * 
 	 * @param speedX
-	 *            the speed in direction X, can be positive (right) or negative (left)
+	 *            the speed in direction X, can be positive (forward) or negative (backward)
 	 * @param speedY
-	 *            the speed in direction Y, can be positive (forward) or negative (backward)
+	 *            the speed in direction Y, can be positive (right) or negative (left)
 	 * @param speedZ
 	 *            the speed in direction Z, can be positive (up) or negative (down)
 	 * @param speedSpin
@@ -78,8 +78,8 @@ public class ARDroneCommander implements IARDroneCommander {
 			speedZ = perc2float(speedZ);
 		if (speedSpin != 0)
 			speedSpin = perc2float(speedSpin);
-		cmd.move(speedX, speedY, speedZ, speedSpin);
-//		cmd.forward(20);
+		cmd.move(speedY, speedX, speedZ, speedSpin);
+		cmd.forward(20);
 	}
 
 	private float perc2float(float speed) {

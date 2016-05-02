@@ -15,7 +15,6 @@ public class QuadroMotion {
 			app = new App();
 			app.boot();
 			app.run();
-			
 			System.in.read();
 		} catch (Exception exc) {
 			exc.printStackTrace();
