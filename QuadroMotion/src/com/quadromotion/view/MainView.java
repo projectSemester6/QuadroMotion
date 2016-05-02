@@ -3,6 +3,8 @@ package com.quadromotion.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +17,8 @@ import javax.swing.JRadioButton;
 
 import com.quadromotion.model.Model;
 
+import de.yadrone.base.IARDrone;
+
 public class MainView extends JFrame implements Observer {
 
 	/**
@@ -22,7 +26,8 @@ public class MainView extends JFrame implements Observer {
 	 */
 	private static final long serialVersionUID = 8860617118897090898L;
 
-	private Model model;
+	private Model model = null;
+	private IARDrone drone = null;
 
 	JProgressBar batteryLevelValue;
 	JLabel speedXValue;
@@ -52,11 +57,25 @@ public class MainView extends JFrame implements Observer {
 		this.model = model;
 		this.model.addObserver(this);
 
+addWindowListener(new WindowListener() {
+			
+			public void windowOpened(WindowEvent e) { }
+			public void windowIconified(WindowEvent e) { }
+			public void windowDeiconified(WindowEvent e) { }
+			public void windowActivated(WindowEvent e) { }
+			public void windowDeactivated(WindowEvent e) { }
+			public void windowClosing(WindowEvent e) {
+				drone.stop();
+				System.exit(0);
+			}
+			public void windowClosed(WindowEvent e) { }
+		});
 		initGUI();
 	}
 
 	public void initGUI() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		this.setLocationRelativeTo(null);
 		setTitle("QuadroMotion");
 
@@ -308,5 +327,9 @@ public class MainView extends JFrame implements Observer {
 		if (currentState.equals(state1)||currentState.equals(state2))
 			return true;
 		return false;
+	}
+	
+	public void setDrone(IARDrone drone){
+		this.drone = drone;
 	}
 }

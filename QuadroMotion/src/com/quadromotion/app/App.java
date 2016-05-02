@@ -49,6 +49,7 @@ public class App {
 	private void initView() {
 		viewController = new MainViewController(model);
 		setView(viewController.getView());
+		view.setDrone(drone);
 	}
 
 	private void initDrone() {
