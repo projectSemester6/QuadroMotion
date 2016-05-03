@@ -7,6 +7,9 @@ import de.yadrone.base.navdata.Altitude;
 import de.yadrone.base.navdata.AltitudeListener;
 import de.yadrone.base.navdata.AttitudeListener;
 import de.yadrone.base.navdata.BatteryListener;
+import de.yadrone.base.navdata.ControlState;
+import de.yadrone.base.navdata.DroneState;
+import de.yadrone.base.navdata.StateListener;
 
 public class NavDataListener {
 
@@ -54,6 +57,21 @@ public class NavDataListener {
 
 			public void receivedExtendedAltitude(Altitude d) {
 
+			}
+		});
+		
+		/**
+		 * State Listener
+		 */
+		drone.getNavDataManager().addStateListener(new StateListener(){
+			public void stateChanged(DroneState data)
+			{
+				System.out.println(data.toString());
+			}
+
+			@Override
+			public void controlStateChanged(ControlState state) {
+				
 			}
 		});
 	}

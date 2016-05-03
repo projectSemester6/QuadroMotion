@@ -5,10 +5,12 @@ import java.util.Observer;
 
 import com.quadromotion.model.Model;
 import com.quadromotion.navdata.*;
+import com.quadromotion.pilotingstates.PilotingStates;
+
 import de.yadrone.base.IARDrone;
 
 /**
- * This class sends the latest commands permanently to the drone
+ * This class sends the latest commands on every change to the drone
  * 
  * @author Gabriel
  *
@@ -46,28 +48,27 @@ public class SendThread extends Thread implements Observer {
 	 */
 	private synchronized void sendCommand(Model m) {
 
-		switch (m.getState()) {
-		case "init":
+		switch (m.getPilotingState()) {
+		case PilotingStates.STATE_0_INIT:
 			break;
-		case "ready":
+		case PilotingStates.STATE_1_READY:
 			break;
-		case "takingOff":
+		case PilotingStates.STATE_2_TAKINGOFF:
 			droneCommander.takeOff();
 			break;
-		case "waitingTakeOff":
+		case PilotingStates.STATE_3_WAITINGTAKEOFF:
 			break;
-		case "hovering":
+		case PilotingStates.STATE_4_HOVERING:
 			droneCommander.hover();
 			break;
-		case "flying":
+		case PilotingStates.STATE_5_FLYING:
 			droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
 			break;
-		case "landing":
+		case PilotingStates.STATE_6_LANDING:
 			droneCommander.landing();
 			break;
-		case "waitingLanding":
+		case PilotingStates.STATE_7_WAITINGLANDING:
 			break;
-
 		default:
 			break;
 		}

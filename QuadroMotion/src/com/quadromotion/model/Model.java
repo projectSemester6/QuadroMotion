@@ -19,8 +19,11 @@ public class Model extends Observable {
 	private int altitude;
 	private int timeUntilTakeOff;
 	private final int TAKE_OFF_DELAY = 2000;
+	
+	private int gestureConfig = 0;
 
 	private String state = "init";
+	private int pilotingState = 0;
 
 	/**
 	 * Constructor
@@ -139,7 +142,24 @@ public class Model extends Observable {
 		return TAKE_OFF_DELAY;
 	}
 	
-	public String toString(float value) {
-		return String.valueOf(value);
+	public int getGestureConfig() {
+		return gestureConfig;
+	}
+
+	public void setGestureConfig(int gestureConfig) {
+		this.gestureConfig = gestureConfig;
+	}
+
+	public int getPilotingState() {
+		return pilotingState;
+	}
+
+	public void setPilotingState(int pilotingState) {
+		this.pilotingState = pilotingState;
+	}
+
+	@Override
+	public String toString() {
+		return null;
 	}
 }

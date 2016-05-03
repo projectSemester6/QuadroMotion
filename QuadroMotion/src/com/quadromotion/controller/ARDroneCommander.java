@@ -16,6 +16,7 @@ import de.yadrone.base.command.LEDAnimation;
  */
 public class ARDroneCommander implements IARDroneCommander {
 
+	private boolean isConnected;
 	/**
 	 * The drone
 	 */
@@ -55,6 +56,8 @@ public class ARDroneCommander implements IARDroneCommander {
 	private void initialize() {
 		cmd = drone.getCommandManager();
 		cmd.setMaxAltitude(1500);
+		cmd.setMinAltitude(80);
+		isConnected = cmd.isConnected();
 	}
 
 	/**
@@ -120,7 +123,5 @@ public class ARDroneCommander implements IARDroneCommander {
 	public void cleanup() {
 		if (cmd.isConnected() && cmd != null)
 			cmd.close();
-
 	}
-
 }

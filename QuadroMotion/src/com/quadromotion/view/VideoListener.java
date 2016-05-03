@@ -26,6 +26,7 @@ public class VideoListener extends JFrame {
 	public VideoListener(final IARDrone drone) {
 		super("QuadroMotion Video");
 
+		this.setLocation(640, 0);
 		setSize(640, 360);
 		setVisible(true);
 

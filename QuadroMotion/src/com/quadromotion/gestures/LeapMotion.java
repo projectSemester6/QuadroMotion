@@ -34,6 +34,7 @@ public class LeapMotion extends Listener implements IGestures {
 
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");
+//		services.computeGestures(this);
 	}
 
 	public void onConnect(Controller controller) {
@@ -94,7 +95,7 @@ public class LeapMotion extends Listener implements IGestures {
 				}
 			}
 		}
-		services.ServicesGesturesConfig_1(this);
+		services.computeGestures(this);
 	}
 
 	@Override

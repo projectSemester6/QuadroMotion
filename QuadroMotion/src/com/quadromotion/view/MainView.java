@@ -15,6 +15,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 
 import com.quadromotion.model.Model;
+import com.quadromotion.pilotingstates.PilotingStates;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
@@ -25,8 +26,6 @@ public class MainView extends JFrame implements Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = 8860617118897090898L;
-
-	private Model model = null;
 
 	JProgressBar batteryLevelValue;
 	JLabel speedXValue;
@@ -45,10 +44,10 @@ public class MainView extends JFrame implements Observer {
 	JRadioButton flyingState;
 	JRadioButton landingState;
 
-	public MainView(Model m){
+	public MainView(Model m) {
 		this(m, new ARDrone());
 	}
-	
+
 	/**
 	 * Constructor II
 	 * 
@@ -57,8 +56,8 @@ public class MainView extends JFrame implements Observer {
 	 */
 	public MainView(Model model, IARDrone drone) {
 
-		this.model = model;
-		this.model.addObserver(this);
+		// this.model = model;
+		model.addObserver(this);
 
 		addWindowListener(new WindowListener() {
 
@@ -91,8 +90,7 @@ public class MainView extends JFrame implements Observer {
 	public void initGUI() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.setLocationRelativeTo(null);
-		setTitle("QuadroMotion");
+		setTitle("QuadroMotion Data");
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		this.getContentPane().add(panel);
@@ -121,7 +119,7 @@ public class MainView extends JFrame implements Observer {
 		panel.add(detailsPanel, gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 		this.pack();
-
+		setSize(640, 360);
 		this.setVisible(true);
 	}
 
@@ -185,17 +183,17 @@ public class MainView extends JFrame implements Observer {
 
 		JPanel panel = new JPanel();
 
-		speedXValue = new JLabel(model.toString(model.getSpeedX()) + " %");
-		speedYValue = new JLabel(model.toString(model.getSpeedY()) + " %");
-		speedZValue = new JLabel(model.toString(model.getSpeedZ()) + " %");
-		speedSpinValue = new JLabel(model.toString(model.getSpeedSpin()) + " %");
-		batteryLevelValue = createProgressBar("Battery level:", (int) model.getBatLevel());
+		speedXValue = new JLabel(0 + " %");
+		speedYValue = new JLabel(0 + " %");
+		speedZValue = new JLabel(0 + " %");
+		speedSpinValue = new JLabel(0 + " %");
+		batteryLevelValue = createProgressBar("Battery level:", 0);
 
 		altitudeLabel = new JLabel("Höhe: ");
 		altitudeValue = new JLabel("0 mm");
 
 		timeUntilTakeOffLabel = new JLabel("Zeit bis Start:");
-		timeUntilTakeOffValue = new JLabel(String.valueOf(model.getTimeUntilTakeOff()) + " ms");
+		timeUntilTakeOffValue = new JLabel("0 ms");
 
 		JLabel emptySpaceLabel = new JLabel(" ");
 		JLabel speedXLabel = new JLabel("Speed X:");
@@ -305,31 +303,33 @@ public class MainView extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
 
-		speedXValue.setText(m.toString((int) m.getSpeedX()) + " %");
-		speedYValue.setText(m.toString((int) m.getSpeedY()) + " %");
-		speedZValue.setText(m.toString((int) m.getSpeedZ()) + " %");
-		speedSpinValue.setText(m.toString((int) m.getSpeedSpin()) + " %");
+		speedXValue.setText(String.valueOf(m.getSpeedX()) + " %");
+		speedYValue.setText(String.valueOf(m.getSpeedY()) + " %");
+		speedZValue.setText(String.valueOf(m.getSpeedZ()) + " %");
+		speedSpinValue.setText(String.valueOf(m.getSpeedSpin()) + " %");
 		batteryLevelValue.setValue((int) m.getBatLevel());
 		altitudeValue.setText(m.getAltitudeString() + " mm");
 		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
 
-		initState.setSelected(checkState(m.getState(), "init"));
-		readyState.setSelected(checkState(m.getState(), "ready"));
-		takingOffState.setSelected(checkState(m.getState(), "takingOff", "waitingTakeOff"));
-		hoveringState.setSelected(checkState(m.getState(), "hovering"));
-		flyingState.setSelected(checkState(m.getState(), "flying"));
-		landingState.setSelected(checkState(m.getState(), "landing", "waitingLanding"));
+		initState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_0_INIT));
+		readyState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_1_READY));
+		takingOffState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_2_TAKINGOFF,
+				PilotingStates.STATE_3_WAITINGTAKEOFF));
+		hoveringState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_4_HOVERING));
+		flyingState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_5_FLYING));
+		landingState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_6_LANDING,
+				PilotingStates.STATE_7_WAITINGLANDING));
 
 	}
 
-	private boolean checkState(String currentState, String state) {
-		if (currentState.equals(state))
+	private boolean checkState(int currentState, int state) {
+		if (currentState == state)
 			return true;
 		return false;
 	}
 
-	private boolean checkState(String currentState, String state1, String state2) {
-		if (currentState.equals(state1) || currentState.equals(state2))
+	private boolean checkState(int currentState, int state1, int state2) {
+		if (currentState == state1 || currentState == state2)
 			return true;
 		return false;
 	}

@@ -1,14 +1,14 @@
 package com.quadromotion.model.convertion;
 
-public interface IAngleToSpeedConverter {
+public interface IConverter {
 
 	// methods	
 	public float expConverter(float inputValue);
 
 	public float linearConverter(float inputValue);
 	
-	public float HeavySideConverter(float inputValue);
+	public float heavySideConverter(float inputValue);
 	
-	public float LogarithmConverter(float inputValue);
+	public float logarithmConverter(float inputValue);
 
 }

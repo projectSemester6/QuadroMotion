@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true" automaticImage="PNG">  
+  <object id="1" language="java" name="com.quadromotion.QuadroMotion" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/QuadroMotion.java" binary="false" label="quadroMotion" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="111" y="0"/>    
+    <execution id="2">      
+      <position height="63" width="122" x="5" y="99"/>    
+    </execution>  
+  </object>  
+  <object id="5" language="java" name="com.quadromotion.app.App" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/app/App.java" binary="false" label="app" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="212" y="0"/>    
+    <execution id="4">      
+      <position height="21" width="114" x="131" y="120"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="63" width="114" x="131" y="103"/>    
+    </execution>  
+  </object>  
+  <object id="9" language="java" name="com.quadromotion.model.Model" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/Model.java" binary="false" label="model" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="347" y="0"/>    
+    <execution id="8">      
+      <position height="21" width="124" x="249" y="124"/>    
+    </execution>  
+  </object>  
+  <object id="10" language="java" name="com.quadromotion.model.Services" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/Services.java" binary="false" label="services" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="509" y="0"/>  
+  </object>  
+  <message id="3" operation="run():void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="7" asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>
+</sequence-diagram>

@@ -1,6 +1,7 @@
 package com.quadromotion.testing;
 
 import com.quadromotion.model.Model;
+import com.quadromotion.pilotingstates.PilotingStates;
 import com.quadromotion.util.Util;
 
 public class ChangeModel extends Thread {
@@ -31,7 +32,7 @@ public class ChangeModel extends Thread {
 
 			switch (i) {
 			case 0:
-				model.setState("init");
+				model.setPilotingState(PilotingStates.STATE_0_INIT);
 				model.setBatLevel(util.limit(util.randomWithRange(0, 100), 0, 100));
 				time--;
 				if (time == 0) {
@@ -40,7 +41,7 @@ public class ChangeModel extends Thread {
 				}
 				break;
 			case 1:
-				model.setState("ready");
+				model.setPilotingState(PilotingStates.STATE_1_READY);
 
 				for (int j = 2000; j >= 0; j--) {
 					
@@ -55,8 +56,8 @@ public class ChangeModel extends Thread {
 
 				break;
 			case 2:
-				model.setState("takingOff");
-				model.setState("waitingTakeOff");
+				model.setPilotingState(PilotingStates.STATE_2_TAKINGOFF);
+				model.setPilotingState(PilotingStates.STATE_3_WAITINGTAKEOFF);
 				for (int j = 0; j <= 100; j++) {
 					model.setAltitude(j);
 					try {
@@ -68,7 +69,7 @@ public class ChangeModel extends Thread {
 				i = 3;
 				break;
 			case 3:
-				model.setState("hovering");
+				model.setPilotingState(PilotingStates.STATE_4_HOVERING);
 				i = 4;
 				if (time == 0){
 					i = 5;
@@ -79,7 +80,7 @@ public class ChangeModel extends Thread {
 				
 				break;
 			case 4:
-				model.setState("flying");
+				model.setPilotingState(PilotingStates.STATE_5_FLYING);
 				float nx = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 				float ny = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 				float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
@@ -95,8 +96,8 @@ public class ChangeModel extends Thread {
 				time--;
 				break;
 			case 5:
-				model.setState("landing");
-				model.setState("waitingLanding");
+				model.setPilotingState(PilotingStates.STATE_6_LANDING);
+				model.setPilotingState(PilotingStates.STATE_7_WAITINGLANDING);
 				for (int j = 100; j >= 0; j--) {
 					model.setAltitude(j);
 					try {
