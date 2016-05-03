@@ -87,11 +87,24 @@ public class Converter implements IConverter {
 	@Override
 	public float heavySideConverter(float inputValue) {
 
-		if (inputValue > angleOffset) {
-			return maxSpeed;
-		}
-		return 0;
+		float outputValue = 0;
+		boolean inputSign = false;
 
+		if (inputValue < 0) {
+			inputSign = true; // signe n�gatif
+		}
+		inputValue = Math.abs(inputValue);
+
+		if ((inputValue > angleOffset) && (inputSign == true)) {
+			outputValue = -maxSpeed;
+		} 
+		if ((inputValue > angleOffset) && (inputSign == false)) {
+			outputValue = maxSpeed;
+		}
+		if(inputValue < angleOffset){
+			outputValue = 0;
+		}
+		return outputValue;
 	}
 
 	@Override
@@ -101,11 +114,12 @@ public class Converter implements IConverter {
 
 		float functionSpeed = 0;
 		float functionMaxAngle = 0;
+		
 
 		/**
 		 * Ce bordel est a v�rifi� Math�matiquement
 		 */
-		functionExp = 1 / functionExp;
+		float _functionExp = 1/functionExp;
 
 		if (inputValue < 0) {
 			inputSign = true; // signe n�gatif
@@ -114,7 +128,7 @@ public class Converter implements IConverter {
 		inputValue = Math.abs(inputValue);
 
 		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)
-		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, functionExp); // y(x)
+		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, _functionExp); // y(x)
 		// =
 		// ((x-d)/fMA)^p
 		functionSpeed = functionSpeed * (maxSpeed - speedOffset);// y(x) =

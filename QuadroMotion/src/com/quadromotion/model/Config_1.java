@@ -38,7 +38,7 @@ public class Config_1 extends ConfigBase {
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
 
 		for (int i = 0; i < 4; i++) {
-			outputValues[i] = (int) convertList[i].expConverter(leapValues[i]);
+			outputValues[i] = (int) convertList[i].heavySideConverter(leapValues[i]); // speed
 		}
 
 		for (int i = 4; i < 7; i++) {

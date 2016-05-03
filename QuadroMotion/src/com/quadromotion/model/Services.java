@@ -79,7 +79,6 @@ public class Services {
 		fsm(modelValues);
 	}
 
-<<<<<<< HEAD
 	private void fsm(int modelValues[]) {
 
 		int speedX = modelValues[0];
@@ -173,12 +172,7 @@ public class Services {
 		float speedY = convertList[1].expConverter(leap.getRollRightHand());
 		float speedZ = convertList[2].expConverter(leap.getPitchLeftHand());
 		float speedSpin = convertList[3].expConverter(leap.getRollLeftHand());
-=======
-		float speedX = convertX.HeavySideConverter(leap.getPitchRightHand());
-		float speedY = convertY.HeavySideConverter(leap.getRollRightHand());
-		float speedZ = convertZ.HeavySideConverter(leap.getPitchLeftHand());
-		float speedSpin = convertSpin.HeavySideConverter(leap.getRollLeftHand());
->>>>>>> refs/heads/changesAlexis
+
 		float takeOffGesture = leap.getYawRightHand();
 		int countHands = leap.getAnzahlHaenden();
 		float landingGesture = leap.getYawLeftHand();
