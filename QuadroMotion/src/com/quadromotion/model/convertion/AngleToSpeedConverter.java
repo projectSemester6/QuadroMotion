@@ -1,7 +1,7 @@
 package com.quadromotion.model.convertion;
 
 // converts the input angle value to the output speed 
-public class AngleToSpeedConverter implements IAngleToSpeedConverter {
+public class AngleToSpeedConverter  {
 
 	private float maxAngle;
 	private float maxSpeed;
@@ -27,7 +27,7 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		this.functionExp = functionExp;
 	}
 
-	@Override
+
 	public float expConverter(float inputValue) {
 		// TODO exponentielle umrechnung
 
@@ -66,7 +66,7 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		return outputValue;
 	}
 
-	@Override
+
 	public float linearConverter(float inputValue) {
 		// TODO lineare umrechnung
 
@@ -94,7 +94,7 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 
 	}
 
-	@Override
+
 	public float HeavySideConverter(float inputValue) {
 
 		float outputValue = 0;
@@ -118,7 +118,7 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 
 	}
 
-	@Override
+
 	public float LogarithmConverter(float inputValue) {
 
 		boolean inputSign = false;
