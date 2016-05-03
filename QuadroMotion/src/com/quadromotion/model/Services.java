@@ -32,10 +32,10 @@ public class Services {
 
 	public void ServicesGesturesConfig_1(LeapMotion leap) {
 
-		float speedX = convertX.expConverter(leap.getPitchRightHand());
-		float speedY = convertY.expConverter(leap.getRollRightHand());
-		float speedZ = convertZ.expConverter(leap.getPitchLeftHand());
-		float speedSpin = convertSpin.expConverter(leap.getRollLeftHand());
+		float speedX = convertX.HeavySideConverter(leap.getPitchRightHand());
+		float speedY = convertY.HeavySideConverter(leap.getRollRightHand());
+		float speedZ = convertZ.HeavySideConverter(leap.getPitchLeftHand());
+		float speedSpin = convertSpin.HeavySideConverter(leap.getRollLeftHand());
 		float takeOffGesture = leap.getYawRightHand();
 		int countHands = leap.getAnzahlHaenden();
 		float landingGesture = leap.getYawLeftHand();
