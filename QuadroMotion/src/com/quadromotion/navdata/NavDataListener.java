@@ -10,10 +10,21 @@ import de.yadrone.base.navdata.BatteryListener;
 import de.yadrone.base.navdata.ControlState;
 import de.yadrone.base.navdata.DroneState;
 import de.yadrone.base.navdata.StateListener;
+import de.yadrone.base.navdata.VelocityListener;
 
 public class NavDataListener {
 
 	public NavDataListener(IARDrone drone, Model model) {
+		
+		
+		/**
+		 * Velocity Listener
+		 */
+		drone.getNavDataManager().addVelocityListener(new VelocityListener(){
+			public void velocityChanged(float vx, float vy, float vz){
+				
+			}
+		});
 
 		/**
 		 * Attitude Listener
@@ -21,7 +32,7 @@ public class NavDataListener {
 		drone.getNavDataManager().addAttitudeListener(new AttitudeListener() {
 
 			public void attitudeUpdated(float pitch, float roll, float yaw) {
-				System.out.println("Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
+//				System.out.println("Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
 			}
 
 			public void attitudeUpdated(float pitch, float roll) {
@@ -37,8 +48,8 @@ public class NavDataListener {
 		drone.getNavDataManager().addBatteryListener(new BatteryListener() {
 
 			public void batteryLevelChanged(int percentage) {
-				System.out.println("Battery: " + percentage + " %");
-				model.setBatLevel(percentage);
+//				System.out.println("Battery: " + percentage + " %");
+//				model.setBatLevel(percentage);
 			}
 
 			public void voltageChanged(int vbat_raw) {

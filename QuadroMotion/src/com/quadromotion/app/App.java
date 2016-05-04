@@ -5,11 +5,14 @@ import com.quadromotion.controller.SendThread;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
+import com.quadromotion.navdata.NavDataListener;
 import com.quadromotion.view.MainView;
 import com.quadromotion.view.VideoListener;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
+import de.yadrone.base.navdata.BatteryListener;
+import de.yadrone.base.navdata.NavDataManager;
 
 /**
  * Diese Klasse enthaelt die boot() und die run() Methode und steuert den
@@ -50,13 +53,14 @@ public class App {
 	}
 
 	private void initView() {
-		new VideoListener(drone);
+//		new VideoListener(drone);
 		new MainView(model, drone);
 	}
 
 	private void initDrone() {
 		drone = new ARDrone();
 		sender = new SendThread("Sender", model, drone);
+//		new NavDataListener(drone, model);
 	}
 
 	public void cleanup() {

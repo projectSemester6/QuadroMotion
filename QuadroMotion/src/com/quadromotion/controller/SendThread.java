@@ -33,7 +33,7 @@ public class SendThread extends Thread implements Observer {
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
-		new NavDataListener(drone, model);
+		
 		this.model = model;
 		this.model.addObserver(this);
 	}

@@ -29,7 +29,7 @@ public class ConverterTest {
 	public void testHeavySideConverter() {
 		Converter convert = new Converter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
 				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
-		assertEquals("heavyside", OffsetConfig.MAX_SPEED_X, convert.heavySideConverter(input), 0);
+		assertEquals("heavyside", OffsetConfig.MAX_SPEED_X, convert.heavySideConverter(OffsetConfig.ANGLE_OFFSET_X+10), 0);
 	}
 
 	@Test

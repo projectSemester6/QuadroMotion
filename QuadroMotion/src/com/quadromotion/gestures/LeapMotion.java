@@ -34,15 +34,15 @@ public class LeapMotion extends Listener implements IGestures {
 
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");
-//		services.computeGestures(this);
+		services.computeGestures(this);
 	}
 
 	public void onConnect(Controller controller) {
 		System.out.println("Connected");
-		controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-		controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
-		controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+//		controller.enableGesture(Gesture.Type.TYPE_SWIPE);
+//		controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
+//		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+//		controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
 	}
 
 	public void onDisconnect(Controller controller) {

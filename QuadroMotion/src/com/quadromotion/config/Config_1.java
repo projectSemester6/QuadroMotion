@@ -1,4 +1,4 @@
-package com.quadromotion.model;
+package com.quadromotion.config;
 
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
@@ -22,13 +22,13 @@ public class Config_1 extends ConfigBase {
 				leapValues[i] = (int) leap.getPitchRightHand(); // speedX
 				break;
 			case 1:
-				leapValues[i] = (int) leap.getPitchRightHand(); // speedY
+				leapValues[i] = (int) leap.getRollRightHand(); // speedY
 				break;
 			case 2:
-				leapValues[i] = (int) leap.getPitchRightHand(); // speedZ
+				leapValues[i] = (int) leap.getPitchLeftHand(); // speedZ
 				break;
 			case 3:
-				leapValues[i] = (int) leap.getPitchRightHand(); // speedSpin
+				leapValues[i] = (int) leap.getRollLeftHand(); // speedSpin
 				break;
 			default:
 				break;
@@ -44,10 +44,16 @@ public class Config_1 extends ConfigBase {
 		for (int i = 4; i < 7; i++) {
 			switch (i) {
 			case 4:
-				outputValues[i] = (int) leap.getYawRightHand(); // takeOffGesture
+				if (leap.getYawRightHand() < -35)
+					outputValues[i] = 1; // takeOffGesture
+				else
+					outputValues[i] = 0;
 				break;
 			case 5:
-				outputValues[i] = (int) leap.getYawLeftHand(); // landingGesture
+				if (leap.getYawLeftHand() > 35)
+					outputValues[i] = 1; // landingGesture
+				else
+					outputValues[i] = 0;
 				break;
 			case 6:
 				outputValues[i] = (int) leap.getAnzahlHaenden(); // countHands

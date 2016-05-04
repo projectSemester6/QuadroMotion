@@ -38,7 +38,7 @@ public class ARDroneCommander implements IARDroneCommander {
 		drone.start();
 		initialize();
 	}
-	
+
 	/**
 	 * Constructor II
 	 * 
@@ -64,28 +64,33 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * move the drone in every direction
 	 * 
 	 * @param speedX
-	 *            the speed in direction X, can be positive (forward) or negative (backward)
+	 *            the speed in direction X, can be positive (forward) or
+	 *            negative (backward)
 	 * @param speedY
-	 *            the speed in direction Y, can be positive (right) or negative (left)
+	 *            the speed in direction Y, can be positive (right) or negative
+	 *            (left)
 	 * @param speedZ
-	 *            the speed in direction Z, can be positive (up) or negative (down)
+	 *            the speed in direction Z, can be positive (up) or negative
+	 *            (down)
 	 * @param speedSpin
-	 *            the speed to spin, can be positive (clockwise) or negative (counterclockwise)
+	 *            the speed to spin, can be positive (clockwise) or negative
+	 *            (counterclockwise)
 	 */
 	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin) {
-		if (speedX != 0)
-			speedX = perc2float(speedX);
-		if (speedY != 0)
-			speedY = -perc2float(speedY);
-		if (speedZ != 0)
-			speedZ = perc2float(speedZ);
-		if (speedSpin != 0)
-			speedSpin = perc2float(speedSpin);
-		cmd.move(speedY, speedX, speedZ, speedSpin);
-		cmd.forward(20);
+
+		// speedX = perc2float(speedX);
+		// speedY = -perc2float(speedY);
+		// speedZ = perc2float(speedZ);
+		// speedSpin = perc2float(speedSpin);
+
+		cmd.move(perc2float(-speedY), perc2float(speedX), perc2float(speedZ), perc2float(speedSpin));
+
+		// cmd.forward(20);
 	}
 
 	private float perc2float(float speed) {
+		if (speed == 0)
+			return 0;
 		return (speed / 100.0f);
 	}
 

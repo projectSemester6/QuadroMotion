@@ -1,4 +1,4 @@
-package com.quadromotion.model;
+package com.quadromotion.config;
 
 import com.quadromotion.gestures.LeapMotion;
 

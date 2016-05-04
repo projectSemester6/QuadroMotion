@@ -1,5 +1,7 @@
 package com.quadromotion.model;
 
+import com.quadromotion.config.ConfigBase;
+import com.quadromotion.config.Config_1;
 import com.quadromotion.config.OffsetConfig;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
@@ -17,7 +19,14 @@ public class Services {
 
 	private Model model = null;
 
-	private long startTime = 0;
+	private long startTakeOffCommandTime = 0;
+	private long startTakeOffTime = 0;
+	private long startLandingTime = 0;
+	private long startHoveringWithoutHandsTime = 0;
+
+	private final int TAKEOFF_LAND_DELAY = 5; // in Sekunden
+
+	private int c = 0;
 
 	public Services(Model model) {
 
@@ -91,38 +100,46 @@ public class Services {
 
 		switch (model.getPilotingState()) {
 		case PilotingStates.STATE_0_INIT:
+			startTakeOffCommandTime = 0;
+			model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
 			if (countHands > 1)
 				model.setPilotingState(PilotingStates.STATE_1_READY);
 			break;
 		case PilotingStates.STATE_1_READY:
-			if (countHands < 2)
+			if (countHands < 2) {
 				model.setPilotingState(PilotingStates.STATE_0_INIT);
+			}
 
-			if (takeOffGesture < -35) {
-				if (startTime == 0)
-					startTime = System.currentTimeMillis();
-				model.setTimeUntilTakeOff((int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTime)));
+			if (takeOffGesture == 1) {
+				if (startTakeOffCommandTime == 0)
+					startTakeOffCommandTime = System.currentTimeMillis();
+				model.setTimeUntilTakeOff(
+						(int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTakeOffCommandTime)));
+
 				if (model.getTimeUntilTakeOff() <= 0) {
 					model.setPilotingState(PilotingStates.STATE_2_TAKINGOFF);
+					model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
 				}
-			} else if (takeOffGesture >= -35) {
+			} else if (takeOffGesture == 0 && startTakeOffCommandTime != 0) {
 				model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
-				startTime = 0;
+				startTakeOffCommandTime = 0;
 			}
 
 			break;
 
 		case PilotingStates.STATE_2_TAKINGOFF:
-			startTime = 0;
+			startTakeOffCommandTime = 0;
 			model.setPilotingState(PilotingStates.STATE_3_WAITINGTAKEOFF);
+			startTakeOffTime = System.currentTimeMillis();
 			break;
 		case PilotingStates.STATE_3_WAITINGTAKEOFF:
-			if (takeOffGesture > -10 && model.getAltitude() > 0)
+			if (/* takeOffGesture > -10 && */ (System.currentTimeMillis() - startTakeOffTime) > TAKEOFF_LAND_DELAY
+					* 1000/* && model.getAltitude() > 0 */)
 				model.setPilotingState(PilotingStates.STATE_4_HOVERING);
 			break;
 		case PilotingStates.STATE_4_HOVERING:
 
-			if (landingGesture > 35) {
+			if (countHands == 2 && landingGesture == 1) {
 				model.setPilotingState(PilotingStates.STATE_6_LANDING);
 				break;
 			}
@@ -134,17 +151,14 @@ public class Services {
 
 			break;
 		case PilotingStates.STATE_5_FLYING:
-			if (landingGesture > 35) {
+			if (landingGesture == 1) {
 				model.setPilotingState(PilotingStates.STATE_6_LANDING);
 				break;
 			}
 
-			if (countHands < 2) {
+			if ((countHands < 2) || (speedX == 0 && speedY == 0 && speedZ == 0 && speedSpin == 0)) {
+				setSpeedToZero();
 				model.setPilotingState(PilotingStates.STATE_4_HOVERING);
-				model.setSpeedX(0);
-				model.setSpeedY(0);
-				model.setSpeedZ(0);
-				model.setSpeedSpin(0);
 				break;
 			}
 
@@ -155,15 +169,25 @@ public class Services {
 
 			break;
 		case PilotingStates.STATE_6_LANDING:
+			setSpeedToZero();
 			model.setPilotingState(PilotingStates.STATE_7_WAITINGLANDING);
+			startLandingTime = System.currentTimeMillis();
 			break;
 		case PilotingStates.STATE_7_WAITINGLANDING:
-			if (model.getAltitude() <= 10)
+			if ((System.currentTimeMillis() - startLandingTime) > TAKEOFF_LAND_DELAY * 1000)
+				// if (model.getAltitude() <= 10)
 				model.setPilotingState(PilotingStates.STATE_1_READY);
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void setSpeedToZero() {
+		model.setSpeedX(0);
+		model.setSpeedY(0);
+		model.setSpeedZ(0);
+		model.setSpeedSpin(0);
 	}
 
 	private void config_1(LeapMotion leap) {
@@ -193,21 +217,22 @@ public class Services {
 				model.setState("init");
 
 			if (takeOffGesture < -35) {
-				if (startTime == 0)
-					startTime = System.currentTimeMillis();
-				model.setTimeUntilTakeOff((int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTime)));
+				if (startTakeOffCommandTime == 0)
+					startTakeOffCommandTime = System.currentTimeMillis();
+				model.setTimeUntilTakeOff(
+						(int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTakeOffCommandTime)));
 				if (model.getTimeUntilTakeOff() <= 0) {
 					model.setState("takingOff");
 				}
 			} else if (takeOffGesture >= -35) {
 				model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
-				startTime = 0;
+				startTakeOffCommandTime = 0;
 			}
 
 			break;
 
 		case "takingOff":
-			startTime = 0;
+			startTakeOffCommandTime = 0;
 			model.setState("waitingTakeOff");
 			break;
 		case "waitingTakeOff":

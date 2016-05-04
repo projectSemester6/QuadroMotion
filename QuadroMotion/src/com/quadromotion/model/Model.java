@@ -156,6 +156,10 @@ public class Model extends Observable {
 
 	public void setPilotingState(int pilotingState) {
 		this.pilotingState = pilotingState;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(this.pilotingState);
+		}
 	}
 
 	@Override
