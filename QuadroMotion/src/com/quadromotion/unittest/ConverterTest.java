@@ -10,12 +10,11 @@ import com.quadromotion.model.convertion.Converter;
 public class ConverterTest {
 
 	float input = OffsetConfig.MAX_ANGLE_X;
-	
+
 	@Test
 	public void testExpConverter() {
-		Converter convert = new Converter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
-				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
-		assertEquals("exponentiell", 50, convert.expConverter(input), 0.5);
+		Converter convert = new Converter(70, 50, 10, 0, 2.1f);
+		assertEquals("exponentiell", 50, convert.expConverter(80), 0.5);
 	}
 
 	@Test
@@ -29,7 +28,8 @@ public class ConverterTest {
 	public void testHeavySideConverter() {
 		Converter convert = new Converter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X,
 				OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X);
-		assertEquals("heavyside", OffsetConfig.MAX_SPEED_X, convert.heavySideConverter(OffsetConfig.ANGLE_OFFSET_X+10), 0);
+		assertEquals("heavyside", OffsetConfig.MAX_SPEED_X,
+				convert.heavySideConverter(OffsetConfig.ANGLE_OFFSET_X + 10), 0);
 	}
 
 	@Test

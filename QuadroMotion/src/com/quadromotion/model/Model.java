@@ -2,6 +2,8 @@ package com.quadromotion.model;
 
 import java.util.Observable;
 
+import com.quadromotion.config.GestureConfig;
+
 /**
  * This class holds the data
  * 
@@ -20,7 +22,7 @@ public class Model extends Observable {
 	private int timeUntilTakeOff;
 	private final int TAKE_OFF_DELAY = 2000;
 	
-	private int gestureConfig = 0;
+	private int gestureConfig;
 
 	private String state = "init";
 	private int pilotingState = 0;
@@ -36,6 +38,7 @@ public class Model extends Observable {
 		this.speedZ = 0;
 		this.speedSpin = 0;
 		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
+		gestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
 	}
 
 	public float getSpeedX() {

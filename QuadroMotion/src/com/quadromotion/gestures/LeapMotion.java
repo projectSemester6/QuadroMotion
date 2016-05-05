@@ -2,7 +2,6 @@ package com.quadromotion.gestures;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
@@ -12,6 +11,8 @@ import com.quadromotion.model.Services;
 public class LeapMotion extends Listener implements IGestures {
 
 	private int anzahlHaenden = 0;
+	private boolean rightHand;
+	private boolean leftHand;
 
 	private float rechtPitch = 0;
 	private float rechtYaw = 0;
@@ -26,7 +27,7 @@ public class LeapMotion extends Listener implements IGestures {
 	private float linkThrust = 0;
 
 	private Services services = null;
-	
+
 	public LeapMotion(Services s) {
 		super();
 		this.services = s;
@@ -39,10 +40,10 @@ public class LeapMotion extends Listener implements IGestures {
 
 	public void onConnect(Controller controller) {
 		System.out.println("Connected");
-//		controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-//		controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-//		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
-//		controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+		// controller.enableGesture(Gesture.Type.TYPE_SWIPE);
+		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
+		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
 	}
 
 	public void onDisconnect(Controller controller) {
@@ -65,25 +66,27 @@ public class LeapMotion extends Listener implements IGestures {
 		setAnzahlHaenden(frame.hands().count());
 		GestureList gestures = frame.gestures();
 
-		if (anzahlHaenden > 1) {
+		if (anzahlHaenden > 0) {
 
 			// Get hands
 			for (Hand hand : frame.hands()) {
-				String handType = hand.isLeft() ? "Left hand" : "Right hand";
 
 				// Get the hand's normal vector and direction
 
 				Vector normal = hand.palmNormal();
 				Vector direction = hand.direction();
 
-				if (handType == "Right hand") {
+				rightHand = hand.isRight();
+				leftHand = hand.isLeft();
+
+				if (rightHand) {
 
 					setRechtPitch((float) Math.toDegrees(direction.pitch()));
 					setRechtYaw((float) Math.toDegrees(direction.yaw()));
 					setRechtRoll((float) Math.toDegrees(normal.roll()));
 					setRechtSphereRadius(hand.sphereRadius());
 				}
-				if (handType == "Left hand") {
+				if (leftHand) {
 
 					setLinkPitch((float) Math.toDegrees(direction.pitch()));
 					setLinkRoll((float) Math.toDegrees(normal.roll()));
@@ -94,6 +97,9 @@ public class LeapMotion extends Listener implements IGestures {
 				if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
 				}
 			}
+		} else {
+			rightHand = false;
+			leftHand = false;
 		}
 		services.computeGestures(this);
 	}
@@ -207,4 +213,11 @@ public class LeapMotion extends Listener implements IGestures {
 		return anzahlHaenden;
 	}
 
+	public boolean getRightHand() {
+		return rightHand;
+	}
+
+	public boolean getLeftHand() {
+		return leftHand;
+	}
 }

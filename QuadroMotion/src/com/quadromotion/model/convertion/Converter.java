@@ -17,8 +17,7 @@ public class Converter implements IConverter {
 	 * @param angleOffset
 	 * @param functionExp
 	 */
-	public Converter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset,
-			float functionExp) {
+	public Converter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset, float functionExp) {
 		super();
 		this.maxAngle = maxAngle;
 		this.maxSpeed = maxSpeed;
@@ -31,8 +30,10 @@ public class Converter implements IConverter {
 	@Override
 	public float expConverter(float inputValue) {
 
-		if (inputValue < angleOffset)
+		if (Math.abs(inputValue) < angleOffset)
 			return 0f;
+		if (inputValue > maxAngle)
+			inputValue = maxAngle;
 
 		boolean inputSign = false;
 
@@ -58,8 +59,12 @@ public class Converter implements IConverter {
 		 * changement de signe
 		 */
 
+		if (outputValue > maxSpeed)
+			outputValue = maxSpeed;
+
 		if (inputSign) {
-			outputValue = -outputValue;// y(x) = -y(x)
+			return -outputValue;
+			// outputValue = -outputValue;// y(x) = -y(x)
 		}
 
 		return outputValue;
@@ -68,18 +73,26 @@ public class Converter implements IConverter {
 	@Override
 	public float linearConverter(float inputValue) {
 		// TODO lineare umrechnung
-
+		if (Math.abs(inputValue) < angleOffset)
+			return 0;
+		if (inputValue > maxAngle)
+			inputValue = maxAngle;
+		boolean inputSign = false;
+		if (inputValue < 0) {
+			inputSign = true; // signe n�gatif
+		}
 		float slope = 0;
 		float intercept = 0;
 
 		slope = (maxSpeed - speedOffset) / (maxAngle - angleOffset); // a
 		intercept = speedOffset - slope * angleOffset; // b
 
-		float outputValue = slope * inputValue + intercept;// y = a*x + b;
-
-		if (inputValue < angleOffset)
-			outputValue = 0;
-
+		float outputValue = slope * Math.abs(inputValue) + intercept;// y = a*x
+																		// + b;
+		if (outputValue > maxSpeed)
+			outputValue = maxSpeed;
+		if (inputSign)
+			return -outputValue;
 		return outputValue;
 
 	}
@@ -97,11 +110,11 @@ public class Converter implements IConverter {
 
 		if ((inputValue > angleOffset) && (inputSign == true)) {
 			outputValue = -maxSpeed;
-		} 
+		}
 		if ((inputValue > angleOffset) && (inputSign == false)) {
 			outputValue = maxSpeed;
 		}
-		if(inputValue < angleOffset){
+		if (inputValue < angleOffset) {
 			outputValue = 0;
 		}
 		return outputValue;
@@ -114,12 +127,11 @@ public class Converter implements IConverter {
 
 		float functionSpeed = 0;
 		float functionMaxAngle = 0;
-		
 
 		/**
 		 * Ce bordel est a v�rifi� Math�matiquement
 		 */
-		float _functionExp = 1/functionExp;
+		float _functionExp = 1 / functionExp;
 
 		if (inputValue < 0) {
 			inputSign = true; // signe n�gatif
