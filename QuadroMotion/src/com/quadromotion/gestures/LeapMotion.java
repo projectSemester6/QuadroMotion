@@ -18,13 +18,18 @@ public class LeapMotion extends Listener implements IGestures {
 	private float rechtYaw = 0;
 	private float rechtRoll = 0;
 	private float rechtSphereRadius = 0;
-	private float rechtThrust = 0;
+	private float rechtThrust = 0; 		// Y direcgion of leap motion
+	private float rechtSide = 0;		// X direcgion of leap motion
+	private float rechtForBack = 0; 	// Z direcgion of leap motion
 
 	private float linkPitch = 0;
 	private float linkYaw = 0;
 	private float linkRoll = 0;
 	private float linkSphereRadius = 0;
-	private float linkThrust = 0;
+	private float linkThrust = 0; 		// Y direction of leap motion
+	private float linkSide = 0; 		// X direcgion of leap motion
+	private float linkForBack = 0; 		// Z direcgion of leap motion
+
 
 	private Services services = null;
 
@@ -44,11 +49,13 @@ public class LeapMotion extends Listener implements IGestures {
 		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
 		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
 		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+		services.setLeapConnected(true);
 	}
 
 	public void onDisconnect(Controller controller) {
 		// Note: not dispatched when running in a debugger.
 		System.out.println("Disconnected");
+		services.setLeapConnected(false);
 	}
 
 	public void onExit(Controller controller) {
@@ -75,6 +82,7 @@ public class LeapMotion extends Listener implements IGestures {
 
 				Vector normal = hand.palmNormal();
 				Vector direction = hand.direction();
+				Vector handCenter = hand.palmPosition();
 
 				rightHand = hand.isRight();
 				leftHand = hand.isLeft();
@@ -85,6 +93,9 @@ public class LeapMotion extends Listener implements IGestures {
 					setRechtYaw((float) Math.toDegrees(direction.yaw()));
 					setRechtRoll((float) Math.toDegrees(normal.roll()));
 					setRechtSphereRadius(hand.sphereRadius());
+					setRechtThrust(handCenter.getY());
+					setRechtSide(handCenter.getX());
+					setRechtForBack(handCenter.getZ());
 				}
 				if (leftHand) {
 
@@ -92,6 +103,9 @@ public class LeapMotion extends Listener implements IGestures {
 					setLinkRoll((float) Math.toDegrees(normal.roll()));
 					setLinkYaw((float) Math.toDegrees(direction.yaw()));
 					setLinkSphereRadius(hand.sphereRadius());
+					setLinkThrust(handCenter.getY());
+					setLinkSide(handCenter.getX());
+					setLinkForBack(handCenter.getZ());
 				}
 
 				if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
@@ -184,6 +198,22 @@ public class LeapMotion extends Listener implements IGestures {
 
 	}
 
+	public float getRechtSide() {
+		return rechtSide;
+	}
+
+	public void setRechtSide(float rechtSide) {
+		this.rechtSide = rechtSide;
+	}
+
+	public float getRechtForBack() {
+		return rechtForBack;
+	}
+
+	public void setRechtForBack(float rechtForBack) {
+		this.rechtForBack = rechtForBack;
+	}
+
 	public void setLinkPitch(float linkPitch) {
 		this.linkPitch = linkPitch;
 
@@ -219,5 +249,21 @@ public class LeapMotion extends Listener implements IGestures {
 
 	public boolean getLeftHand() {
 		return leftHand;
+	}
+
+	public float getLinkSide() {
+		return linkSide;
+	}
+
+	public void setLinkSide(float linkSide) {
+		this.linkSide = linkSide;
+	}
+
+	public float getLinkForBack() {
+		return linkForBack;
+	}
+
+	public void setLinkForBack(float linkForBack) {
+		this.linkForBack = linkForBack;
 	}
 }

@@ -28,6 +28,7 @@ public class OffsetConfig {
 	
 	public static final float MAX_HAND_YAW = 35;
 	public static final float MAX_HAND_THRUST = 20;
+	public static final float HAND_THRUST_OFFSET = 140;
 	
 	/**
 	 * 

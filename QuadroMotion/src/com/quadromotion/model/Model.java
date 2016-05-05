@@ -21,11 +21,13 @@ public class Model extends Observable {
 	private int altitude;
 	private int timeUntilTakeOff;
 	private final int TAKE_OFF_DELAY = 2000;
-	
-	private int gestureConfig;
+
+	private int selectedGestureConfig;
 
 	private String state = "init";
 	private int pilotingState = 0;
+	
+	private boolean leapConnected = false;
 
 	/**
 	 * Constructor
@@ -38,7 +40,7 @@ public class Model extends Observable {
 		this.speedZ = 0;
 		this.speedSpin = 0;
 		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
-		gestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
+		selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
 	}
 
 	public float getSpeedX() {
@@ -144,13 +146,13 @@ public class Model extends Observable {
 	public int getTAKE_OFF_DELAY() {
 		return TAKE_OFF_DELAY;
 	}
-	
-	public int getGestureConfig() {
-		return gestureConfig;
+
+	public int getSelectedGestureConfig() {
+		return selectedGestureConfig;
 	}
 
-	public void setGestureConfig(int gestureConfig) {
-		this.gestureConfig = gestureConfig;
+	public void setSelectedGestureConfig(int gestureConfig) {
+		this.selectedGestureConfig = gestureConfig;
 	}
 
 	public int getPilotingState() {
@@ -163,6 +165,14 @@ public class Model extends Observable {
 			setChanged();
 			notifyObservers(this.pilotingState);
 		}
+	}
+
+	public boolean isLeapConnected() {
+		return leapConnected;
+	}
+
+	public void setLeapConnected(boolean leapConnected) {
+		this.leapConnected = leapConnected;
 	}
 
 	@Override

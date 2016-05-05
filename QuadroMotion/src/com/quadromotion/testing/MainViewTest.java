@@ -8,10 +8,7 @@ public class MainViewTest {
 	public MainViewTest() {
 
 		try {
-			Model m = new Model();
-			new MainView(m);
-			ChangeModel cm = new ChangeModel("cm", m);
-			cm.start();
+			new MainView(new Model());
 
 		} catch (Exception exc)
 

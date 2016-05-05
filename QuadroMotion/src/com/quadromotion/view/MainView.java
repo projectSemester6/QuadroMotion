@@ -2,18 +2,23 @@ package com.quadromotion.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 
+import com.leapmotion.leap.Config;
+import com.quadromotion.config.Config_2_Right_Hand;
 import com.quadromotion.model.Model;
 import com.quadromotion.pilotingstates.PilotingStates;
 
@@ -37,12 +42,7 @@ public class MainView extends JFrame implements Observer {
 	JLabel timeUntilTakeOffLabel;
 	JLabel timeUntilTakeOffValue;
 
-	JRadioButton initState;
-	JRadioButton readyState;
-	JRadioButton takingOffState;
-	JRadioButton hoveringState;
-	JRadioButton flyingState;
-	JRadioButton landingState;
+//	ConfigPanel configPanel;
 
 	public MainView(Model m) {
 		this(m, new ARDrone());
@@ -56,7 +56,6 @@ public class MainView extends JFrame implements Observer {
 	 */
 	public MainView(Model model, IARDrone drone) {
 
-		// this.model = model;
 		model.addObserver(this);
 
 		addWindowListener(new WindowListener() {
@@ -84,10 +83,11 @@ public class MainView extends JFrame implements Observer {
 			public void windowClosed(WindowEvent e) {
 			}
 		});
-		initGUI();
+	
+		initGUI(model);
 	}
 
-	public void initGUI() {
+	public void initGUI(Model m) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setTitle("QuadroMotion Data");
@@ -95,11 +95,14 @@ public class MainView extends JFrame implements Observer {
 		JPanel panel = new JPanel(new GridBagLayout());
 		this.getContentPane().add(panel);
 
-		JPanel statePanel = createStatePanel();
-		statePanel.setBorder(BorderFactory.createTitledBorder("Status:"));
+		JPanel statePanel = new StatePanel(m);
 
 		JPanel detailsPanel = createDataPanel();
 		detailsPanel.setBorder(BorderFactory.createTitledBorder("Drone data:"));
+
+		
+		JPanel configPanel = new ConfigPanel(m);
+		
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -107,7 +110,6 @@ public class MainView extends JFrame implements Observer {
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 2;
-		// gbc.insets = new Insets(2, 2, 2, 2);
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		panel.add(statePanel, gbc);
 
@@ -118,65 +120,18 @@ public class MainView extends JFrame implements Observer {
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		panel.add(detailsPanel, gbc);
 		gbc.anchor = GridBagConstraints.WEST;
+
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.NORTHEAST;
+		panel.add(configPanel, gbc);
+		gbc.anchor = GridBagConstraints.WEST;
+
 		this.pack();
 		setSize(640, 360);
 		this.setVisible(true);
-	}
-
-	public JPanel createStatePanel() {
-		JPanel panel = new JPanel();
-
-		initState = new JRadioButton("Init", true);
-		readyState = new JRadioButton("Ready", false);
-		takingOffState = new JRadioButton("Taking off", false);
-		hoveringState = new JRadioButton("Hovering", false);
-		flyingState = new JRadioButton("Flying", false);
-		landingState = new JRadioButton("Landing", false);
-
-		initState.setEnabled(false);
-		readyState.setEnabled(false);
-		takingOffState.setEnabled(false);
-		hoveringState.setEnabled(false);
-		flyingState.setEnabled(false);
-		landingState.setEnabled(false);
-
-		panel.setLayout(new GridBagLayout());
-
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		gbc.anchor = GridBagConstraints.WEST;
-		int i = 0;
-
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(initState, gbc);
-
-		i++;
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(readyState, gbc);
-
-		i++;
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(takingOffState, gbc);
-
-		i++;
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(hoveringState, gbc);
-
-		i++;
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(flyingState, gbc);
-
-		i++;
-		gbc.gridx = 0;
-		gbc.gridy = i;
-		panel.add(landingState, gbc);
-
-		return panel;
 	}
 
 	public JPanel createDataPanel() {
@@ -310,27 +265,5 @@ public class MainView extends JFrame implements Observer {
 		batteryLevelValue.setValue((int) m.getBatLevel());
 		altitudeValue.setText(m.getAltitudeString() + " mm");
 		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
-
-		initState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_0_INIT));
-		readyState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_1_READY));
-		takingOffState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_2_TAKINGOFF,
-				PilotingStates.STATE_3_WAITINGTAKEOFF));
-		hoveringState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_4_HOVERING));
-		flyingState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_5_FLYING));
-		landingState.setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_6_LANDING,
-				PilotingStates.STATE_7_WAITINGLANDING));
-
-	}
-
-	private boolean checkState(int currentState, int state) {
-		if (currentState == state)
-			return true;
-		return false;
-	}
-
-	private boolean checkState(int currentState, int state1, int state2) {
-		if (currentState == state1 || currentState == state2)
-			return true;
-		return false;
 	}
 }

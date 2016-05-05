@@ -49,25 +49,25 @@ public class SendThread extends Thread implements Observer {
 	private synchronized void sendCommand(Model m) {
 
 		switch (m.getPilotingState()) {
-		case PilotingStates.STATE_0_INIT:
+		case PilotingStates.STATE_1_INIT:
 			break;
-		case PilotingStates.STATE_1_READY:
+		case PilotingStates.STATE_2_READY:
 			break;
-		case PilotingStates.STATE_2_TAKINGOFF:
+		case PilotingStates.STATE_3_TAKINGOFF:
 			droneCommander.takeOff();
 			break;
-		case PilotingStates.STATE_3_WAITINGTAKEOFF:
+		case PilotingStates.STATE_4_WAITINGTAKEOFF:
 			break;
-		case PilotingStates.STATE_4_HOVERING:
+		case PilotingStates.STATE_5_HOVERING:
 			droneCommander.hover();
 			break;
-		case PilotingStates.STATE_5_FLYING:
+		case PilotingStates.STATE_6_FLYING:
 			droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
 			break;
-		case PilotingStates.STATE_6_LANDING:
+		case PilotingStates.STATE_7_LANDING:
 			droneCommander.landing();
 			break;
-		case PilotingStates.STATE_7_WAITINGLANDING:
+		case PilotingStates.STATE_8_WAITINGLANDING:
 			break;
 		default:
 			break;

@@ -11,6 +11,7 @@ public class Services {
 	private ConfigBase configList[] = new ConfigBase[3];
 
 	private Model model = null;
+	private boolean leapConnected = false;
 
 	private long startTakeOffCommandTime = 0;
 	private long startTakeOffTime = 0;
@@ -48,10 +49,16 @@ public class Services {
 		for (int i = 0; i < 3; i++) {
 			switch (i) {
 			case 0:
-				configList[i] = new Config_1(convertList);
+				configList[i] = new Config_1_Two_Hands(convertList);
 				break;
+
 			case 1:
-				configList[i] = new Config_2(convertList);
+				configList[i] = new Config_2_Right_Hand(convertList);
+				break;
+
+			case 2:
+				configList[i] = new Config_3_Left_Hand(convertList);
+				break;
 			default:
 				break;
 			}
@@ -59,7 +66,7 @@ public class Services {
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		int modelValues[] = configList[model.getGestureConfig()].convertLeapInput(leap);
+		int modelValues[] = configList[model.getSelectedGestureConfig()].convertLeapInput(leap);
 		fsm(modelValues);
 	}
 
@@ -74,15 +81,22 @@ public class Services {
 		int countHands = modelValues[6];
 
 		switch (model.getPilotingState()) {
-		case PilotingStates.STATE_0_INIT:
+		case PilotingStates.STATE_0_OFF:
+			if (model.isLeapConnected())
+				model.setPilotingState(PilotingStates.STATE_1_INIT);
+			break;
+			
+		case PilotingStates.STATE_1_INIT:
 			startTakeOffCommandTime = 0;
 			model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
-			if (countHands == configList[model.getGestureConfig()].getCountHands())
-				model.setPilotingState(PilotingStates.STATE_1_READY);
+
+			if (countHands == configList[model.getSelectedGestureConfig()].getCountHands())
+				model.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
-		case PilotingStates.STATE_1_READY:
-			if (countHands != configList[model.getGestureConfig()].getCountHands()) {
-				model.setPilotingState(PilotingStates.STATE_0_INIT);
+
+		case PilotingStates.STATE_2_READY:
+			if (countHands != configList[model.getSelectedGestureConfig()].getCountHands()) {
+				model.setPilotingState(PilotingStates.STATE_1_INIT);
 			}
 
 			if (takeOffGesture == 1) {
@@ -92,55 +106,56 @@ public class Services {
 						(int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTakeOffCommandTime)));
 
 				if (model.getTimeUntilTakeOff() <= 0) {
-					model.setPilotingState(PilotingStates.STATE_2_TAKINGOFF);
+					model.setPilotingState(PilotingStates.STATE_3_TAKINGOFF);
 					model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
 				}
 			} else if (takeOffGesture == 0 && startTakeOffCommandTime != 0) {
 				model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
 				startTakeOffCommandTime = 0;
 			}
-
 			break;
 
-		case PilotingStates.STATE_2_TAKINGOFF:
+		case PilotingStates.STATE_3_TAKINGOFF:
 			startTakeOffCommandTime = 0;
-			model.setPilotingState(PilotingStates.STATE_3_WAITINGTAKEOFF);
+			model.setPilotingState(PilotingStates.STATE_4_WAITINGTAKEOFF);
 			startTakeOffTime = System.currentTimeMillis();
 			break;
-		case PilotingStates.STATE_3_WAITINGTAKEOFF:
+
+		case PilotingStates.STATE_4_WAITINGTAKEOFF:
 			if (/* takeOffGesture > -10 && */ (System.currentTimeMillis() - startTakeOffTime) > TAKEOFF_LAND_DELAY
 					* 1000/* && model.getAltitude() > 0 */)
-				model.setPilotingState(PilotingStates.STATE_4_HOVERING);
+				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			break;
-		case PilotingStates.STATE_4_HOVERING:
+
+		case PilotingStates.STATE_5_HOVERING:
 			if (startHoveringWithoutHandsTime == 0)
 				startHoveringWithoutHandsTime = System.currentTimeMillis();
-			if (((countHands == configList[model.getGestureConfig()].getCountHands()) && (landingGesture == 1))
+			if (((countHands == configList[model.getSelectedGestureConfig()].getCountHands()) && (landingGesture == 1))
 					|| ((System.currentTimeMillis() - startHoveringWithoutHandsTime) > TAKEOFF_LAND_DELAY * 1000)) {
 				startHoveringWithoutHandsTime = 0;
-				model.setPilotingState(PilotingStates.STATE_6_LANDING);
+				model.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
 			}
 
-			if (countHands == configList[model.getGestureConfig()].getCountHands()
+			if (countHands == configList[model.getSelectedGestureConfig()].getCountHands()
 					&& (speedX != 0 || speedY != 0 || speedZ != 0 || speedSpin != 0)) {
 				startHoveringWithoutHandsTime = 0;
-				model.setPilotingState(PilotingStates.STATE_5_FLYING);
+				model.setPilotingState(PilotingStates.STATE_6_FLYING);
 				break;
 			}
-
 			break;
-		case PilotingStates.STATE_5_FLYING:
+
+		case PilotingStates.STATE_6_FLYING:
 			if (landingGesture == 1) {
-				model.setPilotingState(PilotingStates.STATE_6_LANDING);
+				model.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
 			}
 
-			if ((countHands < configList[model.getGestureConfig()].getCountHands())
+			if ((countHands < configList[model.getSelectedGestureConfig()].getCountHands())
 					|| (speedX == 0 && speedY == 0 && speedZ == 0 && speedSpin == 0)) {
 				setSpeedToZero();
 				startHoveringWithoutHandsTime = System.currentTimeMillis();
-				model.setPilotingState(PilotingStates.STATE_4_HOVERING);
+				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				break;
 			}
 
@@ -148,18 +163,19 @@ public class Services {
 			model.setSpeedY(-speedY);
 			model.setSpeedZ(-speedZ);
 			model.setSpeedSpin(-speedSpin);
-
 			break;
-		case PilotingStates.STATE_6_LANDING:
+
+		case PilotingStates.STATE_7_LANDING:
 			setSpeedToZero();
-			model.setPilotingState(PilotingStates.STATE_7_WAITINGLANDING);
+			model.setPilotingState(PilotingStates.STATE_8_WAITINGLANDING);
 			startLandingTime = System.currentTimeMillis();
 			break;
-		case PilotingStates.STATE_7_WAITINGLANDING:
+
+		case PilotingStates.STATE_8_WAITINGLANDING:
 			if ((System.currentTimeMillis() - startLandingTime) > TAKEOFF_LAND_DELAY * 1000)
-				// if (model.getAltitude() <= 10)
-				model.setPilotingState(PilotingStates.STATE_1_READY);
+				model.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
+
 		default:
 			break;
 		}
@@ -170,5 +186,17 @@ public class Services {
 		model.setSpeedY(0);
 		model.setSpeedZ(0);
 		model.setSpeedSpin(0);
+	}
+
+	public boolean isLeapConnected() {
+		return leapConnected;
+	}
+
+	public void setLeapConnected(boolean leapConnected) {
+		this.leapConnected = leapConnected;
+		model.setLeapConnected(this.leapConnected);
+		if (!model.isLeapConnected()) {
+			model.setPilotingState(PilotingStates.STATE_0_OFF);			
+		}
 	}
 }

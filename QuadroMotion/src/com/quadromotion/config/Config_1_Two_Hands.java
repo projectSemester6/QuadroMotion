@@ -3,21 +3,17 @@ package com.quadromotion.config;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
 
-public class Config_2 extends ConfigBase {
+public class Config_1_Two_Hands extends ConfigBase {
 
-	private int COUNT_HANDS = 1;
+	private static final int COUNTHANDS = 2;
 	private Converter convertList[] = new Converter[4];
 
-	public Config_2(Converter convertList[]) {
-
+	public Config_1_Two_Hands(Converter convertList[]) {
 		super();
 		this.convertList = convertList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
-		
-		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-		
 		int leapValues[] = { 0, 0, 0, 0 };
 
 		for (int i = 0; i < 4; i++) {
@@ -29,19 +25,20 @@ public class Config_2 extends ConfigBase {
 				leapValues[i] = (int) leap.getRollRightHand(); // speedY
 				break;
 			case 2:
-				//TODO Thrust richtig einlesen
-//				leapValues[i] = (int) leap.getThrustRightHand(); // speedZ
+				leapValues[i] = (int) leap.getPitchLeftHand(); // speedZ
 				break;
 			case 3:
-				leapValues[i] = (int) leap.getYawRightHand(); // speedSpin
+				leapValues[i] = (int) leap.getRollLeftHand(); // speedSpin
 				break;
 			default:
 				break;
 			}
 		}
 
+		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
+
 		for (int i = 0; i < 4; i++) {
-			outputValues[i] = (int) convertList[i].expConverter(leapValues[i]); // speed
+			outputValues[i] = (int) convertList[i].linearConverter(leapValues[i]); // speed
 		}
 
 		for (int i = 4; i < 7; i++) {
@@ -53,19 +50,13 @@ public class Config_2 extends ConfigBase {
 					outputValues[i] = 0;
 				break;
 			case 5:
-				if (leap.getYawRightHand() > 35)
+				if (leap.getYawLeftHand() > 35)
 					outputValues[i] = 1; // landingGesture
 				else
 					outputValues[i] = 0;
 				break;
 			case 6:
-				// countHands
-				if(leap.getRightHand()) {
-					outputValues[i] = 1;
-				}
-				else {
-					outputValues[i] = 0;
-				}
+				outputValues[i] = (int) leap.getAnzahlHaenden(); // countHands
 				break;
 			default:
 				break;
@@ -73,7 +64,8 @@ public class Config_2 extends ConfigBase {
 		}
 		return outputValues;
 	}
+
 	public int getCountHands() {
-		return COUNT_HANDS;
+		return COUNTHANDS;
 	}
 }

@@ -41,8 +41,8 @@ public class App {
 	}
 	
 	public void run() {
-		drone.start();
-		sender.start();
+//		drone.start();
+//		sender.start();
 	}
 
 	private void initLeap() {
