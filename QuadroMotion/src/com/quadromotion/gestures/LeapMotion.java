@@ -18,18 +18,17 @@ public class LeapMotion extends Listener implements IGestures {
 	private float rechtYaw = 0;
 	private float rechtRoll = 0;
 	private float rechtSphereRadius = 0;
-	private float rechtThrust = 0; 		// Y direcgion of leap motion
-	private float rechtSide = 0;		// X direcgion of leap motion
-	private float rechtForBack = 0; 	// Z direcgion of leap motion
+	private float rechtThrust = 0; // Y direcgion of leap motion
+	private float rechtSide = 0; // X direcgion of leap motion
+	private float rechtForBack = 0; // Z direcgion of leap motion
 
 	private float linkPitch = 0;
 	private float linkYaw = 0;
 	private float linkRoll = 0;
 	private float linkSphereRadius = 0;
-	private float linkThrust = 0; 		// Y direction of leap motion
-	private float linkSide = 0; 		// X direcgion of leap motion
-	private float linkForBack = 0; 		// Z direcgion of leap motion
-
+	private float linkThrust = 0; // Y direction of leap motion
+	private float linkSide = 0; // X direcgion of leap motion
+	private float linkForBack = 0; // Z direcgion of leap motion
 
 	private Services services = null;
 
@@ -84,11 +83,8 @@ public class LeapMotion extends Listener implements IGestures {
 				Vector direction = hand.direction();
 				Vector handCenter = hand.palmPosition();
 
-				rightHand = hand.isRight();
-				leftHand = hand.isLeft();
-
-				if (rightHand) {
-
+				if (hand.isRight()) {
+					rightHand = hand.isRight();
 					setRechtPitch((float) Math.toDegrees(direction.pitch()));
 					setRechtYaw((float) Math.toDegrees(direction.yaw()));
 					setRechtRoll((float) Math.toDegrees(normal.roll()));
@@ -97,8 +93,9 @@ public class LeapMotion extends Listener implements IGestures {
 					setRechtSide(handCenter.getX());
 					setRechtForBack(handCenter.getZ());
 				}
-				if (leftHand) {
 
+				if (hand.isLeft()) {
+					leftHand = hand.isLeft();
 					setLinkPitch((float) Math.toDegrees(direction.pitch()));
 					setLinkRoll((float) Math.toDegrees(normal.roll()));
 					setLinkYaw((float) Math.toDegrees(direction.yaw()));

@@ -18,6 +18,7 @@ public class Services {
 	private long startTakeOffTime = 0;
 	private long startLandingTime = 0;
 	private long startHoveringWithoutHandsTime = 0;
+	private long hoveringDuration = 0;
 
 	private final int TAKEOFF_LAND_DELAY = 5; // in Sekunden
 
@@ -129,8 +130,16 @@ public class Services {
 		case PilotingStates.STATE_5_HOVERING:
 			if (startHoveringWithoutHandsTime == 0)
 				startHoveringWithoutHandsTime = System.currentTimeMillis();
-			if (((countHands != configList[controller.getSelectedGestureConfig()].getCountHands())
-					&& ((System.currentTimeMillis() - startHoveringWithoutHandsTime) > TAKEOFF_LAND_DELAY * 1000))
+
+			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands()) {
+				startHoveringWithoutHandsTime = 0;
+				hoveringDuration = 0;
+			}
+
+			if (countHands != configList[controller.getSelectedGestureConfig()].getCountHands())
+				hoveringDuration = System.currentTimeMillis() - startHoveringWithoutHandsTime;
+
+			if (((hoveringDuration > TAKEOFF_LAND_DELAY * 1000))
 					|| (landingGesture == 1)) {
 				startHoveringWithoutHandsTime = 0;
 				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
