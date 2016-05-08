@@ -51,10 +51,10 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		this.drone = new ARDrone();
-		this.leap = new LeapMotion(new Services(model));
-		this.leapController = new Controller();
-		leapController.addListener(leap);
+//		this.drone = new ARDrone();
+//		this.leap = new LeapMotion(new Services(model));
+//		this.leapController = new Controller();
+//		leapController.addListener(leap);
 
 		// this.app = new App(model);
 		// app.setDrone(drone);

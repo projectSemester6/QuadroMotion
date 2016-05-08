@@ -2,6 +2,7 @@ package com.quadromotion.app;
 
 import com.leapmotion.leap.Controller;
 import com.quadromotion.controller.SendThread;
+import com.quadromotion.controller.ServiceController;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
@@ -45,7 +46,8 @@ public class App {
 	}
 
 	private void initLeap() {
-		service = new Services(model);
+		service = new Services();
+		service.setServiceController(new ServiceController(model));
 		leap = new LeapMotion(service);
 		leapController = new Controller();
 		leapController.addListener(leap);

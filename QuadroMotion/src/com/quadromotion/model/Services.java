@@ -1,6 +1,7 @@
 package com.quadromotion.model;
 
 import com.quadromotion.config.*;
+import com.quadromotion.controller.ServiceController;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
 import com.quadromotion.pilotingstates.PilotingStates;
@@ -10,7 +11,7 @@ public class Services {
 	private Converter convertList[] = new Converter[4];
 	private ConfigBase configList[] = new ConfigBase[3];
 
-	private Model model = null;
+	private ServiceController controller = null;
 	private boolean leapConnected = false;
 
 	private long startTakeOffCommandTime = 0;
@@ -20,9 +21,7 @@ public class Services {
 
 	private final int TAKEOFF_LAND_DELAY = 5; // in Sekunden
 
-	public Services(Model model) {
-
-		this.model = model;
+	public Services() {
 
 		for (int i = 0; i < 4; i++) {
 			switch (i) {
@@ -66,7 +65,7 @@ public class Services {
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		int modelValues[] = configList[model.getSelectedGestureConfig()].convertLeapInput(leap);
+		int modelValues[] = configList[controller.getSelectedGestureConfig()].convertLeapInput(leap);
 		fsm(modelValues);
 	}
 
@@ -80,100 +79,97 @@ public class Services {
 		int landingGesture = modelValues[5];
 		int countHands = modelValues[6];
 
-		switch (model.getPilotingState()) {
+		switch (controller.getPilotingState()) {
 		case PilotingStates.STATE_0_OFF:
-			if (model.isLeapConnected())
-				model.setPilotingState(PilotingStates.STATE_1_INIT);
+			if (controller.isLeapConnected())
+				controller.setPilotingState(PilotingStates.STATE_1_INIT);
 			break;
-			
+
 		case PilotingStates.STATE_1_INIT:
 			startTakeOffCommandTime = 0;
-			model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
+			controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
 
-			if (countHands == configList[model.getSelectedGestureConfig()].getCountHands())
-				model.setPilotingState(PilotingStates.STATE_2_READY);
+			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands())
+				controller.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
 
 		case PilotingStates.STATE_2_READY:
-			if (countHands != configList[model.getSelectedGestureConfig()].getCountHands()) {
-				model.setPilotingState(PilotingStates.STATE_1_INIT);
+			if (countHands != configList[controller.getSelectedGestureConfig()].getCountHands()) {
+				controller.setPilotingState(PilotingStates.STATE_1_INIT);
 			}
 
 			if (takeOffGesture == 1) {
 				if (startTakeOffCommandTime == 0)
 					startTakeOffCommandTime = System.currentTimeMillis();
-				model.setTimeUntilTakeOff(
-						(int) (model.getTAKE_OFF_DELAY() - (System.currentTimeMillis() - startTakeOffCommandTime)));
+				controller.setTimeUntilTakeOff((int) (controller.getTAKE_OFF_DELAY()
+						- (System.currentTimeMillis() - startTakeOffCommandTime)));
 
-				if (model.getTimeUntilTakeOff() <= 0) {
-					model.setPilotingState(PilotingStates.STATE_3_TAKINGOFF);
-					model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
+				if (controller.getTimeUntilTakeOff() <= 0) {
+					controller.setPilotingState(PilotingStates.STATE_3_TAKINGOFF);
+					controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
 				}
 			} else if (takeOffGesture == 0 && startTakeOffCommandTime != 0) {
-				model.setTimeUntilTakeOff(model.getTAKE_OFF_DELAY());
+				controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
 				startTakeOffCommandTime = 0;
 			}
 			break;
 
 		case PilotingStates.STATE_3_TAKINGOFF:
 			startTakeOffCommandTime = 0;
-			model.setPilotingState(PilotingStates.STATE_4_WAITINGTAKEOFF);
+			controller.setPilotingState(PilotingStates.STATE_4_WAITINGTAKEOFF);
 			startTakeOffTime = System.currentTimeMillis();
 			break;
 
 		case PilotingStates.STATE_4_WAITINGTAKEOFF:
-			if (/* takeOffGesture > -10 && */ (System.currentTimeMillis() - startTakeOffTime) > TAKEOFF_LAND_DELAY
+			if ((System.currentTimeMillis() - startTakeOffTime) > TAKEOFF_LAND_DELAY
 					* 1000/* && model.getAltitude() > 0 */)
-				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
+				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			break;
 
 		case PilotingStates.STATE_5_HOVERING:
 			if (startHoveringWithoutHandsTime == 0)
 				startHoveringWithoutHandsTime = System.currentTimeMillis();
-			if (((countHands == configList[model.getSelectedGestureConfig()].getCountHands()) && (landingGesture == 1))
-					|| ((System.currentTimeMillis() - startHoveringWithoutHandsTime) > TAKEOFF_LAND_DELAY * 1000)) {
+			if (((countHands != configList[controller.getSelectedGestureConfig()].getCountHands())
+					&& ((System.currentTimeMillis() - startHoveringWithoutHandsTime) > TAKEOFF_LAND_DELAY * 1000))
+					|| (landingGesture == 1)) {
 				startHoveringWithoutHandsTime = 0;
-				model.setPilotingState(PilotingStates.STATE_7_LANDING);
+				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
 			}
 
-			if (countHands == configList[model.getSelectedGestureConfig()].getCountHands()
+			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands()
 					&& (speedX != 0 || speedY != 0 || speedZ != 0 || speedSpin != 0)) {
 				startHoveringWithoutHandsTime = 0;
-				model.setPilotingState(PilotingStates.STATE_6_FLYING);
+				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
 				break;
 			}
 			break;
 
 		case PilotingStates.STATE_6_FLYING:
 			if (landingGesture == 1) {
-				model.setPilotingState(PilotingStates.STATE_7_LANDING);
+				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
 			}
 
-			if ((countHands < configList[model.getSelectedGestureConfig()].getCountHands())
+			if ((countHands < configList[controller.getSelectedGestureConfig()].getCountHands())
 					|| (speedX == 0 && speedY == 0 && speedZ == 0 && speedSpin == 0)) {
 				setSpeedToZero();
 				startHoveringWithoutHandsTime = System.currentTimeMillis();
-				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
+				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				break;
 			}
-
-			model.setSpeedX(-speedX);
-			model.setSpeedY(-speedY);
-			model.setSpeedZ(-speedZ);
-			model.setSpeedSpin(-speedSpin);
+			controller.setSpeed(-speedX, -speedY, -speedZ, -speedSpin);
 			break;
 
 		case PilotingStates.STATE_7_LANDING:
 			setSpeedToZero();
-			model.setPilotingState(PilotingStates.STATE_8_WAITINGLANDING);
+			controller.setPilotingState(PilotingStates.STATE_8_WAITINGLANDING);
 			startLandingTime = System.currentTimeMillis();
 			break;
 
 		case PilotingStates.STATE_8_WAITINGLANDING:
 			if ((System.currentTimeMillis() - startLandingTime) > TAKEOFF_LAND_DELAY * 1000)
-				model.setPilotingState(PilotingStates.STATE_2_READY);
+				controller.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
 
 		default:
@@ -182,10 +178,7 @@ public class Services {
 	}
 
 	private void setSpeedToZero() {
-		model.setSpeedX(0);
-		model.setSpeedY(0);
-		model.setSpeedZ(0);
-		model.setSpeedSpin(0);
+		controller.setSpeed(0, 0, 0, 0);
 	}
 
 	public boolean isLeapConnected() {
@@ -194,9 +187,13 @@ public class Services {
 
 	public void setLeapConnected(boolean leapConnected) {
 		this.leapConnected = leapConnected;
-		model.setLeapConnected(this.leapConnected);
-		if (!model.isLeapConnected()) {
-			model.setPilotingState(PilotingStates.STATE_0_OFF);			
+		controller.setLeapConnected(this.leapConnected);
+		if (!controller.isLeapConnected()) {
+			controller.setPilotingState(PilotingStates.STATE_0_OFF);
 		}
+	}
+
+	public void setServiceController(ServiceController sc) {
+		this.controller = sc;
 	}
 }
