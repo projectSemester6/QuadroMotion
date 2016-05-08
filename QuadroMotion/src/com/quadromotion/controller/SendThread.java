@@ -33,7 +33,7 @@ public class SendThread extends Thread implements Observer {
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
-		
+
 		this.model = model;
 		this.model.addObserver(this);
 	}
@@ -46,7 +46,7 @@ public class SendThread extends Thread implements Observer {
 	/**
 	 * sends the commands to the droneCommander
 	 */
-	private synchronized void sendCommand(Model m) {
+	private void sendCommand(Model m) {
 
 		switch (m.getPilotingState()) {
 		case PilotingStates.STATE_1_INIT:
@@ -82,6 +82,7 @@ public class SendThread extends Thread implements Observer {
 					|| (float) arg == m.getTimeUntilTakeOff())
 				return;
 		}
-		sendCommand(m);
+		if (m.isDroneConnected())
+			sendCommand(m);
 	}
 }

@@ -17,17 +17,17 @@ public class Model extends Observable {
 	private float speedZ;
 	private float speedSpin;
 
-	private float batLevel;
+	private int batLevel;
 	private int altitude;
 	private int timeUntilTakeOff;
 	private final int TAKE_OFF_DELAY = 2000;
 
 	private int selectedGestureConfig;
 
-	private String state = "init";
 	private int pilotingState = 0;
 	
 	private boolean leapConnected = false;
+	private boolean droneConnected = false;
 
 	/**
 	 * Constructor
@@ -40,11 +40,11 @@ public class Model extends Observable {
 		this.speedZ = 0;
 		this.speedSpin = 0;
 		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
-		selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
+		this.selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
 	}
 
 	public float getSpeedX() {
-		return speedX;
+		return this.speedX;
 	}
 
 	public void setSpeedX(float speed) {
@@ -56,7 +56,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedY() {
-		return speedY;
+		return this.speedY;
 	}
 
 	public void setSpeedY(float speed) {
@@ -68,7 +68,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedZ() {
-		return speedZ;
+		return this.speedZ;
 	}
 
 	public void setSpeedZ(float speed) {
@@ -80,7 +80,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedSpin() {
-		return speedSpin;
+		return this.speedSpin;
 	}
 
 	public void setSpeedSpin(float speed) {
@@ -91,64 +91,52 @@ public class Model extends Observable {
 		}
 	}
 
-	public String getState() {
-		return state;
+	public int getBatLevel() {
+		return this.batLevel;
 	}
 
-	public void setState(String state) {
-		this.state = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
-	}
-
-	public float getBatLevel() {
-		return batLevel;
-	}
-
-	public void setBatLevel(float value) {
+	public void setBatLevel(int value) {
 		this.batLevel = value;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(value);
+			notifyObservers(this.batLevel);
 		}
 	}
 
-	public float getAltitude() {
-		return altitude;
+	public int getAltitude() {
+		return this.altitude;
 	}
 
 	public String getAltitudeString() {
-		return String.valueOf(altitude);
+		return String.valueOf(this.altitude);
 	}
 
-	public void setAltitude(float value) {
-		this.altitude = (int) value;
+	public void setAltitude(int value) {
+		this.altitude = value;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(value);
+			notifyObservers(this.altitude);
 		}
 	}
 
 	public int getTimeUntilTakeOff() {
-		return timeUntilTakeOff;
+		return this.timeUntilTakeOff;
 	}
 
 	public void setTimeUntilTakeOff(int timeUntilTakeOff) {
 		this.timeUntilTakeOff = timeUntilTakeOff;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(timeUntilTakeOff);
+			notifyObservers(this.timeUntilTakeOff);
 		}
 	}
 
 	public int getTAKE_OFF_DELAY() {
-		return TAKE_OFF_DELAY;
+		return this.TAKE_OFF_DELAY;
 	}
 
 	public int getSelectedGestureConfig() {
-		return selectedGestureConfig;
+		return this.selectedGestureConfig;
 	}
 
 	public void setSelectedGestureConfig(int gestureConfig) {
@@ -156,7 +144,7 @@ public class Model extends Observable {
 	}
 
 	public int getPilotingState() {
-		return pilotingState;
+		return this.pilotingState;
 	}
 
 	public void setPilotingState(int pilotingState) {
@@ -168,11 +156,19 @@ public class Model extends Observable {
 	}
 
 	public boolean isLeapConnected() {
-		return leapConnected;
+		return this.leapConnected;
 	}
 
 	public void setLeapConnected(boolean leapConnected) {
 		this.leapConnected = leapConnected;
+	}
+
+	public boolean isDroneConnected() {
+		return droneConnected;
+	}
+
+	public void setDroneConnected(boolean droneConnected) {
+		this.droneConnected = droneConnected;
 	}
 
 	@Override

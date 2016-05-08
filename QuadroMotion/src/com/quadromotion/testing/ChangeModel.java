@@ -33,7 +33,7 @@ public class ChangeModel extends Thread {
 			switch (i) {
 			case 0:
 				model.setPilotingState(PilotingStates.STATE_1_INIT);
-				model.setBatLevel(util.limit(util.randomWithRange(0, 100), 0, 100));
+				model.setBatLevel((int) util.limit(util.randomWithRange(0, 100), 0, 100));
 				time--;
 				if (time == 0) {
 					time = 10;
@@ -44,7 +44,7 @@ public class ChangeModel extends Thread {
 				model.setPilotingState(PilotingStates.STATE_2_READY);
 
 				for (int j = 2000; j >= 0; j--) {
-					
+
 					try {
 						model.setTimeUntilTakeOff(j);
 						Thread.sleep(1);
@@ -71,13 +71,13 @@ public class ChangeModel extends Thread {
 			case 3:
 				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				i = 4;
-				if (time == 0){
+				if (time == 0) {
 					i = 5;
 					time = 10;
 					break;
 				}
 				time--;
-				
+
 				break;
 			case 4:
 				model.setPilotingState(PilotingStates.STATE_6_FLYING);

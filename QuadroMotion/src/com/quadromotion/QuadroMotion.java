@@ -20,8 +20,6 @@ public class QuadroMotion {
 		try {
 			app = new App();
 			app.boot();
-			app.run();
-
 		} catch (Exception exc) {
 			exc.printStackTrace();
 
