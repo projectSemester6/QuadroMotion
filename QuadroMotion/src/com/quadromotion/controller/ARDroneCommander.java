@@ -3,6 +3,7 @@ package com.quadromotion.controller;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
+import de.yadrone.base.command.FlightAnimation;
 import de.yadrone.base.command.LEDAnimation;
 
 /**
@@ -114,7 +115,35 @@ public class ARDroneCommander implements IARDroneCommander {
 	public void landing() {
 		cmd.landing();
 	}
+	
+	/**
+	 * flips ahead
+	 */
+	public void flipAhead(){
+		cmd.animate(FlightAnimation.FLIP_AHEAD);
+	}
 
+	/**
+	 * flips behind
+	 */
+	public void flipBehind(){
+		cmd.animate(FlightAnimation.FLIP_BEHIND);
+	}
+	
+	/**
+	 * flips left
+	 */
+	public void flipLeft(){
+		cmd.animate(FlightAnimation.FLIP_LEFT);
+	}
+	
+	/**
+	 * flips right
+	 */
+	public void flipRight(){
+		cmd.animate(FlightAnimation.FLIP_RIGHT);
+	}
+	
 	/**
 	 * animates the LEDs
 	 */

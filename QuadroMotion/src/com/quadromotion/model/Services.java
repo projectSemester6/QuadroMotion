@@ -139,8 +139,8 @@ public class Services {
 			if (countHands != configList[controller.getSelectedGestureConfig()].getCountHands())
 				hoveringDuration = System.currentTimeMillis() - startHoveringWithoutHandsTime;
 
-			if (((hoveringDuration > TAKEOFF_LAND_DELAY * 1000))
-					|| (landingGesture == 1)) {
+			if ((countHands != configList[controller.getSelectedGestureConfig()].getCountHands()
+					&& (hoveringDuration > TAKEOFF_LAND_DELAY * 1000)) || (landingGesture == 1)) {
 				startHoveringWithoutHandsTime = 0;
 				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
