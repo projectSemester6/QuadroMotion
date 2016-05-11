@@ -8,6 +8,7 @@ import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
 import com.quadromotion.navdata.*;
 import com.quadromotion.view.*;
+import com.quadromotion.gestures.*;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
@@ -29,6 +30,7 @@ public class App {
 	private Services service = null;
 	private MainViewController viewController = null;
 	private NavDataController navDataController = null; 
+	private KeyBoardCommands kbc = null;
 
 	public App() {
 		this.model = new Model();
@@ -37,6 +39,7 @@ public class App {
 	public void boot() {
 		initLeap();
 		initView();
+		kbc = new KeyBoardCommands(model);
 	}
 	
 	public void run() {
