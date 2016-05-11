@@ -11,7 +11,7 @@ public class NavDataController {
 
 	public NavDataController(Model model, IARDrone drone) {
 		this.model = model;
-		setNavDataListener(new NavDataListener(drone, this));
+		this.navDataListener = new NavDataListener(drone, this);
 	}
 
 	public void setBatteryLevel(int percentage) {

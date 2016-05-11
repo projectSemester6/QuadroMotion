@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true" automaticImage="PNG">  
+  <object id="1" language="java" name="com.quadromotion.gestures.LeapMotion" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/gestures/LeapMotion.java" binary="false" label="leapMotion" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="114" y="0"/>    
+    <execution id="2">      
+      <position height="661" width="136" x="5" y="94"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="598" width="136" x="5" y="136"/>    
+    </execution>  
+  </object>  
+  <object id="7" language="java" name="com.quadromotion.model.Services" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/Services.java" binary="false" label="services" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="299" y="0"/>    
+    <execution id="6">      
+      <position height="546" width="124" x="145" y="167"/>    
+    </execution>    
+    <execution id="11">      
+      <position height="443" width="7" x="204" y="249"/>    
+    </execution>  
+  </object>  
+  <object id="14" language="java" name="com.quadromotion.config.ConfigBase" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/config/ConfigBase.java" binary="false" label="configBase" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="271" y="0"/>    
+    <execution id="9">      
+      <position height="63" width="124" x="273" y="188"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="com.quadromotion.model.convertion.Converter" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/convertion/Converter.java" binary="false" label="converter" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="414" y="0"/>    
+    <execution id="16">      
+      <position height="21" width="175" x="401" y="209"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="com.quadromotion.controller.ServiceController" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/controller/ServiceController.java" binary="false" label="serviceController" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="586" y="0"/>    
+    <execution id="13">      
+      <position height="401" width="141" x="580" y="270"/>    
+    </execution>  
+  </object>  
+  <object id="27" language="java" name="com.quadromotion.model.Model" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/Model.java" binary="false" label="model" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="640" y="0"/>    
+    <execution id="20">      
+      <position height="241" width="124" x="725" y="291"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="21" width="124" x="725" y="553"/>    
+    </execution>    
+    <execution id="24">      
+      <position height="21" width="124" x="725" y="588"/>    
+    </execution>    
+    <execution id="26">      
+      <position height="21" width="124" x="725" y="629"/>    
+    </execution>  
+  </object>  
+  <object id="32" language="java" name="java.util.Observable" project="QuadroMotion" 
+    file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" 
+    label="observable" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="670" y="0"/>    
+    <execution id="29">      
+      <position height="21" width="101" x="853" y="312"/>    
+    </execution>    
+    <execution id="31">      
+      <position height="157" width="101" x="853" y="354"/>    
+    </execution>    
+    <execution id="36">      
+      <position height="21" width="0" x="0" y="438"/>    
+    </execution>  
+  </object>  
+  <object id="39" language="java" name="java.util.Vector" project="QuadroMotion" 
+    file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" label="obs" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="34">      
+      <position height="21" width="0" x="0" y="375"/>    
+    </execution>  
+  </object>  
+  <object id="40" language="java" name="java.util.Observer" project="QuadroMotion" 
+    file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="38">      
+      <position height="21" width="0" x="0" y="469"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="onFrame(com.leapmotion.leap.Controller):void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="computeGestures(com.quadromotion.gestures.LeapMotion):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="8" operation="convertLeapInput(com.quadromotion.gestures.LeapMotion):int[]" asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="10" operation="fsm(int[]):void" asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="setSpeed(int,int,int,int):void" asynchronous="false">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="15" operation="expConverter(float):float" asynchronous="false">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="19" operation="setSpeedX(float):void" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="setSpeedY(float):void" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" operation="setSpeedZ(float):void" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="25" operation="setSpeedSpin(float):void" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="26"/>  
+  </message>  
+  <message id="28" operation="setChanged():void" asynchronous="true">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="29"/>  
+  </message>  
+  <message id="30" operation="notifyObservers(java.lang.Object):void" asynchronous="true">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="31"/>  
+  </message>  
+  <message id="33" operation="toArray():java.lang.Object[]" asynchronous="false">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="34"/>  
+  </message>  
+  <message id="35" operation="clearChanged():void" asynchronous="false">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="36"/>  
+  </message>  
+  <message id="37" operation="update(java.util.Observable,java.lang.Object):void" asynchronous="false">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="38"/>  
+  </message>
+</sequence-diagram>
