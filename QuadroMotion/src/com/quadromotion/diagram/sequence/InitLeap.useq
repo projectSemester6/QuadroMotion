@@ -21,8 +21,8 @@
       <position height="21" width="124" x="123" y="247"/>    
     </execution>  
   </object>  
-  <object id="18" language="java" name="com.quadromotion.controller.ServiceController" project="QuadroMotion" 
-    file="/QuadroMotion/src/com/quadromotion/controller/ServiceController.java" binary="false" label="serviceController" 
+  <object id="18" language="java" name="com.quadromotion.controller.InputController" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/controller/InputController.java" binary="false" label="serviceController" 
     type="class" autoSize="true">    
     <position height="-1" width="-1" x="341" y="0"/>    
     <execution id="8">      
@@ -56,7 +56,7 @@
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="6"/>  
   </message>  
-  <message id="7" operation="ServiceController(com.quadromotion.model.Model)" asynchronous="false">    
+  <message id="7" operation="InputController(com.quadromotion.model.Model)" asynchronous="false">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="8"/>  
   </message>  

@@ -5,10 +5,10 @@
     autoSize="true">    
     <position height="-1" width="-1" x="114" y="0"/>    
     <execution id="2">      
-      <position height="661" width="136" x="5" y="94"/>    
+      <position height="543" width="136" x="5" y="94"/>    
     </execution>    
     <execution id="4">      
-      <position height="598" width="136" x="5" y="136"/>    
+      <position height="480" width="136" x="5" y="136"/>    
     </execution>  
   </object>  
   <object id="7" language="java" name="com.quadromotion.model.Services" project="QuadroMotion" 
@@ -16,10 +16,10 @@
     autoSize="true">    
     <position height="-1" width="-1" x="299" y="0"/>    
     <execution id="6">      
-      <position height="546" width="124" x="145" y="167"/>    
+      <position height="428" width="124" x="145" y="167"/>    
     </execution>    
     <execution id="11">      
-      <position height="443" width="7" x="204" y="249"/>    
+      <position height="325" width="7" x="204" y="249"/>    
     </execution>  
   </object>  
   <object id="14" language="java" name="com.quadromotion.config.ConfigBase" project="QuadroMotion" 
@@ -38,57 +38,48 @@
       <position height="21" width="175" x="401" y="209"/>    
     </execution>  
   </object>  
-  <object id="18" language="java" name="com.quadromotion.controller.ServiceController" project="QuadroMotion" 
-    file="/QuadroMotion/src/com/quadromotion/controller/ServiceController.java" binary="false" label="serviceController" 
+  <object id="18" language="java" name="com.quadromotion.controller.InputController" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/controller/InputController.java" binary="false" label="inputController" 
     type="class" autoSize="true">    
-    <position height="-1" width="-1" x="586" y="0"/>    
+    <position height="-1" width="-1" x="562" y="0"/>    
     <execution id="13">      
-      <position height="401" width="141" x="580" y="270"/>    
+      <position height="279" width="138" x="580" y="274"/>    
     </execution>  
   </object>  
-  <object id="27" language="java" name="com.quadromotion.model.Model" project="QuadroMotion" 
+  <object id="21" language="java" name="com.quadromotion.model.Model" project="QuadroMotion" 
     file="/QuadroMotion/src/com/quadromotion/model/Model.java" binary="false" label="model" type="class" autoSize="true">    
     <position height="-1" width="-1" x="640" y="0"/>    
     <execution id="20">      
       <position height="241" width="124" x="725" y="291"/>    
-    </execution>    
-    <execution id="22">      
-      <position height="21" width="124" x="725" y="553"/>    
-    </execution>    
-    <execution id="24">      
-      <position height="21" width="124" x="725" y="588"/>    
-    </execution>    
-    <execution id="26">      
-      <position height="21" width="124" x="725" y="629"/>    
     </execution>  
   </object>  
-  <object id="32" language="java" name="java.util.Observable" project="QuadroMotion" 
+  <object id="26" language="java" name="java.util.Observable" project="QuadroMotion" 
     file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" 
     label="observable" type="class" autoSize="true">    
     <position height="-1" width="-1" x="670" y="0"/>    
-    <execution id="29">      
+    <execution id="23">      
       <position height="21" width="101" x="853" y="312"/>    
     </execution>    
-    <execution id="31">      
+    <execution id="25">      
       <position height="157" width="101" x="853" y="354"/>    
     </execution>    
-    <execution id="36">      
+    <execution id="30">      
       <position height="21" width="0" x="0" y="438"/>    
     </execution>  
   </object>  
-  <object id="39" language="java" name="java.util.Vector" project="QuadroMotion" 
+  <object id="33" language="java" name="java.util.Vector" project="QuadroMotion" 
     file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" label="obs" 
     type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
-    <execution id="34">      
+    <execution id="28">      
       <position height="21" width="0" x="0" y="375"/>    
     </execution>  
   </object>  
-  <object id="40" language="java" name="java.util.Observer" project="QuadroMotion" 
+  <object id="34" language="java" name="java.util.Observer" project="QuadroMotion" 
     file="/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/jre/lib/rt.jar" binary="true" type="interface" 
     autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
-    <execution id="38">      
+    <execution id="32">      
       <position height="21" width="0" x="0" y="469"/>    
     </execution>  
   </object>  
@@ -120,36 +111,24 @@
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="20"/>  
   </message>  
-  <message id="21" operation="setSpeedY(float):void" asynchronous="false">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="22"/>  
-  </message>  
-  <message id="23" operation="setSpeedZ(float):void" asynchronous="false">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="24"/>  
-  </message>  
-  <message id="25" operation="setSpeedSpin(float):void" asynchronous="false">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="26"/>  
-  </message>  
-  <message id="28" operation="setChanged():void" asynchronous="true">    
+  <message id="22" operation="setChanged():void" asynchronous="true">    
     <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="29"/>  
+    <end type="TARGET" refId="23"/>  
   </message>  
-  <message id="30" operation="notifyObservers(java.lang.Object):void" asynchronous="true">    
+  <message id="24" operation="notifyObservers(java.lang.Object):void" asynchronous="true">    
     <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="31"/>  
+    <end type="TARGET" refId="25"/>  
   </message>  
-  <message id="33" operation="toArray():java.lang.Object[]" asynchronous="false">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="34"/>  
+  <message id="27" operation="toArray():java.lang.Object[]" asynchronous="false">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="28"/>  
   </message>  
-  <message id="35" operation="clearChanged():void" asynchronous="false">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="36"/>  
+  <message id="29" operation="clearChanged():void" asynchronous="false">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="30"/>  
   </message>  
-  <message id="37" operation="update(java.util.Observable,java.lang.Object):void" asynchronous="false">    
-    <end type="SOURCE" refId="31"/>    
-    <end type="TARGET" refId="38"/>  
+  <message id="31" operation="update(java.util.Observable,java.lang.Object):void" asynchronous="false">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="32"/>  
   </message>
 </sequence-diagram>

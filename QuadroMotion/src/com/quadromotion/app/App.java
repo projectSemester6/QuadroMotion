@@ -2,7 +2,7 @@ package com.quadromotion.app;
 
 import com.leapmotion.leap.Controller;
 import com.quadromotion.controller.SendThread;
-import com.quadromotion.controller.ServiceController;
+import com.quadromotion.controller.InputController;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.Model;
 import com.quadromotion.model.Services;
@@ -14,8 +14,7 @@ import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
 /**
- * Diese Klasse enthaelt die boot() und die run() Methode und steuert den
- * Programmablauf
+ * Diese Klasse enthaelt die boot() und die run() Methode
  * 
  * @author Alexis
  *
@@ -30,7 +29,6 @@ public class App {
 	private Services service = null;
 	private MainViewController viewController = null;
 	private NavDataController navDataController = null; 
-	private KeyBoardCommands kbc = null;
 
 	public App() {
 		this.model = new Model();
@@ -39,7 +37,6 @@ public class App {
 	public void boot() {
 		initLeap();
 		initView();
-		kbc = new KeyBoardCommands(model);
 	}
 	
 	public void run() {
@@ -50,7 +47,7 @@ public class App {
 
 	private void initLeap() {
 		service = new Services();
-		service.setServiceController(new ServiceController(model));
+		service.setInputController(new InputController(model));
 		leap = new LeapMotion(service);
 		leapController = new Controller();
 		leapController.addListener(leap);
@@ -61,6 +58,8 @@ public class App {
 		viewController = new MainViewController(model, drone);
 		viewController.setApp(this);
 		viewController.showView();
+//		kbc = new KeyBoardCommands();
+//		kbc.setInputController(new InputController(model));
 	}
 
 	private void initDrone() {

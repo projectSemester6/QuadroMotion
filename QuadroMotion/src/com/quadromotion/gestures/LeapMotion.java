@@ -1,5 +1,7 @@
 package com.quadromotion.gestures;
 
+import javax.management.ServiceNotFoundException;
+
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.GestureList;
@@ -8,7 +10,7 @@ import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
 import com.quadromotion.model.Services;
 
-public class LeapMotion extends Listener implements IGestures {
+public class LeapMotion extends Listener {
 
 	private int anzahlHaenden = 0;
 	private boolean rightHand;
@@ -39,7 +41,6 @@ public class LeapMotion extends Listener implements IGestures {
 
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");
-		services.computeGestures(this);
 	}
 
 	public void onConnect(Controller controller) {
@@ -115,52 +116,52 @@ public class LeapMotion extends Listener implements IGestures {
 		services.computeGestures(this);
 	}
 
-	@Override
+
 	public float getPitchRightHand() {
 		return rechtPitch;
 	}
 
-	@Override
+
 	public float getRollRightHand() {
 		return rechtRoll;
 	}
 
-	@Override
+
 	public float getYawRightHand() {
 		return rechtYaw;
 	}
 
-	@Override
+
 	public float getThrustRightHand() {
 		return rechtThrust;
 	}
 
-	@Override
+	
 	public float getSphereRadiusRightHand() {
 		return rechtSphereRadius;
 	}
 
-	@Override
+
 	public float getPitchLeftHand() {
 		return linkPitch;
 	}
 
-	@Override
+
 	public float getRollLeftHand() {
 		return linkRoll;
 	}
 
-	@Override
+
 	public float getYawLeftHand() {
 		return linkYaw;
 	}
 
-	@Override
+
 	public float getThrustLeftHand() {
 		return linkThrust;
 	}
 
-	@Override
+
 	public float getSpehreRadiusLeftHand() {
 		return linkSphereRadius;
 	}

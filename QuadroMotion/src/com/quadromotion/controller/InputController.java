@@ -2,14 +2,24 @@ package com.quadromotion.controller;
 
 import com.quadromotion.model.Model;
 
-public class ServiceController {
+/**
+ * The input controller which stores the input of the input device to the model.
+ * @author Gabriel
+ *
+ */
+public class InputController implements IInputController{
 
 	private Model model = null;
 
-	public ServiceController(Model model) {
+	/**
+	 * Constructor
+	 * @param model
+	 */
+	public InputController(Model model) {
 		this.model = model;
 	}
 
+	@Override
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin) {
 		model.setSpeedX(speedX);
 		model.setSpeedY(speedY);
@@ -17,35 +27,48 @@ public class ServiceController {
 		model.setSpeedSpin(speedSpin);
 	}
 
+	@Override
 	public int getPilotingState() {
 		return model.getPilotingState();
 	}
 
+	@Override
 	public void setPilotingState(int pilotingState) {
 		model.setPilotingState(pilotingState);
 	}
 
-	public int getSelectedGestureConfig() {
-		return model.getSelectedGestureConfig();
+	@Override
+	public int getSelectedConfig() {
+		return model.getSelectedConfig();
 	}
 
-	public boolean isLeapConnected() {
-		return model.isLeapConnected();
+	@Override
+	public boolean isInputDeviceConnected() {
+		return model.isInputDeviceConnected();
 	}
 
-	public void setLeapConnected(boolean leapConnected) {
-		model.setLeapConnected(leapConnected);
+	@Override
+	public void setInputDeviceState(boolean inputDeviceState) {
+		model.setInputDeviceConnected(inputDeviceState);
 	}
 
+	@Override
 	public int getTAKE_OFF_DELAY() {
 		return model.getTAKE_OFF_DELAY();
 	}
 
+	@Override
 	public void setTimeUntilTakeOff(int timeUntilTakeOff) {
 		model.setTimeUntilTakeOff(timeUntilTakeOff);
 	}
 
+	@Override
 	public int getTimeUntilTakeOff() {
 		return model.getTimeUntilTakeOff();
+	}
+
+	@Override
+	public void setSelectedConfig(int config) {
+		model.setSelectedConfig(config);
 	}
 }

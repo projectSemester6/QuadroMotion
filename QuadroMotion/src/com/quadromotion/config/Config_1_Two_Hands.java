@@ -16,7 +16,6 @@ public class Config_1_Two_Hands extends ConfigBase {
 	public int[] convertLeapInput(LeapMotion leap) {
 		int leapValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-//		System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
 		if (leap.getLeftHand() && leap.getRightHand()) {
 			for (int i = 0; i < 4; i++) {
 				switch (i) {

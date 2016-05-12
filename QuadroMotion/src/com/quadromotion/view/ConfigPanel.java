@@ -10,12 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.quadromotion.config.GestureConfig;
+import com.quadromotion.controller.InputController;
+import com.quadromotion.gestures.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
 public class ConfigPanel extends JPanel {
-
-//	private JRadioButton[] config = { null, null, null };
-//	private String[] configNames = { "2-Hand-Steuerung", "Rechte-Hand-Steuerung", "Linke-Hand-Steuerung" };
 
 	/**
 	 * Constructor
@@ -26,9 +25,10 @@ public class ConfigPanel extends JPanel {
 	 *            the model
 	 */
 	public ConfigPanel(Model m) {
-		JRadioButton[] config = { null, null, null };
-		String[] configNames = { "2-Hand-Steuerung", "Rechte-Hand-Steuerung", "Linke-Hand-Steuerung" };
-		
+		JRadioButton[] config = { null, null, null, null };
+		String[] configNames = { "2-Hand-Steuerung", "Rechte-Hand-Steuerung", "Linke-Hand-Steuerung",
+				"Tastatur-Steuerung" };
+
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Config:"));
 
@@ -42,35 +42,37 @@ public class ConfigPanel extends JPanel {
 		}
 
 		GridBagConstraints gbc = new GridBagConstraints();
-
+		
+		KeyBoardCommands kbc = new KeyBoardCommands(config);
+		
 		gbc.anchor = GridBagConstraints.WEST;
 		for (int i = 0; i < config.length; i++) {
 			gbc.gridx = 0;
 			gbc.gridy = i;
 			this.add(config[i], gbc);
-
+			
 			config[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
 					for (int i = 0; i < config.length; i++) {
 						if (e.getActionCommand() == configNames[i]) {
 							config[i].setSelected(true);
-							m.setSelectedGestureConfig(i);
+							m.setSelectedConfig(i);
+							if (m.getSelectedConfig() == 3) {
+								// create a new window for the key board input
+								kbc.setInputController(new InputController(m));
+								kbc.anzeigen(true);
+							}
 						}
 
-						else
+						else {
 							config[i].setSelected(false);
+							kbc.anzeigen(false);
+						}
+
 					}
 				}
 			});
 		}
 	}
-
-//	public JRadioButton[] getConfigArray() {
-//		return config;
-//	}
-//
-//	public void setConfigArray(JRadioButton[] config) {
-//		this.config = config;
-//	}
 }

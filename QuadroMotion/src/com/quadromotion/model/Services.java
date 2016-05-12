@@ -1,7 +1,8 @@
 package com.quadromotion.model;
 
 import com.quadromotion.config.*;
-import com.quadromotion.controller.ServiceController;
+import com.quadromotion.controller.IInputController;
+import com.quadromotion.controller.InputController;
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
 import com.quadromotion.pilotingstates.PilotingStates;
@@ -11,7 +12,7 @@ public class Services {
 	private Converter convertList[] = new Converter[4];
 	private ConfigBase configList[] = new ConfigBase[3];
 
-	private ServiceController controller = null;
+	private IInputController controller = null;
 	private boolean leapConnected = false;
 
 	private long startTakeOffCommandTime = 0;
@@ -66,7 +67,7 @@ public class Services {
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		int modelValues[] = configList[controller.getSelectedGestureConfig()].convertLeapInput(leap);
+		int modelValues[] = configList[controller.getSelectedConfig()].convertLeapInput(leap);
 		fsm(modelValues);
 	}
 
@@ -82,7 +83,7 @@ public class Services {
 
 		switch (controller.getPilotingState()) {
 		case PilotingStates.STATE_0_OFF:
-			if (controller.isLeapConnected())
+			if (controller.isInputDeviceConnected())
 				controller.setPilotingState(PilotingStates.STATE_1_INIT);
 			break;
 
@@ -90,12 +91,12 @@ public class Services {
 			startTakeOffCommandTime = 0;
 			controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
 
-			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands())
+			if (countHands == configList[controller.getSelectedConfig()].getCountHands())
 				controller.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
 
 		case PilotingStates.STATE_2_READY:
-			if (countHands != configList[controller.getSelectedGestureConfig()].getCountHands()) {
+			if (countHands != configList[controller.getSelectedConfig()].getCountHands()) {
 				controller.setPilotingState(PilotingStates.STATE_1_INIT);
 			}
 
@@ -128,30 +129,31 @@ public class Services {
 			break;
 
 		case PilotingStates.STATE_5_HOVERING:
-			if (startHoveringWithoutHandsTime == 0)
-				startHoveringWithoutHandsTime = System.currentTimeMillis();
-
-			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands()) {
-				startHoveringWithoutHandsTime = 0;
-				hoveringDuration = 0;
-			}
-
-			if (countHands != configList[controller.getSelectedGestureConfig()].getCountHands())
-				hoveringDuration = System.currentTimeMillis() - startHoveringWithoutHandsTime;
-
-			if ((countHands != configList[controller.getSelectedGestureConfig()].getCountHands()
-					&& (hoveringDuration > TAKEOFF_LAND_DELAY * 1000)) || (landingGesture == 1)) {
+			if (landingGesture == 1) {
 				startHoveringWithoutHandsTime = 0;
 				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
 				break;
 			}
 
-			if (countHands == configList[controller.getSelectedGestureConfig()].getCountHands()
-					&& (speedX != 0 || speedY != 0 || speedZ != 0 || speedSpin != 0)) {
+			else if (countHands != configList[controller.getSelectedConfig()].getCountHands()) {
+				if (startHoveringWithoutHandsTime == 0)
+					startHoveringWithoutHandsTime = System.currentTimeMillis();
+				long timeNow = System.currentTimeMillis();
+				hoveringDuration = timeNow - startHoveringWithoutHandsTime;
+				if (hoveringDuration > TAKEOFF_LAND_DELAY * 1000) {
+					controller.setPilotingState(PilotingStates.STATE_7_LANDING);
+					startHoveringWithoutHandsTime = 0;
+					break;
+				}
+			} else {
 				startHoveringWithoutHandsTime = 0;
-				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
-				break;
+				hoveringDuration = 0;
+				if (speedX != 0 || speedY != 0 || speedZ != 0 || speedSpin != 0) {
+					controller.setPilotingState(PilotingStates.STATE_6_FLYING);
+					break;
+				}
 			}
+
 			break;
 
 		case PilotingStates.STATE_6_FLYING:
@@ -160,10 +162,9 @@ public class Services {
 				break;
 			}
 
-			if ((countHands < configList[controller.getSelectedGestureConfig()].getCountHands())
+			if ((countHands != configList[controller.getSelectedConfig()].getCountHands())
 					|| (speedX == 0 && speedY == 0 && speedZ == 0 && speedSpin == 0)) {
 				setSpeedToZero();
-				startHoveringWithoutHandsTime = System.currentTimeMillis();
 				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				break;
 			}
@@ -196,13 +197,13 @@ public class Services {
 
 	public void setLeapConnected(boolean leapConnected) {
 		this.leapConnected = leapConnected;
-		controller.setLeapConnected(this.leapConnected);
-		if (!controller.isLeapConnected()) {
+		controller.setInputDeviceState(this.leapConnected);
+		if (!controller.isInputDeviceConnected()) {
 			controller.setPilotingState(PilotingStates.STATE_0_OFF);
 		}
 	}
 
-	public void setServiceController(ServiceController sc) {
-		this.controller = sc;
+	public void setInputController(InputController ic) {
+		this.controller = ic;
 	}
 }

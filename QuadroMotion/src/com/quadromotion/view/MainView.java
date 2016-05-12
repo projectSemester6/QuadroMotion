@@ -81,9 +81,11 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(e.getActionCommand());
 				if (!controller.getModel().isDroneConnected()){
+					connectionButton.setSelected(false);
+					connectionButton.setText("Drohne verbunden");
 					controller.connect();
 					controller.setDroneConnected(true);
-					connectionButton.setText("Drohne verbunden");
+					connectionButton.removeActionListener(this);
 				}	
 //				else{
 //					controller.disconnect();

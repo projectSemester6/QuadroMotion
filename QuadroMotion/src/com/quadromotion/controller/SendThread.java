@@ -33,7 +33,7 @@ public class SendThread extends Thread implements Observer {
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
-		
+
 		this.model = model;
 		this.model.addObserver(this);
 	}
@@ -81,7 +81,8 @@ public class SendThread extends Thread implements Observer {
 			if ((float) arg == m.getBatLevel() || (float) arg == m.getAltitude()
 					|| (float) arg == m.getTimeUntilTakeOff())
 				return;
-		}
-		sendCommand(m);
+		} 
+		if (m.isInputDeviceConnected())
+			sendCommand(m);
 	}
 }

@@ -2,34 +2,32 @@
 package com.quadromotion.gestures;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 import com.quadromotion.controller.*;
-import com.quadromotion.model.Model;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 public class KeyBoardCommands extends JFrame implements KeyListener {
 
-	int speed = 15;
+	private int speed = 15;
 	private boolean exit = false;
 	private boolean isFlying = false;
 
-	private ServiceController controller = null;
+	private IInputController controller = null;
 
-	public KeyBoardCommands(Model m) {
-		controller = new ServiceController(m);
+	public KeyBoardCommands(JRadioButton[] config) {
 		this.setLayout(new BorderLayout());
-		JTextField field = new JTextField();
-		JLabel label = new JLabel("QuadroMotion");
-		label.addKeyListener(this);
-		// field.addKeyListener(this);
+		JLabel label = new JLabel("Tastatursteuerung");
 		this.addKeyListener(this);
 		this.addFocusListener(new FocusListener() {
 
@@ -37,38 +35,81 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 			public void focusGained(FocusEvent e) {
 				if (!isFlying)
 					controller.setPilotingState(PilotingStates.STATE_2_READY);
+				controller.setInputDeviceState(true);
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				if (!isFlying)
 					controller.setPilotingState(PilotingStates.STATE_0_OFF);
+				controller.setInputDeviceState(false);
+			}
+		});
+
+		addWindowListener(new WindowListener() {
+
+			public void windowOpened(WindowEvent e) {
+				if (!isFlying)
+					controller.setPilotingState(PilotingStates.STATE_2_READY);
+				controller.setInputDeviceState(true);
 			}
 
+			public void windowIconified(WindowEvent e) {
+			}
+
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			public void windowActivated(WindowEvent e) {
+				if (!isFlying)
+					controller.setPilotingState(PilotingStates.STATE_2_READY);
+				controller.setInputDeviceState(true);
+			}
+
+			public void windowDeactivated(WindowEvent e) {
+			}
+
+			public void windowClosing(WindowEvent e) {
+
+			}
+
+			public void windowClosed(WindowEvent e) {
+				config[0].setSelected(true);
+				config[3].setSelected(false);
+				controller.setSelectedConfig(0);
+				if (!isFlying)
+					controller.setPilotingState(PilotingStates.STATE_0_OFF);
+				controller.setInputDeviceState(false);
+			}
 		});
+
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.add(label, BorderLayout.CENTER);
 		this.pack();
-		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		this.setLocation(700, 100);
+		this.setSize(300, 150);
+
+	}
+
+	public void anzeigen(boolean v) {
+		this.setVisible(v);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		int keyCode = e.getKeyCode();
 		switch (keyCode) {
 		case KeyEvent.VK_ENTER:
-			controller.setPilotingState(PilotingStates.STATE_3_TAKINGOFF);
-			isFlying = true;
-			System.out.println("start");
+			if (controller.getPilotingState() == PilotingStates.STATE_2_READY) {
+				controller.setPilotingState(PilotingStates.STATE_3_TAKINGOFF);
+				isFlying = true;
+				System.out.println("start");
+			}
 			break;
 		case KeyEvent.VK_SPACE:
 			if (isFlying) {
@@ -212,6 +253,11 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		}
 	}
 
+	public void setInputController(IInputController controller) {
+		this.controller = controller;
+
+	}
+
 	public boolean isExit() {
 		return exit;
 	}
@@ -219,5 +265,4 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 	public void setExit(boolean exit) {
 		this.exit = exit;
 	}
-
 }

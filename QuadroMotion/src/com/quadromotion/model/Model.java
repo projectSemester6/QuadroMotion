@@ -26,7 +26,7 @@ public class Model extends Observable {
 
 	private int pilotingState = 0;
 	
-	private boolean leapConnected = false;
+	private boolean inputDeviceConnected = false;
 	private boolean droneConnected = false;
 
 	/**
@@ -135,11 +135,11 @@ public class Model extends Observable {
 		return this.TAKE_OFF_DELAY;
 	}
 
-	public int getSelectedGestureConfig() {
+	public int getSelectedConfig() {
 		return this.selectedGestureConfig;
 	}
 
-	public void setSelectedGestureConfig(int gestureConfig) {
+	public void setSelectedConfig(int gestureConfig) {
 		this.selectedGestureConfig = gestureConfig;
 	}
 
@@ -155,12 +155,12 @@ public class Model extends Observable {
 		}
 	}
 
-	public boolean isLeapConnected() {
-		return this.leapConnected;
+	public boolean isInputDeviceConnected() {
+		return this.inputDeviceConnected;
 	}
 
-	public void setLeapConnected(boolean leapConnected) {
-		this.leapConnected = leapConnected;
+	public void setInputDeviceConnected(boolean inputDeviceState) {
+		this.inputDeviceConnected = inputDeviceState;
 	}
 
 	public boolean isDroneConnected() {
