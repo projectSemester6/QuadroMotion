@@ -56,7 +56,7 @@ public class ARDroneCommander implements IARDroneCommander {
 	 */
 	private void initialize() {
 		cmd = drone.getCommandManager();
-		cmd.setMaxAltitude(1500);
+		cmd.setMaxAltitude(2000);
 		cmd.setMinAltitude(80);
 		isConnected = cmd.isConnected();
 	}
@@ -84,7 +84,7 @@ public class ARDroneCommander implements IARDroneCommander {
 		// speedZ = perc2float(speedZ);
 		// speedSpin = perc2float(speedSpin);
 
-		cmd.move(perc2float(-speedY), perc2float(speedX), perc2float(speedZ), perc2float(speedSpin));
+		cmd.move(perc2float(speedY), perc2float(-speedX), perc2float(-speedZ), perc2float(speedSpin));
 
 		// cmd.forward(20);
 	}
