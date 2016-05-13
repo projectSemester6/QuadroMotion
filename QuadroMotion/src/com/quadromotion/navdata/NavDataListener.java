@@ -34,15 +34,15 @@ public class NavDataListener {
 		/**
 		 * Altitude Listener
 		 */
-//		drone.getNavDataManager().addAltitudeListener(new AltitudeListener() {
-//			public void receivedAltitude(int altitude) {
-//				controller.setAltitude(altitude);
-//			}
-//
-//			public void receivedExtendedAltitude(Altitude d) {
-//
-//			}
-//		});
+		drone.getNavDataManager().addAltitudeListener(new AltitudeListener() {
+			public void receivedAltitude(int altitude) {
+				controller.setAltitude(altitude);
+			}
+
+			public void receivedExtendedAltitude(Altitude d) {
+
+			}
+		});
 
 		/**
 		 * Velocity Listener

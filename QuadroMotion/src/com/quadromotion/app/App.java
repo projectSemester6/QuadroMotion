@@ -65,7 +65,7 @@ public class App {
 	private void initDrone() {
 		drone = new ARDrone();
 		sender = new SendThread("Sender", model, drone);
-		navDataController = new NavDataController(model, drone);
+		new NavDataController(model, drone);
 	}
 
 	public void cleanup() {
