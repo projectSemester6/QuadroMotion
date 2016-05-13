@@ -41,6 +41,7 @@ public class MainView extends JFrame {
 		JPanel statePanel = new StatePanel(model);
 		JPanel dataPanel = new DataPanel(model);
 		JPanel configPanel = new ConfigPanel(model);
+		JPanel controlStatePanel = new ControlStatePanel(model);
 		JPanel panel = new JPanel(new GridBagLayout());
 		this.getContentPane().add(panel);
 
@@ -75,6 +76,14 @@ public class MainView extends JFrame {
 		gbc.gridheight = 2;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		panel.add(connectionButton, gbc);
+		gbc.anchor = GridBagConstraints.WEST;
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.gridheight = 2;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		panel.add(controlStatePanel, gbc);
 		gbc.anchor = GridBagConstraints.WEST;
 
 		connectionButton.addActionListener(new ActionListener() {

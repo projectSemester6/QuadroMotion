@@ -43,7 +43,9 @@ public class ConfigPanel extends JPanel {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		
+		// create a new window for the key board input
 		KeyBoardCommands kbc = new KeyBoardCommands(config);
+		kbc.setInputController(new InputController(m));
 		
 		gbc.anchor = GridBagConstraints.WEST;
 		for (int i = 0; i < config.length; i++) {
@@ -59,8 +61,6 @@ public class ConfigPanel extends JPanel {
 							config[i].setSelected(true);
 							m.setSelectedConfig(i);
 							if (m.getSelectedConfig() == 3) {
-								// create a new window for the key board input
-								kbc.setInputController(new InputController(m));
 								kbc.anzeigen(true);
 							}
 						}

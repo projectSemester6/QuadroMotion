@@ -25,7 +25,7 @@ public class NavDataListener {
 			public void voltageChanged(int vbat_raw) {
 			}
 		};
-		
+
 		/**
 		 * Battery Listener
 		 */
@@ -75,19 +75,19 @@ public class NavDataListener {
 		/**
 		 * State Listener
 		 */
-		// drone.getNavDataManager().addStateListener(new StateListener() {
-		// public void stateChanged(DroneState data) {
-		//
-		// }
+		drone.getNavDataManager().addStateListener(new StateListener() {
+			public void stateChanged(DroneState data) {
 
-		// @Override
-		// public void controlStateChanged(ControlState state) {
-		//
-		// }
-		// });
+			}
+
+			@Override
+			public void controlStateChanged(ControlState state) {
+				controller.setControlState(state.toString());
+			}
+		});
 	}
-	
-	public BatteryListener getBatteryListener(){
+
+	public BatteryListener getBatteryListener() {
 		return batListener;
 	}
 }

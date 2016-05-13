@@ -64,4 +64,6 @@ public interface IInputController {
 	 * @return the time in ms until the drone will take off.
 	 */
 	public int getTimeUntilTakeOff();
+
+	public String getControlState();
 }

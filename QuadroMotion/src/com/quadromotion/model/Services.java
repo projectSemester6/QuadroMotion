@@ -129,7 +129,6 @@ public class Services {
 			break;
 
 		case PilotingStates.STATE_5_HOVERING:
-			setSpeedToZero();
 			if (landingGesture == 1) {
 				startHoveringWithoutHandsTime = 0;
 				controller.setPilotingState(PilotingStates.STATE_7_LANDING);

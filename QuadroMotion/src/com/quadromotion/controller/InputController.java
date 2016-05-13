@@ -71,4 +71,9 @@ public class InputController implements IInputController{
 	public void setSelectedConfig(int config) {
 		model.setSelectedConfig(config);
 	}
+	
+	@Override
+	public String getControlState(){
+		return model.getControlState();
+	}
 }
