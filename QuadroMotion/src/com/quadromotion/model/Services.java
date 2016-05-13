@@ -47,10 +47,10 @@ public class Services {
 			}
 		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 10; i++) {
 			switch (i) {
 			case 0:
-				configList[i] = new Config_1_Two_Hands(convertList);
+				configList[i] = new Config_2_Two_Hands(convertList);
 				break;
 
 			case 1:
@@ -129,6 +129,7 @@ public class Services {
 			break;
 
 		case PilotingStates.STATE_5_HOVERING:
+			setSpeedToZero();
 			if (landingGesture == 1) {
 				startHoveringWithoutHandsTime = 0;
 				controller.setPilotingState(PilotingStates.STATE_7_LANDING);
