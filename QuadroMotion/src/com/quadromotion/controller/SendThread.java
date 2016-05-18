@@ -5,47 +5,24 @@ import java.util.Observer;
 
 import com.quadromotion.model.Model;
 import com.quadromotion.navdata.*;
-import de.yadrone.base.ARDrone;
+import com.quadromotion.pilotingstates.PilotingStates;
+
 import de.yadrone.base.IARDrone;
-import de.yadrone.base.command.CommandManager;
 
 /**
- * This class sends the latest commands permanently to the drone
+ * This class sends the latest commands on every change to the drone
  * 
  * @author Gabriel
  *
  */
 public class SendThread extends Thread implements Observer {
-
-	private static final int SLEEP = 200;
-	private String threadName;
-
 	private Model model = null;
 	private Model m = null;
+
 	private ARDroneCommander droneCommander = null;
-	private NavDataController ndc = null;
-
-	// private IARDrone drone = null;
-	// private CommandManager cmd = null;
 
 	/**
-	 * Constructor I
-	 * 
-	 * @param threadName
-	 *            the thread name
-	 * @param model
-	 *            the model
-	 */
-	public SendThread(String threadName, Model model) {
-		this.threadName = threadName;
-		this.model = model;
-		this.m = new Model();
-		this.droneCommander = new ARDroneCommander();
-		model.addObserver(this);
-	}
-
-	/**
-	 * Constructor II
+	 * Constructor
 	 * 
 	 * @param threadName
 	 *            the thread name
@@ -55,69 +32,42 @@ public class SendThread extends Thread implements Observer {
 	 *            the ardrone
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
-		this.threadName = threadName;
-		this.model = model;
-		this.m = new Model();
-		// this.drone = drone;
 		this.droneCommander = new ARDroneCommander(drone);
-		this.ndc = new NavDataController(drone);
-		model.addObserver(this);
+
+		this.model = model;
+		this.model.addObserver(this);
 	}
 
 	@Override
 	public void run() {
-		System.out.println("Ich bin der Thread " + threadName);
-//		int c = 0;
-//		long startTime = System.currentTimeMillis();
-		droneCommander.animateLEDs();
-//		do {
-////			c++;
-////			System.out.println(c + "er Durchlauf");
-////			System.out.println("Zeit seit start: " + (System.currentTimeMillis() - startTime));
-//			sendCommand();
-////			yield();
-//			try {
-//				Thread.sleep(SLEEP);
-//			}
-//
-//			catch (InterruptedException ie) {
-//				System.out.println("Thread " + threadName + " interrupted...");
-//			}
-//		} while (!this.isInterrupted());
 
 	}
 
 	/**
 	 * sends the commands to the droneCommander
 	 */
-	private synchronized void sendCommand() {
-		// TODO FinaleStateMachine
+	private synchronized void sendCommand(Model m) {
 
-		System.out.println("\nSender: " + model.getState());
-		
-		switch (model.getState()) {
-		case "init":
+		switch (m.getPilotingState()) {
+		case PilotingStates.STATE_1_INIT:
 			break;
-		case "ready":
-//			droneCommander.animateLEDs();
+		case PilotingStates.STATE_2_READY:
 			break;
-		case "takingOff":
+		case PilotingStates.STATE_3_TAKINGOFF:
 			droneCommander.takeOff();
 			break;
-		case "hovering":
+		case PilotingStates.STATE_4_WAITINGTAKEOFF:
+			break;
+		case PilotingStates.STATE_5_HOVERING:
 			droneCommander.hover();
 			break;
-		case "flying":
-			droneCommander.moveDrone(m.getSpeedX(),m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
-			
-			System.out.println(m.getSpeedX());
-			System.out.println(m.getSpeedY());
-			System.out.println(m.getSpeedZ());
-			System.out.println(m.getSpeedSpin());
+		case PilotingStates.STATE_6_FLYING:
+			droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
 			break;
-		case "landing":
+		case PilotingStates.STATE_7_LANDING:
 			droneCommander.landing();
-			model.setState("ready");
+			break;
+		case PilotingStates.STATE_8_WAITINGLANDING:
 			break;
 		default:
 			break;
@@ -126,8 +76,13 @@ public class SendThread extends Thread implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		m = (Model) o;
-		 sendCommand();
+		if (arg instanceof Float) {
+			if ((float) arg == m.getBatLevel() || (float) arg == m.getAltitude()
+					|| (float) arg == m.getTimeUntilTakeOff())
+				return;
+		} 
+		if (m.isInputDeviceConnected())
+			sendCommand(m);
 	}
 }

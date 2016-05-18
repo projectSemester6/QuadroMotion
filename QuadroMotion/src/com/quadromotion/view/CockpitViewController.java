@@ -7,9 +7,11 @@ import com.quadromotion.MainApp;
 import com.quadromotion.model.Model;
 import com.quadromotion.util.Util;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.*;
 
 public class CockpitViewController implements Observer {
@@ -17,7 +19,8 @@ public class CockpitViewController implements Observer {
 	/**
 	 * The data as an observable list of Model.
 	 */
-//	private ObservableList<Model> modelData = FXCollections.observableArrayList();
+	// private ObservableList<Model> modelData =
+	// FXCollections.observableArrayList();
 
 	@FXML
 	private ImageView x_right;
@@ -33,16 +36,29 @@ public class CockpitViewController implements Observer {
 	private ImageView z_bottom;
 	@FXML
 	private ImageView spin;
+	@FXML
+	private Label batLevel;
+	@FXML
+	private Label altutude;
 
 	private float minLimit = -15f;
 	private float maxLimit = 15f;
+	private static final long UPDATE_RATE = 200;
+	private long startTime;
+	private long currentTime;
+	private boolean update = true;
 
-	private Util util;
+	// private Util util;
 
 	private Model model;
 
 	// Reference to the main application.
 	private MainApp mainApp;
+
+	/**
+	 * The data as an observable list of Model.
+	 */
+//	private ObservableList<Model> modelData = FXCollections.observableArrayList();
 
 	/**
 	 * The constructor. The constructor is called before the initialize()
@@ -58,32 +74,37 @@ public class CockpitViewController implements Observer {
 		if (percent >= 90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
 
-//		else if (percent >= 80)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+		// else if (percent >= 80)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
 
 		else if (percent >= 70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
 
-//		else if (percent >= 60)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+		// else if (percent >= 60)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
 
 		else if (percent >= 50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
-//
-//		else if (percent >= 40)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+		//
+		// else if (percent >= 40)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
 
 		else if (percent >= 30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
-//
-//		else if (percent >= 20)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+		//
+		// else if (percent >= 20)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
 
 		else if (percent >= 1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
-//
-//		else if (percent >= 1)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+		//
+		// else if (percent >= 1)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
 
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
@@ -97,32 +118,36 @@ public class CockpitViewController implements Observer {
 		if (percent <= -90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
 
-//		else if (percent <= -80)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+		else if (percent <= -80)
+			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
 
 		else if (percent <= -70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
 
-//		else if (percent <= -60)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+		// else if (percent <= -60)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
 
 		else if (percent <= -50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
 
-//		else if (percent <= -40)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+		// else if (percent <= -40)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
 
 		else if (percent <= -30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
 
-//		else if (percent <= -20)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+		// else if (percent <= -20)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
 
 		else if (percent <= -1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
 
-//		else if (percent <= -1)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+		// else if (percent <= -1)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
 
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
@@ -134,39 +159,43 @@ public class CockpitViewController implements Observer {
 		if (percent >= 90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
 
-//		else if (percent >= 80)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+		// else if (percent >= 80)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
 
 		else if (percent >= 70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
 
-//		else if (percent >= 60)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+		// else if (percent >= 60)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
 
 		else if (percent >= 50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
 
-//		else if (percent >= 40)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+		// else if (percent >= 40)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
 
 		else if (percent >= 30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
 
-//		else if (percent >= 20)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+		// else if (percent >= 20)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
 
 		else if (percent >= 1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
 
-//		else if (percent >= 1)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+		// else if (percent >= 1)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
 
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
 		y_top.setImage(image);
 	}
 
-	
 	public void changeYBottomImage(int percent) {
 		Image image = null;
 		if (percent <= -90)
@@ -174,68 +203,72 @@ public class CockpitViewController implements Observer {
 
 		else if (percent <= -80)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -60)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -40)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -20)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -10)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else if (percent <= -1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts.png"));
-		
+
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-oben-rechts-bl.png"));
 		y_bottom.setImage(image);
 	}
 
-	
 	public void changeZTopImage(int percent) {
 		Image image = null;
 		if (percent >= 90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
 
-//		else if (percent >= 80)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+		// else if (percent >= 80)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
 
 		else if (percent >= 70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
 
-//		else if (percent >= 60)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+		// else if (percent >= 60)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
 
 		else if (percent >= 50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
 
-//		else if (percent >= 40)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+		// else if (percent >= 40)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
 
 		else if (percent >= 30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
 
-//		else if (percent >= 20)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+		// else if (percent >= 20)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
 
 		else if (percent >= 1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
 
-//		else if (percent >= 1)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+		// else if (percent >= 1)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
 
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
@@ -247,32 +280,37 @@ public class CockpitViewController implements Observer {
 		if (percent <= -90)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-100.png"));
 
-//		else if (percent <= -80)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
+		// else if (percent <= -80)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-90.png"));
 
 		else if (percent <= -70)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-80.png"));
 
-//		else if (percent <= -60)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
+		// else if (percent <= -60)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-70.png"));
 
 		else if (percent <= -50)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-60.png"));
 
-//		else if (percent <= -40)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
+		// else if (percent <= -40)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-50.png"));
 
 		else if (percent <= -30)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-40.png"));
 
-//		else if (percent <= -20)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
+		// else if (percent <= -20)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-30.png"));
 
 		else if (percent <= -1)
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-20.png"));
 
-//		else if (percent <= -1)
-//			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
+		// else if (percent <= -1)
+		// image = new
+		// Image(MainApp.class.getResourceAsStream("icons/pfeil-10.png"));
 
 		else
 			image = new Image(MainApp.class.getResourceAsStream("icons/pfeil-0.png"));
@@ -316,7 +354,9 @@ public class CockpitViewController implements Observer {
 
 	public void setModel(Model model) {
 		this.model = model;
-		model.addObserver(this);
+		 model.addObserver(this);
+//		modelData.add(model);
+//		batLevel.textProperty().bind(Bindings.convert(model.getBatLevel()));
 	}
 
 	private void updateView(Model m) {
@@ -339,7 +379,17 @@ public class CockpitViewController implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-//		Model m = (Model) o;
-		updateView((Model) o);
+		 Model m = (Model) o;
+		currentTime = System.currentTimeMillis();
+		batLevel.textProperty().setValue(String.valueOf(m.getBatLevel()));
+	
+		if (update) {
+			updateView((Model) o);
+			startTime = System.currentTimeMillis();
+			update = false;
+		} else if (startTime + UPDATE_RATE <= currentTime) {
+			update = true;
+		}
+
 	}
 }

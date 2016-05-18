@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true" automaticImage="PNG">  
+  <object id="1" language="java" name="com.quadromotion.app.App" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/app/App.java" binary="false" label="app" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="84" y="0"/>    
+    <execution id="2">      
+      <position height="351" width="114" x="5" y="84"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="288" width="114" x="5" y="126"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="com.quadromotion.model.Services" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/model/Services.java" binary="false" label="services" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="189" y="0"/>    
+    <execution id="6">      
+      <position height="21" width="124" x="123" y="154"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="21" width="124" x="123" y="247"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="com.quadromotion.controller.InputController" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/controller/InputController.java" binary="false" label="serviceController" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="341" y="0"/>    
+    <execution id="8">      
+      <position height="21" width="141" x="251" y="203"/>    
+    </execution>  
+  </object>  
+  <object id="19" language="java" name="com.quadromotion.gestures.LeapMotion" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/gestures/LeapMotion.java" binary="false" label="leapMotion" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="444" y="0"/>    
+    <execution id="12">      
+      <position height="21" width="136" x="396" y="294"/>    
+    </execution>  
+  </object>  
+  <object id="20" language="java" name="com.leapmotion.leap.Controller" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/libraries/LeapJava.jar" binary="true" label="controller" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="-115" y="0"/>    
+    <execution id="14">      
+      <position height="21" width="103" x="536" y="330"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="21" width="103" x="536" y="372"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="initLeap():void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="Services()" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="InputController(com.quadromotion.model.Model)" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="setServiceController(com.quadromotion.controller.ServiceController):void" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="LeapMotion(com.quadromotion.model.Services)" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="Controller()" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="addListener(com.leapmotion.leap.Listener):boolean" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>
+</sequence-diagram>

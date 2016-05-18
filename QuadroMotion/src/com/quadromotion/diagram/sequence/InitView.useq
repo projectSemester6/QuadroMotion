@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true" automaticImage="PNG">  
+  <object id="1" language="java" name="com.quadromotion.app.App" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/app/App.java" binary="false" label="app" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="52" y="0"/>    
+    <execution id="2">      
+      <position height="357" width="114" x="5" y="78"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="294" width="114" x="5" y="120"/>    
+    </execution>  
+  </object>  
+  <object id="11" language="java" name="com.quadromotion.view.MainViewController" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/view/MainViewController.java" binary="false" label="mainViewController" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="262" y="0"/>    
+    <execution id="6">      
+      <position height="21" width="156" x="123" y="149"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="21" width="156" x="123" y="181"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="170" width="156" x="123" y="223"/>    
+    </execution>  
+  </object>  
+  <object id="14" language="java" name="com.quadromotion.view.MainView" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/view/MainView.java" binary="false" label="mainView" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="349" y="0"/>    
+    <execution id="13">      
+      <position height="128" width="116" x="283" y="244"/>    
+    </execution>  
+  </object>  
+  <object id="21" language="java" name="com.quadromotion.view.StatePanel" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/view/StatePanel.java" binary="false" label="statePanel" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="456" y="0"/>    
+    <execution id="16">      
+      <position height="21" width="116" x="403" y="265"/>    
+    </execution>  
+  </object>  
+  <object id="22" language="java" name="com.quadromotion.view.DataPanel" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/view/DataPanel.java" binary="false" label="dataPanel" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="605" y="0"/>    
+    <execution id="18">      
+      <position height="21" width="116" x="523" y="298"/>    
+    </execution>  
+  </object>  
+  <object id="23" language="java" name="com.quadromotion.view.ConfigPanel" project="QuadroMotion" 
+    file="/QuadroMotion/src/com/quadromotion/view/ConfigPanel.java" binary="false" label="configPanel" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="755" y="0"/>    
+    <execution id="20">      
+      <position height="21" width="116" x="643" y="330"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="initView():void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5" operation="MainViewController(com.quadromotion.model.Model,de.yadrone.base.IARDrone)" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="7" operation="setApp(com.quadromotion.app.App):void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="9" operation="showView():void" asynchronous="false">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="12" 
+    operation="MainView(com.quadromotion.model.Model,de.yadrone.base.IARDrone,com.quadromotion.view.MainViewController)" 
+    asynchronous="false">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="15" operation="StatePanel(com.quadromotion.model.Model)" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="17" operation="DataPanel(com.quadromotion.model.Model)" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="ConfigPanel(com.quadromotion.model.Model)" asynchronous="false">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>
+</sequence-diagram>

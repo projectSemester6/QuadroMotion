@@ -13,7 +13,6 @@ public class Ready extends State {
 	
 	public void takeOff(){
 		System.out.println("Ready + command take off = Hovering");
-		model.setTakeOffCommand(true);
 	}
 	
 	public void noHands(){

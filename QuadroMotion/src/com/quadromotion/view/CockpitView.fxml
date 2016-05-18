@@ -53,5 +53,9 @@
             </ImageView>
          </children>
       </Group>
+      <Label layoutX="58.0" layoutY="67.0" text="Battery Level:" />
+      <Label layoutX="58.0" layoutY="92.0" text="Altitude:" />
+      <Label fx:id="altutude" layoutX="165.0" layoutY="92.0" text="0 mm" />
+      <Label fx:id="batLevel" layoutX="165.0" layoutY="67.0" text="0 %" />
    </children>
 </AnchorPane>

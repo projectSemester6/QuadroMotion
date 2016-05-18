@@ -3,6 +3,7 @@ package com.quadromotion.controller;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
+import de.yadrone.base.command.FlightAnimation;
 import de.yadrone.base.command.LEDAnimation;
 
 /**
@@ -16,6 +17,7 @@ import de.yadrone.base.command.LEDAnimation;
  */
 public class ARDroneCommander implements IARDroneCommander {
 
+	private boolean isConnected;
 	/**
 	 * The drone
 	 */
@@ -37,7 +39,7 @@ public class ARDroneCommander implements IARDroneCommander {
 		drone.start();
 		initialize();
 	}
-	
+
 	/**
 	 * Constructor II
 	 * 
@@ -54,35 +56,42 @@ public class ARDroneCommander implements IARDroneCommander {
 	 */
 	private void initialize() {
 		cmd = drone.getCommandManager();
-		cmd.setMaxAltitude(1500);
+		cmd.setMaxAltitude(2000);
+		cmd.setMinAltitude(80);
+		isConnected = cmd.isConnected();
 	}
 
 	/**
 	 * move the drone in every direction
 	 * 
 	 * @param speedX
-	 *            the speed in direction X, can be positive (right) or negative (left)
+	 *            the speed in direction X, can be positive (forward) or
+	 *            negative (backward)
 	 * @param speedY
-	 *            the speed in direction Y, can be positive (forward) or negative (backward)
+	 *            the speed in direction Y, can be positive (right) or negative
+	 *            (left)
 	 * @param speedZ
-	 *            the speed in direction Z, can be positive (up) or negative (down)
+	 *            the speed in direction Z, can be positive (up) or negative
+	 *            (down)
 	 * @param speedSpin
-	 *            the speed to spin, can be positive (clockwise) or negative (counterclockwise)
+	 *            the speed to spin, can be positive (clockwise) or negative
+	 *            (counterclockwise)
 	 */
 	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin) {
-		if (speedX != 0)
-			speedX = perc2float(speedX);
-		if (speedY != 0)
-			speedY = -perc2float(speedY);
-		if (speedZ != 0)
-			speedZ = perc2float(speedZ);
-		if (speedSpin != 0)
-			speedSpin = perc2float(speedSpin);
-		cmd.move(speedX, speedY, speedZ, speedSpin);
-//		cmd.forward(20);
+
+		// speedX = perc2float(speedX);
+		// speedY = -perc2float(speedY);
+		// speedZ = perc2float(speedZ);
+		// speedSpin = perc2float(speedSpin);
+
+		cmd.move(perc2float(speedY), perc2float(-speedX), perc2float(-speedZ), perc2float(speedSpin));
+
+		// cmd.forward(20);
 	}
 
 	private float perc2float(float speed) {
+		if (speed == 0)
+			return 0;
 		return (speed / 100.0f);
 	}
 
@@ -104,9 +113,37 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * sends the landing command
 	 */
 	public void landing() {
-		cmd.landing().doFor(5000);
+		cmd.landing();
+	}
+	
+	/**
+	 * flips ahead
+	 */
+	public void flipAhead(){
+		cmd.animate(FlightAnimation.FLIP_AHEAD);
 	}
 
+	/**
+	 * flips behind
+	 */
+	public void flipBehind(){
+		cmd.animate(FlightAnimation.FLIP_BEHIND);
+	}
+	
+	/**
+	 * flips left
+	 */
+	public void flipLeft(){
+		cmd.animate(FlightAnimation.FLIP_LEFT);
+	}
+	
+	/**
+	 * flips right
+	 */
+	public void flipRight(){
+		cmd.animate(FlightAnimation.FLIP_RIGHT);
+	}
+	
 	/**
 	 * animates the LEDs
 	 */
@@ -120,7 +157,5 @@ public class ARDroneCommander implements IARDroneCommander {
 	public void cleanup() {
 		if (cmd.isConnected() && cmd != null)
 			cmd.close();
-
 	}
-
 }

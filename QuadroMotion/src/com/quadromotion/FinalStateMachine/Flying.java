@@ -13,17 +13,14 @@ private Model model;
 	
 	public void land(){
 		System.out.println("Flying + land  = Ready");
-		model.setLandingCommand(true);
 	}
 	
 	public void noHands(){
 		System.out.println("Flying + noHands  = Hovering");
-		model.setHoverCommand(true);
 	}
 	
 	public void noCommand(){
 		System.out.println("Flying + noCommand  = Hovering");
-		model.setHoverCommand(true);
 	}
 	
 	public void commandMove(){

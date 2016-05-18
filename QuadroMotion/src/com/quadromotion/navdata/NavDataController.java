@@ -1,56 +1,34 @@
 package com.quadromotion.navdata;
 
+import com.quadromotion.model.Model;
+
 import de.yadrone.base.IARDrone;
-import de.yadrone.base.navdata.Altitude;
-import de.yadrone.base.navdata.AltitudeListener;
-import de.yadrone.base.navdata.AttitudeListener;
-import de.yadrone.base.navdata.BatteryListener;
 
 public class NavDataController {
 
-	public NavDataController(IARDrone drone) {
+	private Model model = null;
+	private NavDataListener navDataListener = null;
 
-		/**
-		 * Attitude Listener
-		 */
-		drone.getNavDataManager().addAttitudeListener(new AttitudeListener() {
+	public NavDataController(Model model, IARDrone drone) {
+		this.model = model;
+		this.navDataListener = new NavDataListener(drone, this);
+	}
 
-			public void attitudeUpdated(float pitch, float roll, float yaw) {
-				System.out.println("Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
-			}
+	public void setBatteryLevel(int percentage) {
+		if (percentage != model.getBatLevel())
+			model.setBatLevel(percentage);
+	}
 
-			public void attitudeUpdated(float pitch, float roll) {
-			}
+	public void setAltitude(int altitude) {
+		if (altitude != model.getAltitude())
+			model.setAltitude(altitude);
+	}
 
-			public void windCompensation(float pitch, float roll) {
-			}
-		});
+	public NavDataListener getNavDataListener() {
+		return navDataListener;
+	}
 
-		/**
-		 * Battery Listener
-		 */
-		drone.getNavDataManager().addBatteryListener(new BatteryListener() {
-
-			public void batteryLevelChanged(int percentage) {
-				System.out.println("Battery: " + percentage + " %");
-			}
-
-			public void voltageChanged(int vbat_raw) {
-				System.out.println("Battery voltage: " + vbat_raw + " V");
-			}
-		});
-
-		/**
-		 * Altitude Listener
-		 */
-		drone.getNavDataManager().addAltitudeListener(new AltitudeListener() {
-			public void receivedAltitude(int altitude) {
-				System.out.println("Altitude: " + altitude);
-			}
-
-			public void receivedExtendedAltitude(Altitude d) {
-
-			}
-		});
+	public void setNavDataListener(NavDataListener navDataListener) {
+		this.navDataListener = navDataListener;
 	}
 }

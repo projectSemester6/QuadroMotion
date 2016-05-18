@@ -1,8 +1,8 @@
 package com.quadromotion.model;
 
 import java.util.Observable;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.SimpleFloatProperty;
+
+import com.quadromotion.config.GestureConfig;
 
 /**
  * This class holds the data
@@ -16,16 +16,18 @@ public class Model extends Observable {
 	private float speedY;
 	private float speedZ;
 	private float speedSpin;
-	private boolean takeOffCommand;
-	private boolean landingCommand;
-	private boolean hoverCommand;
-	private boolean isFlying;
-	private boolean isHovering;
-	private boolean isConnected;
-	private boolean isTakingOff;
-	private boolean isLanding;
+
+	private int batLevel;
+	private int altitude;
+	private int timeUntilTakeOff;
+	private final int TAKE_OFF_DELAY = 2000;
+
+	private int selectedGestureConfig;
+
+	private int pilotingState = 0;
 	
-	private String state = "init";
+	private boolean inputDeviceConnected = false;
+	private boolean droneConnected = false;
 
 	/**
 	 * Constructor
@@ -37,16 +39,12 @@ public class Model extends Observable {
 		this.speedY = 0;
 		this.speedZ = 0;
 		this.speedSpin = 0;
-		this.takeOffCommand = false;
-		this.landingCommand = false;
-		this.hoverCommand = false;
-		this.isFlying = false;
-		this.isHovering = false;
-		this.isConnected = false;
+		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
+		this.selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
 	}
 
 	public float getSpeedX() {
-		return speedX;
+		return this.speedX;
 	}
 
 	public void setSpeedX(float speed) {
@@ -58,7 +56,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedY() {
-		return speedY;
+		return this.speedY;
 	}
 
 	public void setSpeedY(float speed) {
@@ -70,7 +68,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedZ() {
-		return speedZ;
+		return this.speedZ;
 	}
 
 	public void setSpeedZ(float speed) {
@@ -82,7 +80,7 @@ public class Model extends Observable {
 	}
 
 	public float getSpeedSpin() {
-		return speedSpin;
+		return this.speedSpin;
 	}
 
 	public void setSpeedSpin(float speed) {
@@ -93,111 +91,88 @@ public class Model extends Observable {
 		}
 	}
 
-	public boolean getTakeOffCommand() {
-		return takeOffCommand;
+	public int getBatLevel() {
+		return this.batLevel;
 	}
 
-	public void setTakeOffCommand(boolean command) {
-		this.takeOffCommand = command;
+	public void setBatLevel(int value) {
+		this.batLevel = value;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(this.takeOffCommand);
+			notifyObservers(this.batLevel);
 		}
 	}
 
-	public boolean getLandingCommand() {
-		return landingCommand;
+	public int getAltitude() {
+		return this.altitude;
 	}
 
-	public void setLandingCommand(boolean command) {
-		this.landingCommand = command;
+	public String getAltitudeString() {
+		return String.valueOf(this.altitude);
+	}
+
+	public void setAltitude(int value) {
+		this.altitude = value;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(this.landingCommand);
+			notifyObservers(this.altitude);
 		}
 	}
 
-	public boolean getHoverCommand() {
-		return hoverCommand;
+	public int getTimeUntilTakeOff() {
+		return this.timeUntilTakeOff;
 	}
 
-	public void setHoverCommand(boolean command) {
-		this.hoverCommand = command;
+	public void setTimeUntilTakeOff(int timeUntilTakeOff) {
+		this.timeUntilTakeOff = timeUntilTakeOff;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(this.hoverCommand);
+			notifyObservers(this.timeUntilTakeOff);
 		}
 	}
 
-	public boolean isHovering() {
-		return isHovering;
+	public int getTAKE_OFF_DELAY() {
+		return this.TAKE_OFF_DELAY;
 	}
 
-	public void setIsHovering(boolean state) {
-		this.isHovering = state;
+	public int getSelectedConfig() {
+		return this.selectedGestureConfig;
+	}
+
+	public void setSelectedConfig(int gestureConfig) {
+		this.selectedGestureConfig = gestureConfig;
+	}
+
+	public int getPilotingState() {
+		return this.pilotingState;
+	}
+
+	public void setPilotingState(int pilotingState) {
+		this.pilotingState = pilotingState;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers(state);
+			notifyObservers(this.pilotingState);
 		}
 	}
 
-	public boolean isFlying() {
-		return isFlying;
+	public boolean isInputDeviceConnected() {
+		return this.inputDeviceConnected;
 	}
 
-	public void setIsFlying(boolean state) {
-		this.isFlying = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
+	public void setInputDeviceConnected(boolean inputDeviceState) {
+		this.inputDeviceConnected = inputDeviceState;
 	}
 
-	public boolean isConnected() {
-		return isConnected;
+	public boolean isDroneConnected() {
+		return droneConnected;
 	}
 
-	public void setIsConnected(boolean state) {
-		this.isConnected = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
+	public void setDroneConnected(boolean droneConnected) {
+		this.droneConnected = droneConnected;
 	}
 
-	public boolean isTakingOff() {
-		return isTakingOff;
-	}
-
-	public void setTakingOff(boolean state) {
-		this.isTakingOff = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
-	}
-
-	public boolean isLanding() {
-		return isLanding;
-	}
-
-	public void setLanding(boolean state) {
-		this.isLanding = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(state);
-		}
+	@Override
+	public String toString() {
+		return null;
 	}
 }

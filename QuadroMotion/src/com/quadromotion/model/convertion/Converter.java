@@ -1,7 +1,7 @@
 package com.quadromotion.model.convertion;
 
 // converts the input angle value to the output speed 
-public class AngleToSpeedConverter implements IAngleToSpeedConverter {
+public class Converter implements IConverter {
 
 	private float maxAngle;
 	private float maxSpeed;
@@ -17,25 +17,28 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 	 * @param angleOffset
 	 * @param functionExp
 	 */
-	public AngleToSpeedConverter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset,
-			float functionExp) {
+	public Converter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset, float functionExp) {
 		super();
 		this.maxAngle = maxAngle;
 		this.maxSpeed = maxSpeed;
 		this.speedOffset = speedOffset;
 		this.angleOffset = angleOffset;
 		this.functionExp = functionExp;
+
 	}
 
 	@Override
 	public float expConverter(float inputValue) {
-		// TODO exponentielle umrechnung
+
+		if (Math.abs(inputValue) < angleOffset)
+			return 0f;
+		if (inputValue > maxAngle)
+			inputValue = maxAngle;
 
 		boolean inputSign = false;
 
 		float functionSpeed = 0;
 		float functionMaxAngle = 0;
-		
 
 		if (inputValue < 0) {
 			inputSign = true; // signe n�gatif
@@ -45,55 +48,80 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 
 		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)
 		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, functionExp); // y(x)
-																								// =
-																								// ((x-d)/fMA)^p
+		// =
+		// ((x-d)/fMA)^p
 		functionSpeed = functionSpeed * (maxSpeed - speedOffset);// y(x) =
 																	// y(x)*a
+																	//
 		float outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
 
 		/**
 		 * changement de signe
 		 */
 
+		if (outputValue > maxSpeed)
+			outputValue = maxSpeed;
+
 		if (inputSign) {
-			outputValue = -outputValue;// y(x) = -y(x)
+			return -outputValue;
+			// outputValue = -outputValue;// y(x) = -y(x)
 		}
-		
-		if(inputValue < angleOffset) outputValue = 0;
-		
+
 		return outputValue;
 	}
 
 	@Override
 	public float linearConverter(float inputValue) {
 		// TODO lineare umrechnung
-
+		if (Math.abs(inputValue) < angleOffset)
+			return 0;
+		if (inputValue > maxAngle)
+			inputValue = maxAngle;
+		boolean inputSign = false;
+		if (inputValue < 0) {
+			inputSign = true; // signe n�gatif
+		}
 		float slope = 0;
 		float intercept = 0;
 
 		slope = (maxSpeed - speedOffset) / (maxAngle - angleOffset); // a
 		intercept = speedOffset - slope * angleOffset; // b
 
-		float outputValue = slope * inputValue + intercept;// y = a*x + b;
-		
-		if(inputValue < angleOffset) outputValue = 0;
-
+		float outputValue = slope * Math.abs(inputValue) + intercept;// y = a*x
+																		// + b;
+		if (outputValue > maxSpeed)
+			outputValue = maxSpeed;
+		if (inputSign)
+			return -outputValue;
 		return outputValue;
 
 	}
 
 	@Override
-	public float HeavySideConverter(float inputValue) {
+	public float heavySideConverter(float inputValue) {
 
-		if (inputValue > angleOffset) {
-			return maxSpeed;
-		} 
-		return 0;
+		float outputValue = 0;
+		boolean inputSign = false;
 
+		if (inputValue < 0) {
+			inputSign = true; // signe n�gatif
+		}
+		inputValue = Math.abs(inputValue);
+
+		if ((inputValue > angleOffset) && (inputSign == true)) {
+			outputValue = -maxSpeed;
+		}
+		if ((inputValue > angleOffset) && (inputSign == false)) {
+			outputValue = maxSpeed;
+		}
+		if (inputValue < angleOffset) {
+			outputValue = 0;
+		}
+		return outputValue;
 	}
 
 	@Override
-	public float LogarithmConverter(float inputValue) {
+	public float logarithmConverter(float inputValue) {
 
 		boolean inputSign = false;
 
@@ -103,7 +131,7 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		/**
 		 * Ce bordel est a v�rifi� Math�matiquement
 		 */
-		functionExp = 1 / functionExp;
+		float _functionExp = 1 / functionExp;
 
 		if (inputValue < 0) {
 			inputSign = true; // signe n�gatif
@@ -112,9 +140,9 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		inputValue = Math.abs(inputValue);
 
 		functionMaxAngle = maxAngle - angleOffset; // fMA = (b-d)
-		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, functionExp); // y(x)
-																								// =
-																								// ((x-d)/fMA)^p
+		functionSpeed = (float) Math.pow((inputValue - angleOffset) / functionMaxAngle, _functionExp); // y(x)
+		// =
+		// ((x-d)/fMA)^p
 		functionSpeed = functionSpeed * (maxSpeed - speedOffset);// y(x) =
 																	// y(x)*a
 		float outputValue = functionSpeed + speedOffset; // y(x) = y(x) + c
@@ -126,18 +154,10 @@ public class AngleToSpeedConverter implements IAngleToSpeedConverter {
 		if (inputSign) {
 			outputValue = -outputValue;// y(x) = -y(x)
 		}
-		
-		if(inputValue < angleOffset) outputValue = 0;
-		
-		return  outputValue;
-	}
 
-	public float getMaxAngle() {
-		return maxAngle;
-	}
+		if (inputValue < angleOffset)
+			outputValue = 0;
 
-	public float getMaxSpeed() {
-		return maxSpeed;
+		return outputValue;
 	}
-
 }
