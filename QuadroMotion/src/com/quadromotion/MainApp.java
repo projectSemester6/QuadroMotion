@@ -168,16 +168,16 @@ public class MainApp extends Application {
 		return batteryStage;
 	}
 
-	public static void main(String[] args) {
-		try {
-			launch(args);
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		} finally {
-			if (drone != null)
-				drone.stop();
-
-			System.exit(0);
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			launch(args);
+//		} catch (Exception exc) {
+//			exc.printStackTrace();
+//		} finally {
+//			if (drone != null)
+//				drone.stop();
+//
+//			System.exit(0);
+//		}
+//	}
 }

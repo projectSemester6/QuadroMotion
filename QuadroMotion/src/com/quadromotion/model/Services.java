@@ -47,10 +47,10 @@ public class Services {
 			}
 		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 10; i++) {
 			switch (i) {
 			case 0:
-				configList[i] = new Config_1_Two_Hands(convertList);
+				configList[i] = new Config_2_Two_Hands(convertList);
 				break;
 
 			case 1:
@@ -67,8 +67,9 @@ public class Services {
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		int modelValues[] = configList[controller.getSelectedConfig()].convertLeapInput(leap);
-		fsm(modelValues);
+//		int modelValues[] = configList[controller.getSelectedConfig()].convertLeapInput(leap);
+//		fsm(modelValues);
+		fsm(configList[controller.getSelectedConfig()].convertLeapInput(leap));
 	}
 
 	private void fsm(int modelValues[]) {

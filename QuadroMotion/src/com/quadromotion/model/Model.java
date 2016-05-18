@@ -28,6 +28,7 @@ public class Model extends Observable {
 	
 	private boolean inputDeviceConnected = false;
 	private boolean droneConnected = false;
+	private String controlState = "nicht verbunden";
 
 	/**
 	 * Constructor
@@ -174,5 +175,17 @@ public class Model extends Observable {
 	@Override
 	public String toString() {
 		return null;
+	}
+
+	public void setControlState(String string) {
+		this.controlState = string;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers(this.controlState);
+		}
+	}
+
+	public String getControlState() {
+		return this.controlState;
 	}
 }

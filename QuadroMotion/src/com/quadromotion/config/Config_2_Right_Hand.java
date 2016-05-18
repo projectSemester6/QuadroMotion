@@ -54,9 +54,9 @@ public class Config_2_Right_Hand extends ConfigBase {
 						outputValues[i] = 0;
 					break;
 				case 5:
-					if (leap.getRollRightHand() < -100)
-						outputValues[i] = 1; // landingGesture
-					else
+					if (leap.getRollRightHand() < -100){
+						//outputValues[i] = 1; // landingGesture
+					}else
 						outputValues[i] = 0;
 					break;
 				case 6:
@@ -67,6 +67,9 @@ public class Config_2_Right_Hand extends ConfigBase {
 					break;
 				}
 			}
+		}
+		else if (leap.getRightHand() && leap.getLeftHand()) {
+			outputValues[5] = 1; // landingGesture
 		}
 		return outputValues;
 	}

@@ -1,6 +1,7 @@
 package com.quadromotion.navdata;
 
 import com.quadromotion.model.Model;
+import com.quadromotion.pilotingstates.PilotingStates;
 
 import de.yadrone.base.IARDrone;
 
@@ -30,5 +31,16 @@ public class NavDataController {
 
 	public void setNavDataListener(NavDataListener navDataListener) {
 		this.navDataListener = navDataListener;
+	}
+
+	public void setControlState(String string) {
+		if (!string.equals(model.getControlState())) {
+			model.setControlState(string);
+//			if (string.equals("LANDED"))
+//				model.setPilotingState(PilotingStates.STATE_2_READY);
+//			else if(string.equals("HOVERING"))
+//				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
+			
+		}
 	}
 }
