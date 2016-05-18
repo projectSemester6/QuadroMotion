@@ -1,7 +1,7 @@
 package com.quadromotion.controller;
 
 /**
- * This Interface defines the methods needed for the communication with the drone.
+ * Diese Schnittstelle definiert alle notwendigen Methoden zum Steuern der Drohne.
  * @author Gabriel
  *
  */

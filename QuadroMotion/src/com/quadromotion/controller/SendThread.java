@@ -19,7 +19,7 @@ public class SendThread extends Thread implements Observer {
 	private Model model = null;
 	private Model m = null;
 
-	private ARDroneCommander droneCommander = null;
+	private IARDroneCommander droneCommander = null;
 
 	/**
 	 * Constructor
@@ -35,7 +35,7 @@ public class SendThread extends Thread implements Observer {
 		this.droneCommander = new ARDroneCommander(drone);
 
 		this.model = model;
-		this.model.addObserver(this);
+		model.addObserver(this);
 	}
 
 	@Override

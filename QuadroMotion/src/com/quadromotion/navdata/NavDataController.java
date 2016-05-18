@@ -36,10 +36,10 @@ public class NavDataController {
 	public void setControlState(String string) {
 		if (!string.equals(model.getControlState())) {
 			model.setControlState(string);
-			if (string.equals("LANDED"))
-				model.setPilotingState(PilotingStates.STATE_2_READY);
-			else if(string.equals("HOVERING"))
-				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
+//			if (string.equals("LANDED"))
+//				model.setPilotingState(PilotingStates.STATE_2_READY);
+//			else if(string.equals("HOVERING"))
+//				model.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			
 		}
 	}

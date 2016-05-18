@@ -67,8 +67,9 @@ public class Services {
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		int modelValues[] = configList[controller.getSelectedConfig()].convertLeapInput(leap);
-		fsm(modelValues);
+//		int modelValues[] = configList[controller.getSelectedConfig()].convertLeapInput(leap);
+//		fsm(modelValues);
+		fsm(configList[controller.getSelectedConfig()].convertLeapInput(leap));
 	}
 
 	private void fsm(int modelValues[]) {

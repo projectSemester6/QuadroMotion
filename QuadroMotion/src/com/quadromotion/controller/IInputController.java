@@ -8,7 +8,7 @@ package com.quadromotion.controller;
 public interface IInputController {
 
 	/**
-	 * Stores the speed of every direction in the model.
+	 * Speichert alle Geschwindigkeiten im model.
 	 * @param speedX
 	 * @param speedY
 	 * @param speedZ
@@ -22,17 +22,21 @@ public interface IInputController {
 	public int getPilotingState();
 
 	/**
-	 * Sets the current piloting state.
+	 * Sets the piloting state.
 	 * @param pilotingState
 	 */
 	public void setPilotingState(int pilotingState);
 
 	/**
-	 * Gets the current flying configureation
+	 * Gets the current flying configureation.
 	 * @return the selected flying configuration
 	 */
 	public int getSelectedConfig();
 	
+	/**
+	 * Sets the flying configuration.
+	 * @param config the configuration
+	 */
 	public void setSelectedConfig(int config);
 
 	/**
