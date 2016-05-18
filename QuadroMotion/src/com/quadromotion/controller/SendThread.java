@@ -16,8 +16,8 @@ import de.yadrone.base.IARDrone;
  *
  */
 public class SendThread extends Thread implements Observer {
-	private Model model = null;
-	private Model m = null;
+//	private Model model = null;
+//	private Model m = null;
 
 	private IARDroneCommander droneCommander = null;
 
@@ -34,7 +34,7 @@ public class SendThread extends Thread implements Observer {
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
 
-		this.model = model;
+//		this.model = model;
 		model.addObserver(this);
 	}
 
@@ -76,7 +76,7 @@ public class SendThread extends Thread implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		m = (Model) o;
+		Model m = (Model) o;
 		if (arg instanceof Float) {
 			if ((float) arg == m.getBatLevel() || (float) arg == m.getAltitude()
 					|| (float) arg == m.getTimeUntilTakeOff())

@@ -1,5 +1,7 @@
 package com.quadromotion.config;
 
+import java.util.ArrayList;
+
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
 
@@ -7,10 +9,15 @@ public class Config_3_Left_Hand extends ConfigBase {
 
 	private static final int COUNT_HANDS = 1;
 	private Converter convertList[] = new Converter[4];
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
 
 	public Config_3_Left_Hand(Converter convertList[]) {
 		super();
 		this.convertList = convertList;
+	}
+
+	public Config_3_Left_Hand(ArrayList<Converter> converterList) {
+		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
@@ -18,7 +25,9 @@ public class Config_3_Left_Hand extends ConfigBase {
 		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
 //		System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
-		if (leap.getLeftHand() && !leap.getRightHand()) {
+		if (leap.getRightHand() && leap.getLeftHand()) {
+			outputValues[5] = 1; // landingGesture
+		} else if (leap.getLeftHand() && !leap.getRightHand()) {
 			for (int i = 0; i < 4; i++) {
 				switch (i) {
 				case 0:
@@ -42,7 +51,7 @@ public class Config_3_Left_Hand extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].expConverter(speedValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).expConverter(speedValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
@@ -50,14 +59,10 @@ public class Config_3_Left_Hand extends ConfigBase {
 				case 4:
 					if (leap.getYawLeftHand() > 35)
 						outputValues[i] = 1; // takeOffGesture
-					else
-						outputValues[i] = 0;
 					break;
 				case 5:
 					if (leap.getRollLeftHand() > 100)
-						outputValues[i] = 1; // landingGesture
-					else
-						outputValues[i] = 0;
+//						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:
 					// countHands

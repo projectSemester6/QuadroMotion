@@ -1,5 +1,7 @@
 package com.quadromotion.config;
 
+import java.util.ArrayList;
+
 import com.quadromotion.gestures.LeapMotion;
 import com.quadromotion.model.convertion.Converter;
 
@@ -7,10 +9,15 @@ public class Config_2_Two_Hands extends ConfigBase {
 
 	private static final int COUNTHANDS = 2;
 	private Converter convertList[] = new Converter[4];
-
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
+	
 	public Config_2_Two_Hands(Converter convertList[]) {
 		super();
 		this.convertList = convertList;
+	}
+
+	public Config_2_Two_Hands(ArrayList<Converter> converterList) {
+		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
@@ -37,7 +44,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].expConverter(leapValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).expConverter(leapValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
