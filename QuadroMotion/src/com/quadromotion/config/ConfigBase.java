@@ -4,9 +4,9 @@ import com.quadromotion.gestures.LeapMotion;
 
 public abstract class ConfigBase {
 
-	public ConfigBase() {
-
-	}
+//	public ConfigBase() {
+//
+//	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
 		System.err.println("error");

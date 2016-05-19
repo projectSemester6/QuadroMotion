@@ -39,8 +39,8 @@ public class Services {
 				OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN));
 
 		configList.add(new Config_2_Two_Hands(converterList));
-		configList.add(new Config_2_Right_Hand(converterList));
-		configList.add(new Config_3_Left_Hand(converterList));
+		configList.add(new Config_5_Right_Hand(converterList));
+		configList.add(new Config_6_Left_Hand(converterList));
 		// for (int i = 0; i < 4; i++) {
 		// switch (i) {
 		//
