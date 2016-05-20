@@ -74,7 +74,8 @@ public class LeapMotion extends Listener {
 		GestureList gestures = frame.gestures();
 
 		if (anzahlHaenden > 0) {
-
+			rightHand = false;
+			leftHand = false;
 			// Get hands
 			for (Hand hand : frame.hands()) {
 
@@ -83,6 +84,7 @@ public class LeapMotion extends Listener {
 				Vector normal = hand.palmNormal();
 				Vector direction = hand.direction();
 				Vector handCenter = hand.palmPosition();
+				
 
 				if (hand.isRight()) {
 					rightHand = hand.isRight();

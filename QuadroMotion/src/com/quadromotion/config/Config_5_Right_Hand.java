@@ -24,7 +24,7 @@ public class Config_5_Right_Hand extends ConfigBase {
 
 		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-		 System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
+//		 System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
 		if (leap.getRightHand() && leap.getLeftHand()) {
 			outputValues[5] = 1; // landingGesture
 		} else if (leap.getRightHand() && !leap.getLeftHand()) {
