@@ -41,6 +41,7 @@ public class App {
 		initDrone();
 		drone.start();
 		sender.start();
+//		new VideoListener(drone);
 	}
 
 	private void initLeap() {
@@ -52,7 +53,6 @@ public class App {
 	}
 
 	private void initView() {
-//		new VideoListener(drone);
 		viewController = new MainViewController(model, drone);
 		viewController.setApp(this);
 		viewController.showView();

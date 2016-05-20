@@ -54,7 +54,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 35)
+					if (leap.getYawLeftHand() > 45)
 						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:
