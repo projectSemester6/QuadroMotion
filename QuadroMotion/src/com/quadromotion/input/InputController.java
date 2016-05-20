@@ -1,9 +1,9 @@
-package com.quadromotion.controller;
+package com.quadromotion.input;
 
 import com.quadromotion.model.Model;
 
 /**
- * The input controller which stores the input of the input device to the model.
+ * The input controller which saves the input of the input device to the model.
  * @author Gabriel
  *
  */

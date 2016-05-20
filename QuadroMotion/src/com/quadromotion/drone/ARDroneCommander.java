@@ -1,4 +1,4 @@
-package com.quadromotion.controller;
+package com.quadromotion.drone;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
@@ -15,9 +15,8 @@ import de.yadrone.base.command.LEDAnimation;
  * @param CommandManager
  *            the drone command manager
  */
-public class ARDroneCommander implements IARDroneCommander {
+public class ARDroneCommander {
 
-	private boolean isConnected;
 	/**
 	 * The drone
 	 */
@@ -27,6 +26,8 @@ public class ARDroneCommander implements IARDroneCommander {
 	 * The command manager
 	 */
 	private CommandManager cmd = null;
+
+	private boolean isConnected;
 
 	/**
 	 * Constructor I
@@ -49,16 +50,6 @@ public class ARDroneCommander implements IARDroneCommander {
 	public ARDroneCommander(IARDrone drone) {
 		this.drone = drone;
 		initialize();
-	}
-
-	/**
-	 * Initializes the command manager
-	 */
-	private void initialize() {
-		cmd = drone.getCommandManager();
-		cmd.setMaxAltitude(2000);
-		cmd.setMinAltitude(60);
-		isConnected = cmd.isConnected();
 	}
 
 	/**
@@ -89,10 +80,11 @@ public class ARDroneCommander implements IARDroneCommander {
 		// cmd.forward(20);
 	}
 
-	private float perc2float(float speed) {
-		if (speed == 0)
-			return 0;
-		return (speed / 100.0f);
+	/**
+	 * sends the take off command
+	 */
+	public void takeOff() {
+		cmd.takeOff();
 	}
 
 	/**
@@ -103,47 +95,46 @@ public class ARDroneCommander implements IARDroneCommander {
 	}
 
 	/**
-	 * sends the take off command
-	 */
-	public void takeOff() {
-		cmd.takeOff();
-	}
-
-	/**
 	 * sends the landing command
 	 */
 	public void landing() {
 		cmd.landing();
 	}
-	
+
+	private float perc2float(float speed) {
+		if (speed == 0)
+			return 0;
+		return (speed / 100.0f);
+	}
+
 	/**
 	 * flips ahead
 	 */
-	public void flipAhead(){
+	public void flipAhead() {
 		cmd.animate(FlightAnimation.FLIP_AHEAD);
 	}
 
 	/**
 	 * flips behind
 	 */
-	public void flipBehind(){
+	public void flipBehind() {
 		cmd.animate(FlightAnimation.FLIP_BEHIND);
 	}
-	
+
 	/**
 	 * flips left
 	 */
-	public void flipLeft(){
+	public void flipLeft() {
 		cmd.animate(FlightAnimation.FLIP_LEFT);
 	}
-	
+
 	/**
 	 * flips right
 	 */
-	public void flipRight(){
+	public void flipRight() {
 		cmd.animate(FlightAnimation.FLIP_RIGHT);
 	}
-	
+
 	/**
 	 * animates the LEDs
 	 */
@@ -157,5 +148,15 @@ public class ARDroneCommander implements IARDroneCommander {
 	public void cleanup() {
 		if (cmd.isConnected() && cmd != null)
 			cmd.close();
+	}
+
+	/**
+	 * Initializes the command manager
+	 */
+	private void initialize() {
+		cmd = drone.getCommandManager();
+		cmd.setMaxAltitude(2000);
+		cmd.setMinAltitude(60);
+		isConnected = cmd.isConnected();
 	}
 }

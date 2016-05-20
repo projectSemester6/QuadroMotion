@@ -1,4 +1,4 @@
-package com.quadromotion.controller;
+package com.quadromotion.input;
 
 /**
  * The interface between the input device and the model class.
@@ -17,7 +17,7 @@ public interface IInputController {
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin);
 
 	/**
-	 * gets the current piloting state
+	 * Gets the current piloting state
 	 */
 	public int getPilotingState();
 

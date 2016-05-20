@@ -1,4 +1,4 @@
-package com.quadromotion.controller;
+package com.quadromotion.drone;
 
 /**
  * Diese Schnittstelle definiert alle notwendigen Methoden zum Steuern der Drohne.
@@ -17,14 +17,14 @@ public interface IARDroneCommander {
 	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin);
 	
 	/**
-	 * This method is needed to send the hover command
-	 */
-	public void hover();
-	
-	/**
 	 * This method is needed to send the take off command
 	 */
 	public void takeOff();
+	
+	/**
+	 * This method is needed to send the hover command
+	 */
+	public void hover();
 	
 	/**
 	 * This method is needed to send the landing command

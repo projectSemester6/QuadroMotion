@@ -1,6 +1,4 @@
-package com.quadromotion.gestures;
-
-import javax.management.ServiceNotFoundException;
+package com.quadromotion.input;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Controller;
@@ -8,10 +6,11 @@ import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
-import com.quadromotion.model.Services;
+import com.quadromotion.service.Services;
 
 public class LeapMotion extends Listener {
 
+	private Services services = null;
 	private int anzahlHaenden = 0;
 	private boolean rightHand;
 	private boolean leftHand;
@@ -32,34 +31,9 @@ public class LeapMotion extends Listener {
 	private float linkSide = 0; // X direcgion of leap motion
 	private float linkForBack = 0; // Z direcgion of leap motion
 
-	private Services services = null;
-
 	public LeapMotion(Services s) {
 		super();
 		this.services = s;
-	}
-
-	public void onInit(Controller controller) {
-		System.out.println("Leap initialized");
-	}
-
-	public void onConnect(Controller controller) {
-		System.out.println("Connected");
-		// controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
-		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
-		services.setLeapConnected(true);
-	}
-
-	public void onDisconnect(Controller controller) {
-		// Note: not dispatched when running in a debugger.
-		System.out.println("Disconnected");
-		services.setLeapConnected(false);
-	}
-
-	public void onExit(Controller controller) {
-		System.out.println("Exited");
 	}
 
 	/**
@@ -118,6 +92,28 @@ public class LeapMotion extends Listener {
 		services.computeGestures(this);
 	}
 
+	public void onInit(Controller controller) {
+		System.out.println("Leap initialized");
+	}
+
+	public void onConnect(Controller controller) {
+		System.out.println("Connected");
+		// controller.enableGesture(Gesture.Type.TYPE_SWIPE);
+		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
+		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+		services.setLeapConnected(true);
+	}
+
+	public void onDisconnect(Controller controller) {
+		// Note: not dispatched when running in a debugger.
+		System.out.println("Disconnected");
+		services.setLeapConnected(false);
+	}
+
+	public void onExit(Controller controller) {
+		System.out.println("Exited");
+	}
 
 	public float getPitchRightHand() {
 		return rechtPitch;

@@ -2,19 +2,19 @@ package com.quadromotion.config;
 
 import java.util.ArrayList;
 
-import com.quadromotion.gestures.LeapMotion;
-import com.quadromotion.model.convertion.Converter;
+import com.quadromotion.input.LeapMotion;
+import com.quadromotion.service.Converter;
 
 public class Config_5_Right_Hand extends ConfigBase {
 
 	private static final int COUNT_HANDS = 1;
-	private Converter convertList[] = new Converter[4];
+//	private Converter convertList[] = new Converter[4];
 	private ArrayList<Converter> converterList = new ArrayList<Converter>();
 
-	public Config_5_Right_Hand(Converter convertList[]) {
-		super();
-		this.convertList = convertList;
-	}
+//	public Config_5_Right_Hand(Converter convertList[]) {
+//		super();
+//		this.convertList = convertList;
+//	}
 
 	public Config_5_Right_Hand(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
@@ -51,7 +51,7 @@ public class Config_5_Right_Hand extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) converterList.get(i).expConverter(speedValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).convert(speedValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {

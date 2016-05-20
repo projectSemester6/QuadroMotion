@@ -1,7 +1,7 @@
 package com.quadromotion.config;
 
-import com.quadromotion.gestures.LeapMotion;
-import com.quadromotion.model.convertion.Converter;
+import com.quadromotion.input.LeapMotion;
+import com.quadromotion.service.Converter;
 
 public class Config_3_Two_Hands extends ConfigBase {
 
@@ -37,7 +37,7 @@ public class Config_3_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].logarithmConverter(leapValues[i]); // speed
+				outputValues[i] = (int) convertList[i].convert(leapValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {

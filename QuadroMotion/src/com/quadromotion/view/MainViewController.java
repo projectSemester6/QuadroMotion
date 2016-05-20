@@ -33,14 +33,14 @@ public class MainViewController {
 		app.run();
 	}
 	
+	public void setDroneConnected(boolean connection){
+		model.setDroneConnected(connection);
+	}
+	
 	public void disconnect(){
 		app.cleanup();
 	}
 	
-	public void setDroneConnected(boolean connection){
-		model.setDroneConnected(connection);
-	}
-
 	public Model getModel() {
 		return model;
 	}

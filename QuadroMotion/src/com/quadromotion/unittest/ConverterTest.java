@@ -14,7 +14,7 @@ public class ConverterTest {
 	@Test
 	public void testExpConverter() {
 		Converter convert = new Converter(70, 50, 10, 0, 2.1f);
-		assertEquals("exponentiell", 50, convert.expConverter(80), 0.5);
+		assertEquals("exponentiell", 50, convert.convert(80), 0.5);
 	}
 
 	@Test

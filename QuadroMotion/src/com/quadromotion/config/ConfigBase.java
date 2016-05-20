@@ -1,6 +1,6 @@
 package com.quadromotion.config;
 
-import com.quadromotion.gestures.LeapMotion;
+import com.quadromotion.input.LeapMotion;
 
 public abstract class ConfigBase {
 

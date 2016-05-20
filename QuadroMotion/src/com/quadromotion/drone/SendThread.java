@@ -1,10 +1,9 @@
-package com.quadromotion.controller;
+package com.quadromotion.drone;
 
 import java.util.Observable;
 import java.util.Observer;
 
 import com.quadromotion.model.Model;
-import com.quadromotion.navdata.*;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 import de.yadrone.base.IARDrone;
@@ -16,10 +15,10 @@ import de.yadrone.base.IARDrone;
  *
  */
 public class SendThread extends Thread implements Observer {
-//	private Model model = null;
-//	private Model m = null;
+	// private Model model = null;
+	// private Model m = null;
 
-	private IARDroneCommander droneCommander = null;
+	private ARDroneCommander droneCommander = null;
 
 	/**
 	 * Constructor
@@ -34,13 +33,8 @@ public class SendThread extends Thread implements Observer {
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
 
-//		this.model = model;
+		// this.model = model;
 		model.addObserver(this);
-	}
-
-	@Override
-	public void run() {
-
 	}
 
 	/**
@@ -81,8 +75,13 @@ public class SendThread extends Thread implements Observer {
 			if ((float) arg == m.getBatLevel() || (float) arg == m.getAltitude()
 					|| (float) arg == m.getTimeUntilTakeOff())
 				return;
-		} 
+		}
 		if (m.isInputDeviceConnected())
 			sendCommand(m);
+	}
+
+	@Override
+	public void run() {
+
 	}
 }

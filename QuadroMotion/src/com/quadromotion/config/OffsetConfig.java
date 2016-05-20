@@ -30,12 +30,12 @@ public class OffsetConfig {
 	public static final float MAX_HAND_THRUST = 30;
 	public static final float HAND_THRUST_OFFSET = 140;
 	
-	/**
-	 * 
-	 */
-	public OffsetConfig(){
-		
-	}
+//	/**
+//	 * 
+//	 */
+//	public OffsetConfig(){
+//		
+//	}
 	
 
 }

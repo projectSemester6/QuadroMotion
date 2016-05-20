@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.quadromotion.config.GestureConfig;
-import com.quadromotion.controller.InputController;
-import com.quadromotion.gestures.KeyBoardCommands;
+import com.quadromotion.input.InputController;
+import com.quadromotion.input.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
 public class ConfigPanel extends JPanel {

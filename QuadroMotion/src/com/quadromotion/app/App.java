@@ -1,14 +1,12 @@
 package com.quadromotion.app;
 
 import com.leapmotion.leap.Controller;
-import com.quadromotion.controller.SendThread;
-import com.quadromotion.controller.InputController;
-import com.quadromotion.gestures.LeapMotion;
+import com.quadromotion.drone.SendThread;
+import com.quadromotion.input.*;
 import com.quadromotion.model.Model;
-import com.quadromotion.model.Services;
+import com.quadromotion.service.Services;
 import com.quadromotion.navdata.*;
 import com.quadromotion.view.*;
-import com.quadromotion.gestures.*;
 
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
@@ -28,7 +26,7 @@ public class App {
 	private LeapMotion leap = null;
 	private Services service = null;
 	private MainViewController viewController = null;
-	private NavDataController navDataController = null; 
+//	private NavDataController navDataController = null; 
 
 	public App() {
 		this.model = new Model();

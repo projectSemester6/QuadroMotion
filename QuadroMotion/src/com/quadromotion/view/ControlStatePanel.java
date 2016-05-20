@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.quadromotion.gestures.KeyBoardCommands;
+import com.quadromotion.input.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
 public class ControlStatePanel extends JPanel implements Observer {

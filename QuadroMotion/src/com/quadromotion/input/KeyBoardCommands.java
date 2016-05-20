@@ -1,5 +1,5 @@
 
-package com.quadromotion.gestures;
+package com.quadromotion.input;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-import com.quadromotion.controller.*;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 public class KeyBoardCommands extends JFrame implements KeyListener {
@@ -88,15 +87,6 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		this.pack();
 		this.setLocation(700, 100);
 		this.setSize(300, 150);
-	}
-
-	public void anzeigen(boolean v) {
-		this.setVisible(v);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
 	}
 
 	@Override
@@ -251,16 +241,24 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		// break;
 		default:
 			if (controller.getPilotingState() != PilotingStates.STATE_2_READY){
-				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				controller.setSpeed(0, 0, 0, 0);
+				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			}
 			break;
 		}
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	public void anzeigen(boolean v) {
+		this.setVisible(v);
+	}
+	
 	public void setInputController(IInputController controller) {
 		this.controller = controller;
-
 	}
 
 	public boolean isExit() {

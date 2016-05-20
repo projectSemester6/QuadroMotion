@@ -1,12 +1,9 @@
-package com.quadromotion.model;
+package com.quadromotion.service;
 
 import java.util.ArrayList;
 
 import com.quadromotion.config.*;
-import com.quadromotion.controller.IInputController;
-import com.quadromotion.controller.InputController;
-import com.quadromotion.gestures.LeapMotion;
-import com.quadromotion.model.convertion.Converter;
+import com.quadromotion.input.*;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 public class Services {

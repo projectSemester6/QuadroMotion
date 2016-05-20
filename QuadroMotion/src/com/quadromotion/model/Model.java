@@ -114,10 +114,10 @@ public class Model extends Observable {
 
 	public void setAltitude(int value) {
 		this.altitude = value;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(this.altitude);
-		}
+//		if (countObservers() > 0) {
+//			setChanged();
+//			notifyObservers(this.altitude);
+//		}
 	}
 
 	public int getTimeUntilTakeOff() {
