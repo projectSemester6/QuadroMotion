@@ -57,7 +57,7 @@ public class ARDroneCommander implements IARDroneCommander {
 	private void initialize() {
 		cmd = drone.getCommandManager();
 		cmd.setMaxAltitude(2000);
-		cmd.setMinAltitude(80);
+		cmd.setMinAltitude(60);
 		isConnected = cmd.isConnected();
 	}
 
