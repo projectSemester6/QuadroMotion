@@ -29,20 +29,20 @@ public class ARDroneCommander {
 
 	private boolean isConnected;
 
-	/**
-	 * Constructor I
-	 * 
-	 * @param drone
-	 *            the drone
-	 */
-	public ARDroneCommander() {
-		this.drone = new ARDrone();
-		drone.start();
-		initialize();
-	}
+//	/**
+//	 * Constructor I
+//	 * 
+//	 * @param drone
+//	 *            the drone
+//	 */
+//	public ARDroneCommander() {
+//		this.drone = new ARDrone();
+//		drone.start();
+//		initialize();
+//	}
 
 	/**
-	 * Constructor II
+	 * Constructor I
 	 * 
 	 * @param drone
 	 *            the drone

@@ -58,7 +58,6 @@ public class LeapMotion extends Listener {
 				Vector normal = hand.palmNormal();
 				Vector direction = hand.direction();
 				Vector handCenter = hand.palmPosition();
-				
 
 				if (hand.isRight()) {
 					rightHand = hand.isRight();
@@ -90,6 +89,11 @@ public class LeapMotion extends Listener {
 			leftHand = false;
 		}
 		services.computeGestures(this);
+//		try {
+//			Thread.sleep(100);
+//		} catch (Exception ignore) {
+//
+//		}
 	}
 
 	public void onInit(Controller controller) {
@@ -119,46 +123,37 @@ public class LeapMotion extends Listener {
 		return rechtPitch;
 	}
 
-
 	public float getRollRightHand() {
 		return rechtRoll;
 	}
-
 
 	public float getYawRightHand() {
 		return rechtYaw;
 	}
 
-
 	public float getThrustRightHand() {
 		return rechtThrust;
 	}
 
-	
 	public float getSphereRadiusRightHand() {
 		return rechtSphereRadius;
 	}
-
 
 	public float getPitchLeftHand() {
 		return linkPitch;
 	}
 
-
 	public float getRollLeftHand() {
 		return linkRoll;
 	}
-
 
 	public float getYawLeftHand() {
 		return linkYaw;
 	}
 
-
 	public float getThrustLeftHand() {
 		return linkThrust;
 	}
-
 
 	public float getSpehreRadiusLeftHand() {
 		return linkSphereRadius;

@@ -43,6 +43,17 @@ public class Model extends Observable {
 		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
 		this.selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
 	}
+	
+	public void setSpeed(float speedX, float speedY, float speedZ, float speedSpin){
+		this.speedX = speedX;
+		this.speedY = speedY;
+		this.speedZ = speedZ;
+		this.speedSpin = speedSpin;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers();
+		}
+	}
 
 	public float getSpeedX() {
 		return this.speedX;

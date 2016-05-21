@@ -21,10 +21,11 @@ public class InputController implements IInputController{
 
 	@Override
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin) {
-		model.setSpeedX(speedX);
-		model.setSpeedY(speedY);
-		model.setSpeedZ(speedZ);
-		model.setSpeedSpin(speedSpin);
+//		model.setSpeedX(speedX);
+//		model.setSpeedY(speedY);
+//		model.setSpeedZ(speedZ);
+//		model.setSpeedSpin(speedSpin);
+		model.setSpeed(speedX, speedY, speedZ, speedSpin);
 	}
 
 	@Override
