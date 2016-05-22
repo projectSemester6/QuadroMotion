@@ -14,9 +14,18 @@ import de.yadrone.base.IARDrone;
  * @author Gabriel
  *
  */
-public class SendThread extends Thread implements Observer {
+public class SendThread implements Observer, Runnable {
 	// private Model model = null;
-	// private Model m = null;
+//	private Model m = null;
+	private float speedx = 0;
+	private float speedy = 0;
+	private float speedz = 0;
+	private float speedspin = 0;
+	private int state = 0;
+	
+	private boolean changed;
+
+	private int rate = 2; // aktualisierungsrate in ms
 
 	private ARDroneCommander droneCommander = null;
 
@@ -32,7 +41,8 @@ public class SendThread extends Thread implements Observer {
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
 		this.droneCommander = new ARDroneCommander(drone);
-
+//		m = model;
+		changed = false;
 		// this.model = model;
 		model.addObserver(this);
 	}
@@ -40,9 +50,9 @@ public class SendThread extends Thread implements Observer {
 	/**
 	 * sends the commands to the droneCommander
 	 */
-	private synchronized void sendCommand(Model m) {
+	private void sendCommand() {
 
-		switch (m.getPilotingState()) {
+		switch (state) {
 		case PilotingStates.STATE_1_INIT:
 			break;
 		case PilotingStates.STATE_2_READY:
@@ -56,7 +66,7 @@ public class SendThread extends Thread implements Observer {
 			droneCommander.hover();
 			break;
 		case PilotingStates.STATE_6_FLYING:
-			droneCommander.moveDrone(m.getSpeedX(), m.getSpeedY(), m.getSpeedZ(), m.getSpeedSpin());
+			droneCommander.moveDrone(speedx,speedy, speedz, speedspin);
 			break;
 		case PilotingStates.STATE_7_LANDING:
 			droneCommander.landing();
@@ -71,17 +81,35 @@ public class SendThread extends Thread implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
-		if (arg instanceof Float) {
-			if ((float) arg == m.getBatLevel() || (float) arg == m.getAltitude()
-					|| (float) arg == m.getTimeUntilTakeOff())
-				return;
+		if (m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
+				|| m.getPilotingState() == PilotingStates.STATE_5_HOVERING
+				|| m.getPilotingState() == PilotingStates.STATE_6_FLYING
+				|| m.getPilotingState() == PilotingStates.STATE_7_LANDING) {
+			speedx = m.getSpeedX();
+			speedy = m.getSpeedY();
+			speedz = m.getSpeedZ();
+			speedspin = m.getSpeedSpin();
+			state = m.getPilotingState();
+			changed = true;
 		}
-		if (m.isInputDeviceConnected())
-			sendCommand(m);
 	}
 
 	@Override
 	public void run() {
-
+		boolean stop = false;
+		while (!stop) {
+			try {
+				if (changed) {
+					System.out.println(changed);
+					System.out.println("SendThread: "+ System.currentTimeMillis());
+					sendCommand();
+					changed = false;
+				}
+				Thread.sleep(rate);
+			} catch (Exception ignore) {
+				stop = true;
+				droneCommander.cleanup();
+			}
+		}
 	}
 }

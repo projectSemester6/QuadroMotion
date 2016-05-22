@@ -16,6 +16,9 @@ public class StatePanel extends JPanel implements Observer {
 
 	private JRadioButton[] states = { null, null, null, null, null, null, null };
 	private String[] stateNames = { "Off", "Init", "Bereit", "Abheben", "Schweben", "Fliegen", "Landen" };
+	private long timeNow;
+	private long timeStamp = 0;
+	private int rate = 0;
 
 	public StatePanel(Model m) {
 		m.addObserver(this);
@@ -43,17 +46,23 @@ public class StatePanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		timeNow = System.currentTimeMillis();
 		Model m = (Model) o;
 		
-		states[0].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_0_OFF));
-		states[1].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_1_INIT));
-		states[2].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_2_READY));
-		states[3].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_3_TAKINGOFF,
-				PilotingStates.STATE_4_WAITINGTAKEOFF));
-		states[4].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_5_HOVERING));
-		states[5].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_6_FLYING));
-		states[6].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_7_LANDING,
-				PilotingStates.STATE_8_WAITINGLANDING));
+		if (timeNow - timeStamp >= rate || m.getSelectedConfig() == 3) {
+//			System.out.println(timeNow - timeStamp);
+			timeStamp = timeNow;
+			
+			states[0].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_0_OFF));
+			states[1].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_1_INIT));
+			states[2].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_2_READY));
+			states[3].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_3_TAKINGOFF,
+					PilotingStates.STATE_4_WAITINGTAKEOFF));
+			states[4].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_5_HOVERING));
+			states[5].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_6_FLYING));
+			states[6].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_7_LANDING,
+					PilotingStates.STATE_8_WAITINGLANDING));
+		}
 	}
 
 	private boolean checkState(int currentState, int state) {

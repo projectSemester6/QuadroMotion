@@ -2,7 +2,7 @@ package com.quadromotion.input;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.GestureList;
+//import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
@@ -31,6 +31,9 @@ public class LeapMotion extends Listener {
 	private float linkSide = 0; // X direcgion of leap motion
 	private float linkForBack = 0; // Z direcgion of leap motion
 
+	private long timeStamp = 0;
+	private long timeNow;
+
 	public LeapMotion(Services s) {
 		super();
 		this.services = s;
@@ -41,11 +44,11 @@ public class LeapMotion extends Listener {
 	 *            frame
 	 */
 	public void onFrame(Controller controller) {
-
+		timeStamp = System.currentTimeMillis();
 		Frame frame = controller.frame();
 
 		setAnzahlHaenden(frame.hands().count());
-		GestureList gestures = frame.gestures();
+		// GestureList gestures = frame.gestures();
 
 		if (anzahlHaenden > 0) {
 			rightHand = false;
@@ -80,20 +83,20 @@ public class LeapMotion extends Listener {
 					setLinkSide(handCenter.getX());
 					setLinkForBack(handCenter.getZ());
 				}
-
-				if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
-				}
 			}
 		} else {
 			rightHand = false;
 			leftHand = false;
 		}
 		services.computeGestures(this);
-//		try {
-//			Thread.sleep(100);
-//		} catch (Exception ignore) {
-//
-//		}
+		try {
+			Thread.sleep(20);
+		} catch (Exception ignore) {
+
+		}
+		timeNow = System.currentTimeMillis();
+		System.out.println("onFrame: "+(timeNow-timeStamp));
+		System.out.println("LeapMotion: "+ System.currentTimeMillis());
 	}
 
 	public void onInit(Controller controller) {
@@ -107,12 +110,14 @@ public class LeapMotion extends Listener {
 		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
 		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
 		services.setLeapConnected(true);
+		services.computeGestures(this);
 	}
 
 	public void onDisconnect(Controller controller) {
 		// Note: not dispatched when running in a debugger.
 		System.out.println("Disconnected");
 		services.setLeapConnected(false);
+		services.computeGestures(this);
 	}
 
 	public void onExit(Controller controller) {

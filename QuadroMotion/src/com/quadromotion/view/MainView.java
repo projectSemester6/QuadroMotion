@@ -35,7 +35,7 @@ public class MainView extends JFrame {
 
 		this.controller = controller;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("QuadroMotion Data");
+		setTitle("QuadroMotion");
 
 		JButton connectionButton = new JButton("Drohne verbinden");
 		JPanel statePanel = new StatePanel(model);

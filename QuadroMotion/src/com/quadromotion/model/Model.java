@@ -51,7 +51,7 @@ public class Model extends Observable {
 		this.speedSpin = speedSpin;
 		if (countObservers() > 0) {
 			setChanged();
-			notifyObservers();
+			notifyObservers("speed");
 		}
 	}
 

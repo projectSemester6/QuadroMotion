@@ -8,6 +8,9 @@ import com.quadromotion.service.Services;
 import com.quadromotion.navdata.*;
 import com.quadromotion.view.*;
 
+import de.yadrone.apps.controlcenter.CCFrame;
+import de.yadrone.apps.controlcenter.plugins.video.VideoCanvas;
+import de.yadrone.apps.controlcenter.plugins.video.VideoPanel;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
@@ -33,14 +36,14 @@ public class App {
 	}
 
 	public void boot() {
-		initLeap();
 		initView();
+		initLeap();
 	}
 	
 	public void run() {
 		initDrone();
 		drone.start();
-		sender.start();
+//		sender.start();
 //		new VideoListener(drone);
 	}
 
@@ -62,7 +65,8 @@ public class App {
 
 	private void initDrone() {
 		drone = new ARDrone();
-		sender = new SendThread("Sender", model, drone);
+		new Thread(new SendThread("Sender", model, drone)).start();
+//		sender = new SendThread("Sender", model, drone);
 		new NavDataController(model, drone);
 	}
 

@@ -23,6 +23,9 @@ public class DataPanel extends JPanel implements Observer {
 	JLabel altitudeValue;
 	JLabel timeUntilTakeOffLabel;
 	JLabel timeUntilTakeOffValue;
+	private long timeStamp = 0;
+	private long timeNow;
+	private int rate = 10;
 
 	public DataPanel(Model m) {
 
@@ -145,15 +148,20 @@ public class DataPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		timeNow = System.currentTimeMillis();
 		Model m = (Model) o;
-
-		speedXValue.setText(String.valueOf((int) m.getSpeedX()) + " %");
-		speedYValue.setText(String.valueOf((int) m.getSpeedY()) + " %");
-		speedZValue.setText(String.valueOf((int) m.getSpeedZ()) + " %");
-		speedSpinValue.setText(String.valueOf((int) m.getSpeedSpin()) + " %");
-		batteryLevelValue.setValue((int) m.getBatLevel());
-		altitudeValue.setText(m.getAltitudeString() + " mm");
-		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
+		
+		if (timeNow - timeStamp >= rate || m.getSelectedConfig() == 3) {
+//			System.out.println(timeNow - timeStamp);
+			timeStamp = timeNow;
+			
+			speedXValue.setText(String.valueOf((int) m.getSpeedX()) + " %");
+			speedYValue.setText(String.valueOf((int) m.getSpeedY()) + " %");
+			speedZValue.setText(String.valueOf((int) m.getSpeedZ()) + " %");
+			speedSpinValue.setText(String.valueOf((int) m.getSpeedSpin()) + " %");
+			batteryLevelValue.setValue((int) m.getBatLevel());
+			altitudeValue.setText(m.getAltitudeString() + " mm");
+			timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
+		}
 	}
-
 }

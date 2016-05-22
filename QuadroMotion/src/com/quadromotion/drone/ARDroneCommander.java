@@ -29,17 +29,17 @@ public class ARDroneCommander {
 
 	private boolean isConnected;
 
-//	/**
-//	 * Constructor I
-//	 * 
-//	 * @param drone
-//	 *            the drone
-//	 */
-//	public ARDroneCommander() {
-//		this.drone = new ARDrone();
-//		drone.start();
-//		initialize();
-//	}
+	// /**
+	// * Constructor I
+	// *
+	// * @param drone
+	// * the drone
+	// */
+	// public ARDroneCommander() {
+	// this.drone = new ARDrone();
+	// drone.start();
+	// initialize();
+	// }
 
 	/**
 	 * Constructor I
@@ -148,6 +148,7 @@ public class ARDroneCommander {
 	public void cleanup() {
 		if (cmd.isConnected() && cmd != null)
 			cmd.close();
+		drone.stop();
 	}
 
 	/**
@@ -155,7 +156,7 @@ public class ARDroneCommander {
 	 */
 	private void initialize() {
 		cmd = drone.getCommandManager();
-		cmd.setMaxAltitude(2000);
+		cmd.setMaxAltitude(3000);
 		cmd.setMinAltitude(60);
 		isConnected = cmd.isConnected();
 	}

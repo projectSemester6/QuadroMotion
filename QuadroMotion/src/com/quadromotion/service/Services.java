@@ -113,8 +113,9 @@ public class Services {
 
 		case PilotingStates.STATE_1_INIT:
 			startTakeOffCommandTime = 0;
-			controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
-			
+			if (controller.getTimeUntilTakeOff() != controller.getTAKE_OFF_DELAY())
+				controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
+
 			// if (countHands ==
 			// configList[controller.getSelectedConfig()].getCountHands())
 			if (countHands == configList.get(controller.getSelectedConfig()).getCountHands())
@@ -122,7 +123,7 @@ public class Services {
 			break;
 
 		case PilotingStates.STATE_2_READY:
-			
+
 			// if (countHands !=
 			// configList[controller.getSelectedConfig()].getCountHands()) {
 			if (countHands != configList.get(controller.getSelectedConfig()).getCountHands()) {
