@@ -17,36 +17,50 @@
  */
 package com.quadromotion.config;
 
+import java.util.ArrayList;
+
 import com.quadromotion.input.LeapMotion;
 import com.quadromotion.service.Converter;
 
-public class Config_1_Two_Hands extends ConfigBase {
+public class Config_6_Left_Hand extends ConfigBase {
 
-	private static final int COUNTHANDS = 2;
-	private Converter convertList[] = new Converter[4];
+	private static final int COUNT_HANDS = 1;
+//	private Converter convertList[] = new Converter[4];
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
 
-	public Config_1_Two_Hands(Converter convertList[]) {
-		super();
-		this.convertList = convertList;
+//	public Config_6_Left_Hand(Converter convertList[]) {
+//		super();
+//		this.convertList = convertList;
+//	}
+
+	public Config_6_Left_Hand(ArrayList<Converter> converterList) {
+		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
-		int leapValues[] = { 0, 0, 0, 0 };
+
+		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-		if (leap.getLeftHand() && leap.getRightHand()) {
+//		System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
+		if (leap.getRightHand() && leap.getLeftHand()) {
+			outputValues[5] = 1; // landingGesture
+		} else if (leap.getLeftHand() && !leap.getRightHand()) {
 			for (int i = 0; i < 4; i++) {
 				switch (i) {
 				case 0:
-					leapValues[i] = (int) leap.getPitchRightHand(); // speedX
+					speedValues[i] = (int) leap.getPitchLeftHand(); // speedX,
+																	// forward/backward
 					break;
 				case 1:
-					leapValues[i] = (int) leap.getRollRightHand(); // speedY
+					speedValues[i] = (int) leap.getRollLeftHand(); // speedY,
+																	// right/left
 					break;
 				case 2:
-					leapValues[i] = (int) leap.getPitchLeftHand(); // speedZ
+					speedValues[i] = (int) (leap.getThrustLeftHand() - OffsetConfig.HAND_THRUST_OFFSET) / 2; // speedZ,
+					// down/up
 					break;
 				case 3:
-					leapValues[i] = (int) leap.getRollLeftHand(); // speedSpin
+					speedValues[i] = (int) leap.getYawLeftHand(); // speedSpin
 					break;
 				default:
 					break;
@@ -54,21 +68,22 @@ public class Config_1_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].convert(leapValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).convert(speedValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
 				switch (i) {
 				case 4:
-					if (leap.getYawRightHand() < -35)
+					if (leap.getYawLeftHand() > 35)
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 35)
-						outputValues[i] = 1; // landingGesture
+					if (leap.getRollLeftHand() > 100)
+//						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:
-					outputValues[i] = leap.getAnzahlHaenden(); // countHands
+					// countHands
+					outputValues[i] = 1;
 					break;
 				default:
 					break;
@@ -79,6 +94,7 @@ public class Config_1_Two_Hands extends ConfigBase {
 	}
 
 	public int getCountHands() {
-		return COUNTHANDS;
+		return COUNT_HANDS;
 	}
+
 }

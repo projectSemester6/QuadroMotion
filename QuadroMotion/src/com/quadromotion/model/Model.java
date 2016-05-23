@@ -1,3 +1,20 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.model;
 
 import java.util.Observable;
@@ -25,7 +42,7 @@ public class Model extends Observable {
 	private int selectedGestureConfig;
 
 	private int pilotingState = 0;
-	
+
 	private boolean inputDeviceConnected = false;
 	private boolean droneConnected = false;
 	private String controlState = "nicht verbunden";
@@ -42,6 +59,17 @@ public class Model extends Observable {
 		this.speedSpin = 0;
 		this.timeUntilTakeOff = this.TAKE_OFF_DELAY;
 		this.selectedGestureConfig = GestureConfig.CONFIG_1_TWO_HANDS;
+	}
+
+	public void setSpeed(float speedX, float speedY, float speedZ, float speedSpin) {
+		this.speedX = speedX;
+		this.speedY = speedY;
+		this.speedZ = speedZ;
+		this.speedSpin = speedSpin;
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers("speed");
+		}
 	}
 
 	public float getSpeedX() {
@@ -114,10 +142,10 @@ public class Model extends Observable {
 
 	public void setAltitude(int value) {
 		this.altitude = value;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(this.altitude);
-		}
+		// if (countObservers() > 0) {
+		// setChanged();
+		// notifyObservers(this.altitude);
+		// }
 	}
 
 	public int getTimeUntilTakeOff() {
@@ -170,6 +198,11 @@ public class Model extends Observable {
 
 	public void setDroneConnected(boolean droneConnected) {
 		this.droneConnected = droneConnected;
+
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 	@Override

@@ -1,9 +1,26 @@
-package com.quadromotion.controller;
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.quadromotion.input;
 
 import com.quadromotion.model.Model;
 
 /**
- * The input controller which stores the input of the input device to the model.
+ * The input controller which saves the input of the input device to the model.
  * @author Gabriel
  *
  */
@@ -21,10 +38,11 @@ public class InputController implements IInputController{
 
 	@Override
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin) {
-		model.setSpeedX(speedX);
-		model.setSpeedY(speedY);
-		model.setSpeedZ(speedZ);
-		model.setSpeedSpin(speedSpin);
+//		model.setSpeedX(speedX);
+//		model.setSpeedY(speedY);
+//		model.setSpeedZ(speedZ);
+//		model.setSpeedSpin(speedSpin);
+		model.setSpeed(speedX, speedY, speedZ, speedSpin);
 	}
 
 	@Override

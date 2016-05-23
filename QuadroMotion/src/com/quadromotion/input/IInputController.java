@@ -1,4 +1,21 @@
-package com.quadromotion.controller;
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.quadromotion.input;
 
 /**
  * The interface between the input device and the model class.
@@ -17,7 +34,7 @@ public interface IInputController {
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin);
 
 	/**
-	 * gets the current piloting state
+	 * Gets the current piloting state
 	 */
 	public int getPilotingState();
 

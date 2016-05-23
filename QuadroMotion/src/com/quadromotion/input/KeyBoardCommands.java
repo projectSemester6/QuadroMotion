@@ -1,5 +1,21 @@
-
-package com.quadromotion.gestures;
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.quadromotion.input;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -14,7 +30,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-import com.quadromotion.controller.*;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 public class KeyBoardCommands extends JFrame implements KeyListener {
@@ -88,15 +103,6 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		this.pack();
 		this.setLocation(700, 100);
 		this.setSize(300, 150);
-	}
-
-	public void anzeigen(boolean v) {
-		this.setVisible(v);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
 	}
 
 	@Override
@@ -251,16 +257,24 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		// break;
 		default:
 			if (controller.getPilotingState() != PilotingStates.STATE_2_READY){
-				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 				controller.setSpeed(0, 0, 0, 0);
+				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			}
 			break;
 		}
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	public void anzeigen(boolean v) {
+		this.setVisible(v);
+	}
+	
 	public void setInputController(IInputController controller) {
 		this.controller = controller;
-
 	}
 
 	public boolean isExit() {

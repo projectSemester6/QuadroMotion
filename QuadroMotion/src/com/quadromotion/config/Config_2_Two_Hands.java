@@ -1,16 +1,40 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.config;
 
-import com.quadromotion.gestures.LeapMotion;
-import com.quadromotion.model.convertion.Converter;
+import java.util.ArrayList;
+
+import com.quadromotion.input.LeapMotion;
+import com.quadromotion.service.Converter;
 
 public class Config_2_Two_Hands extends ConfigBase {
 
 	private static final int COUNTHANDS = 2;
 	private Converter convertList[] = new Converter[4];
-
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
+	
 	public Config_2_Two_Hands(Converter convertList[]) {
 		super();
 		this.convertList = convertList;
+	}
+
+	public Config_2_Two_Hands(ArrayList<Converter> converterList) {
+		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
@@ -37,7 +61,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].expConverter(leapValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).convert(leapValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
@@ -47,7 +71,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 35)
+					if (leap.getYawLeftHand() > 45)
 						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:

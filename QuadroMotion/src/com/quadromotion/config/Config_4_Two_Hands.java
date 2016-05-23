@@ -1,7 +1,24 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.config;
 
-import com.quadromotion.gestures.LeapMotion;
-import com.quadromotion.model.convertion.Converter;
+import com.quadromotion.input.LeapMotion;
+import com.quadromotion.service.Converter;
 
 public class Config_4_Two_Hands extends ConfigBase {
 
@@ -37,7 +54,7 @@ public class Config_4_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].heavySideConverter(leapValues[i]); // speed
+				outputValues[i] = (int) convertList[i].convert(leapValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {

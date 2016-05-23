@@ -1,3 +1,20 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.view;
 
 import java.awt.GridBagConstraints;
@@ -35,9 +52,10 @@ public class MainView extends JFrame {
 
 		this.controller = controller;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("QuadroMotion Data");
+		setTitle("QuadroMotion");
 
 		JButton connectionButton = new JButton("Drohne verbinden");
+		controller.setConnectionButton(connectionButton);
 		JPanel statePanel = new StatePanel(model);
 		JPanel dataPanel = new DataPanel(model);
 		JPanel configPanel = new ConfigPanel(model);
@@ -89,18 +107,7 @@ public class MainView extends JFrame {
 		connectionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(e.getActionCommand());
-				if (!controller.getModel().isDroneConnected()){
-					connectionButton.setSelected(false);
-					connectionButton.setText("Drohne verbunden");
-					controller.connect();
-					controller.setDroneConnected(true);
-					connectionButton.removeActionListener(this);
-				}	
-//				else{
-//					controller.disconnect();
-//					controller.setDroneConnected(false);
-//					connectionButton.setText("Drohne verbinden");
-//				}	
+				controller.connectionButtonChanged(connectionButton);
 			}
 		});
 

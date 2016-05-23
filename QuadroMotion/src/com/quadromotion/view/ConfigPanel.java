@@ -1,3 +1,20 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.view;
 
 import java.awt.GridBagConstraints;
@@ -10,8 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import com.quadromotion.config.GestureConfig;
-import com.quadromotion.controller.InputController;
-import com.quadromotion.gestures.KeyBoardCommands;
+import com.quadromotion.input.InputController;
+import com.quadromotion.input.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
 public class ConfigPanel extends JPanel {
