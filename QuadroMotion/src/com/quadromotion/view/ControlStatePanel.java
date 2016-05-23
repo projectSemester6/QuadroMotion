@@ -15,10 +15,12 @@ import com.quadromotion.model.Model;
 public class ControlStatePanel extends JPanel implements Observer {
 
 	JLabel controlState;
+	JLabel connected;
 	
 	public ControlStatePanel(Model m) {
 		m.addObserver(this);
-		controlState = new JLabel("nicht verbunden");
+		controlState = new JLabel(m.getControlState());
+		connected = new JLabel(String.valueOf(m.isDroneConnected()));
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Control state:"));
 		this.setSize(80, 80);
@@ -31,11 +33,18 @@ public class ControlStatePanel extends JPanel implements Observer {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		this.add(controlState, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		this.add(new JLabel("Drohne verbunden: "), gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		this.add(connected, gbc);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
 			controlState.setText(m.getControlState());
+			connected.setText(String.valueOf(m.isDroneConnected()));
 	}
 }

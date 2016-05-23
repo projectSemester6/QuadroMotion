@@ -38,6 +38,7 @@ public class MainView extends JFrame {
 		setTitle("QuadroMotion");
 
 		JButton connectionButton = new JButton("Drohne verbinden");
+		controller.setConnectionButton(connectionButton);
 		JPanel statePanel = new StatePanel(model);
 		JPanel dataPanel = new DataPanel(model);
 		JPanel configPanel = new ConfigPanel(model);
@@ -89,18 +90,7 @@ public class MainView extends JFrame {
 		connectionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(e.getActionCommand());
-				if (!controller.getModel().isDroneConnected()){
-					connectionButton.setSelected(false);
-					connectionButton.setText("Drohne verbunden");
-					controller.connect();
-					controller.setDroneConnected(true);
-					connectionButton.removeActionListener(this);
-				}	
-//				else{
-//					controller.disconnect();
-//					controller.setDroneConnected(false);
-//					connectionButton.setText("Drohne verbinden");
-//				}	
+				controller.connectionButtonChanged(connectionButton);
 			}
 		});
 

@@ -181,6 +181,11 @@ public class Model extends Observable {
 
 	public void setDroneConnected(boolean droneConnected) {
 		this.droneConnected = droneConnected;
+		
+		if (countObservers() > 0) {
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 	@Override
