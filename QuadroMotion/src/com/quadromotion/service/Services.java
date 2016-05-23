@@ -25,8 +25,6 @@ import com.quadromotion.pilotingstates.PilotingStates;
 
 public class Services {
 
-	// private Converter convertList[] = new Converter[4];
-	// private ConfigBase configList[] = new ConfigBase[10];
 	private ArrayList<Converter> converterList = new ArrayList<Converter>();
 	private ArrayList<ConfigBase> configList = new ArrayList<ConfigBase>();
 
@@ -52,63 +50,12 @@ public class Services {
 		converterList.add(new Converter(OffsetConfig.MAX_ANGLE_SPIN, OffsetConfig.MAX_SPEED_SPIN,
 				OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN));
 
-		configList.add(new Config_2_Two_Hands(converterList));
+		configList.add(new Config_1_Two_Hands(converterList));
 		configList.add(new Config_5_Right_Hand(converterList));
-		configList.add(new Config_6_Left_Hand(converterList));
-		// for (int i = 0; i < 4; i++) {
-		// switch (i) {
-		//
-		// case 0:
-		// convertList[i] = new Converter(OffsetConfig.MAX_ANGLE_X,
-		// OffsetConfig.MAX_SPEED_X,
-		// OffsetConfig.SPEED_OFFSET_X, OffsetConfig.ANGLE_OFFSET_X,
-		// OffsetConfig.FUNCTION_EXP_X);
-		// break;
-		// case 1:
-		// convertList[i] = new Converter(OffsetConfig.MAX_ANGLE_Y,
-		// OffsetConfig.MAX_SPEED_Y,
-		// OffsetConfig.SPEED_OFFSET_Y, OffsetConfig.ANGLE_OFFSET_Y,
-		// OffsetConfig.FUNCTION_EXP_Y);
-		// break;
-		// case 2:
-		// convertList[i] = new Converter(OffsetConfig.MAX_ANGLE_Z,
-		// OffsetConfig.MAX_SPEED_Z,
-		// OffsetConfig.SPEED_OFFSET_Z, OffsetConfig.ANGLE_OFFSET_Z,
-		// OffsetConfig.FUNCTION_EXP_Z);
-		// break;
-		// case 3:
-		// convertList[i] = new Converter(OffsetConfig.MAX_ANGLE_SPIN,
-		// OffsetConfig.MAX_SPEED_SPIN,
-		// OffsetConfig.SPEED_OFFSET_SPIN, OffsetConfig.ANGLE_OFFSET_SPIN,
-		// OffsetConfig.FUNCTION_EXP_SPIN);
-		// break;
-		// }
-		// }
-
-		// for (int i = 0; i < 10; i++) {
-		// switch (i) {
-		// case 0:
-		// configList[i] = new Config_2_Two_Hands(converterList);
-		// break;
-		//
-		// case 1:
-		// configList[i] = new Config_2_Right_Hand(convertList);
-		// break;
-		//
-		// case 2:
-		// configList[i] = new Config_3_Left_Hand(convertList);
-		// break;
-		// default:
-		// break;
-		// }
-		// }
+		configList.add(new Config_2_Two_Hands(converterList));
 	}
 
 	public void computeGestures(LeapMotion leap) {
-		// int modelValues[] =
-		// configList[controller.getSelectedConfig()].convertLeapInput(leap);
-		// fsm(modelValues);
-		// fsm(configList[controller.getSelectedConfig()].convertLeapInput(leap));
 		fsm(configList.get(controller.getSelectedConfig()).convertLeapInput(leap));
 	}
 
@@ -133,16 +80,12 @@ public class Services {
 			if (controller.getTimeUntilTakeOff() != controller.getTAKE_OFF_DELAY())
 				controller.setTimeUntilTakeOff(controller.getTAKE_OFF_DELAY());
 
-			// if (countHands ==
-			// configList[controller.getSelectedConfig()].getCountHands())
 			if (countHands == configList.get(controller.getSelectedConfig()).getCountHands())
 				controller.setPilotingState(PilotingStates.STATE_2_READY);
 			break;
 
 		case PilotingStates.STATE_2_READY:
 
-			// if (countHands !=
-			// configList[controller.getSelectedConfig()].getCountHands()) {
 			if (countHands != configList.get(controller.getSelectedConfig()).getCountHands()) {
 				controller.setPilotingState(PilotingStates.STATE_1_INIT);
 			}
@@ -171,7 +114,7 @@ public class Services {
 
 		case PilotingStates.STATE_4_WAITINGTAKEOFF:
 			if ((System.currentTimeMillis() - startTakeOffTime) > TAKEOFF_LAND_DELAY
-					* 1000/* && model.getAltitude() > 0 */)
+					* 1000)
 				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			break;
 
@@ -182,8 +125,6 @@ public class Services {
 				break;
 			}
 
-			// else if (countHands !=
-			// configList[controller.getSelectedConfig()].getCountHands()) {
 			else if (countHands != configList.get(controller.getSelectedConfig()).getCountHands()) {
 				if (startHoveringWithoutHandsTime == 0)
 					startHoveringWithoutHandsTime = System.currentTimeMillis();
@@ -211,8 +152,6 @@ public class Services {
 				break;
 			}
 
-			// if ((countHands !=
-			// configList[controller.getSelectedConfig()].getCountHands())
 			if (countHands != configList.get(controller.getSelectedConfig()).getCountHands()
 					|| (speedX == 0 && speedY == 0 && speedZ == 0 && speedSpin == 0)) {
 				setSpeedToZero();

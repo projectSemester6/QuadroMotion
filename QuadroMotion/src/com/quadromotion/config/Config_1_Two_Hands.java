@@ -17,17 +17,19 @@
  */
 package com.quadromotion.config;
 
+import java.util.ArrayList;
+
 import com.quadromotion.input.LeapMotion;
 import com.quadromotion.service.Converter;
 
 public class Config_1_Two_Hands extends ConfigBase {
 
 	private static final int COUNTHANDS = 2;
-	private Converter convertList[] = new Converter[4];
-
-	public Config_1_Two_Hands(Converter convertList[]) {
-		super();
-		this.convertList = convertList;
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
+//	private final String NAME = "2-Hand-Steuerung";
+	
+	public Config_1_Two_Hands(ArrayList<Converter> converterList) {
+		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
@@ -54,7 +56,7 @@ public class Config_1_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) convertList[i].convert(leapValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).convert(leapValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
@@ -64,7 +66,7 @@ public class Config_1_Two_Hands extends ConfigBase {
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 35)
+					if (leap.getYawLeftHand() > 45)
 						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:

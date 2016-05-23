@@ -43,11 +43,11 @@ public class ConfigPanel extends JPanel {
 	 */
 	public ConfigPanel(Model m) {
 		JRadioButton[] config = { null, null, null, null };
-		String[] configNames = { "2-Hand-Steuerung", "Rechte-Hand-Steuerung", "Linke-Hand-Steuerung",
+		String[] configNames = { "2-Hand-Steuerung", "Rechte-Hand-Steuerung", "2-Hand-Steuerung-Yaw",
 				"Tastatur-Steuerung" };
 
 		this.setLayout(new GridBagLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Config:"));
+		this.setBorder(BorderFactory.createTitledBorder("Konfigurationswahl:"));
 
 		// create the radio buttons
 		for (int i = 0; i < configNames.length; i++) {

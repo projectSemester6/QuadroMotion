@@ -61,6 +61,10 @@ public class MainViewController {
 	}
 
 	public void disconnect() {
+		model.setControlState("-");
+		setDroneConnected(false);
+		connectionButton.setText("Drohne verbinden");
+		model.setBatLevel(0);
 		app.cleanup();
 	}
 
@@ -84,9 +88,7 @@ public class MainViewController {
 			connect();
 			// connectionButton.removeActionListener(this);
 		} else {
-			setDroneConnected(false);
 			disconnect();
-			connectionButton.setText("Drohne verbinden");
 		}
 
 	}

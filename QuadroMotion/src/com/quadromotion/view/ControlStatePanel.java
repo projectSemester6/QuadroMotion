@@ -39,22 +39,22 @@ public class ControlStatePanel extends JPanel implements Observer {
 		controlState = new JLabel(m.getControlState());
 		connected = new JLabel(String.valueOf(m.isDroneConnected()));
 		this.setLayout(new GridBagLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Control state:"));
+		this.setBorder(BorderFactory.createTitledBorder("Kontrollstatus:"));
 		this.setSize(80, 80);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 
 		gbc.gridx = 0;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		this.add(new JLabel("Status der Drohne: "), gbc);
 		gbc.gridx = 1;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		this.add(controlState, gbc);
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		this.add(new JLabel("Drohne verbunden: "), gbc);
 		gbc.gridx = 1;
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		this.add(connected, gbc);
 	}
 
@@ -63,5 +63,6 @@ public class ControlStatePanel extends JPanel implements Observer {
 		Model m = (Model) o;
 			controlState.setText(m.getControlState());
 			connected.setText(String.valueOf(m.isDroneConnected()));
+			if(!m.isDroneConnected()) controlState.setText("-");
 	}
 }

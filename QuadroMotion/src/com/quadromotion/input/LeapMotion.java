@@ -112,8 +112,8 @@ public class LeapMotion extends Listener {
 
 		}
 		timeNow = System.currentTimeMillis();
-		System.out.println("onFrame: "+(timeNow-timeStamp));
-		System.out.println("LeapMotion: "+ System.currentTimeMillis());
+//		System.out.println("onFrame: "+(timeNow-timeStamp));
+//		System.out.println("LeapMotion: "+ System.currentTimeMillis());
 	}
 
 	public void onInit(Controller controller) {

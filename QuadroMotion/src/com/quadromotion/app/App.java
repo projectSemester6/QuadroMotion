@@ -101,6 +101,7 @@ public class App {
 					 System.out.println("Message: " + exc.getClass().getSimpleName());
 					if (exc.getClass().getSimpleName().contains("NavDataException")||exc.getClass().getSimpleName().contains("CommandException")) {
 						cleanup();
+						model.setControlState("-");
 						model.setDroneConnected(false);
 						viewController.getConnectionButton().setText("Drohne verbinden");
 					}

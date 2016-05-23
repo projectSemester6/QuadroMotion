@@ -25,13 +25,8 @@ import com.quadromotion.service.Converter;
 public class Config_2_Two_Hands extends ConfigBase {
 
 	private static final int COUNTHANDS = 2;
-	private Converter convertList[] = new Converter[4];
 	private ArrayList<Converter> converterList = new ArrayList<Converter>();
-	
-	public Config_2_Two_Hands(Converter convertList[]) {
-		super();
-		this.convertList = convertList;
-	}
+//	private final String NAME = "2-Hand-Steuerung-Yaw";
 
 	public Config_2_Two_Hands(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
@@ -53,7 +48,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 					leapValues[i] = (int) leap.getPitchLeftHand(); // speedZ
 					break;
 				case 3:
-					leapValues[i] = (int) leap.getRollLeftHand(); // speedSpin
+					leapValues[i] = (int) -leap.getYawLeftHand(); // speedSpin
 					break;
 				default:
 					break;
@@ -71,7 +66,7 @@ public class Config_2_Two_Hands extends ConfigBase {
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 45)
+					if (leap.getYawRightHand() < -35)
 						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:

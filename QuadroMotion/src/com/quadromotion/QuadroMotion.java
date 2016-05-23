@@ -39,11 +39,9 @@ public class QuadroMotion {
 			app.boot();
 		} catch (Exception exc) {
 			exc.printStackTrace();
-
 			app.cleanup();
 			System.exit(-1);
 		}
-
 	}
 
 	public static void main(String[] args) {

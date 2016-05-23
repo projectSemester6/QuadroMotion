@@ -25,13 +25,8 @@ import com.quadromotion.service.Converter;
 public class Config_5_Right_Hand extends ConfigBase {
 
 	private static final int COUNT_HANDS = 1;
-//	private Converter convertList[] = new Converter[4];
 	private ArrayList<Converter> converterList = new ArrayList<Converter>();
-
-//	public Config_5_Right_Hand(Converter convertList[]) {
-//		super();
-//		this.convertList = convertList;
-//	}
+//	private final String NAME = "Rechte-Hand-Steuerung";
 
 	public Config_5_Right_Hand(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
@@ -41,7 +36,6 @@ public class Config_5_Right_Hand extends ConfigBase {
 
 		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-//		 System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
 		if (leap.getRightHand() && leap.getLeftHand()) {
 			outputValues[5] = 1; // landingGesture
 		} else if (leap.getRightHand() && !leap.getLeftHand()) {
@@ -76,14 +70,8 @@ public class Config_5_Right_Hand extends ConfigBase {
 				case 4:
 					if (leap.getYawRightHand() < -35)
 						outputValues[i] = 1; // takeOffGesture
-					else
-						outputValues[i] = 0;
 					break;
 				case 5:
-					if (leap.getYawRightHand() < -90) {
-//						outputValues[i] = 1; // landingGesture
-					} else
-						outputValues[i] = 0;
 					break;
 				case 6:
 					// countHands

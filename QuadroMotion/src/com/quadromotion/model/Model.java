@@ -45,7 +45,7 @@ public class Model extends Observable {
 
 	private boolean inputDeviceConnected = false;
 	private boolean droneConnected = false;
-	private String controlState = "nicht verbunden";
+	private String controlState = "-";
 
 	/**
 	 * Constructor
