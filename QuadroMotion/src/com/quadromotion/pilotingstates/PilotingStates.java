@@ -17,14 +17,55 @@
  */
 package com.quadromotion.pilotingstates;
 
+/**
+ * This class defines the different states which can be accessed in a static way.
+ * @author Gabriel Urech
+ *
+ */
 public class PilotingStates {
+	
+	/**
+	 * The off state.
+	 */
 	public final static int STATE_0_OFF = 0;
+	
+	/**
+	 * The init state.
+	 */
 	public final static int STATE_1_INIT = 1;
+	
+	/**
+	 * The ready state.
+	 */
 	public final static int STATE_2_READY = 2;
+	
+	/**
+	 * The taking off state.
+	 */
 	public final static int STATE_3_TAKINGOFF = 3;
+	
+	/**
+	 * The waiting for taking off finished state.
+	 */
 	public final static int STATE_4_WAITINGTAKEOFF = 4;
+	
+	/**
+	 * The hovering state.
+	 */
 	public final static int STATE_5_HOVERING = 5;
+	
+	/**
+	 * The flying state.
+	 */
 	public final static int STATE_6_FLYING = 6;
+	
+	/**
+	 * The landing state.
+	 */
 	public final static int STATE_7_LANDING = 7;
+	
+	/**
+	 * The waiting for landing finished state.
+	 */
 	public final static int STATE_8_WAITINGLANDING = 8;
 }

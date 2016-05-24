@@ -41,7 +41,7 @@ public class DataPanel extends JPanel implements Observer {
 	JLabel timeUntilTakeOffLabel;
 	JLabel timeUntilTakeOffValue;
 	private long timeStamp = 0;
-	private long timeNow;
+	private long timeNow = 0;
 	private int rate = 10;
 
 	public DataPanel(Model m) {

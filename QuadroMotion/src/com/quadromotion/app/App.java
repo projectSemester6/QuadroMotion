@@ -17,10 +17,6 @@
  */
 package com.quadromotion.app;
 
-import java.awt.image.BufferedImage;
-
-import javax.swing.SwingUtilities;
-
 import com.leapmotion.leap.Controller;
 import com.quadromotion.drone.SendThread;
 import com.quadromotion.input.*;
@@ -29,21 +25,16 @@ import com.quadromotion.service.Services;
 import com.quadromotion.navdata.*;
 import com.quadromotion.view.*;
 
-import de.yadrone.apps.controlcenter.CCFrame;
-import de.yadrone.apps.controlcenter.plugins.video.VideoCanvas;
-import de.yadrone.apps.controlcenter.plugins.video.VideoPanel;
-import de.yadrone.apps.tutorial.TutorialVideoListener;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.exception.ARDroneException;
 import de.yadrone.base.exception.IExceptionListener;
-import de.yadrone.base.video.ImageListener;
-import de.yadrone.base.video.VideoManager;
 
 /**
- * Diese Klasse enthaelt die boot() und die run() Methode
+ * Diese Klasse verwaltet alle Komponenten und enthaelt die boot() und die run()
+ * Methode zum Booten und Starten der Komponentent
  * 
- * @author Alexis
+ * @author Alexis, Gabriel
  *
  */
 public class App {
@@ -56,23 +47,33 @@ public class App {
 	private LeapMotion leap = null;
 	private Services service = null;
 	private MainViewController viewController = null;
-	// private NavDataController navDataController = null;
 
+	/**
+	 * Constructor
+	 */
 	public App() {
 		this.model = new Model();
 	}
 
+	/**
+	 * kreiert die GUI und alle Komponenten für das Leap Motion
+	 */
 	public void boot() {
 		initView();
 		initLeap();
 	}
 
+	/**
+	 * startet die Drohne
+	 */
 	public void run() {
 		initDrone();
 		drone.start();
-		// sender.start();
-		// new VideoListener(drone);
-		// new TutorialVideoListener(drone);
+		if (sender == null) {
+			sender = new SendThread("Sender", model, drone);
+			t = new Thread(sender);
+			t.start();
+		}
 	}
 
 	private void initLeap() {
@@ -106,11 +107,6 @@ public class App {
 					}
 				}
 			});
-		}
-		if (sender == null) {
-			sender = new SendThread("Sender", model, drone);
-			t = new Thread(sender);
-			t.start();
 		}
 		new NavDataController(model, drone);
 	}

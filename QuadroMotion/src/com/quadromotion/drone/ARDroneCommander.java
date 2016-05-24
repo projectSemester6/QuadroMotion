@@ -17,7 +17,6 @@
  */
 package com.quadromotion.drone;
 
-import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.CommandManager;
 import de.yadrone.base.command.FlightAnimation;
@@ -46,18 +45,6 @@ public class ARDroneCommander {
 
 	private boolean isConnected;
 
-	// /**
-	// * Constructor I
-	// *
-	// * @param drone
-	// * the drone
-	// */
-	// public ARDroneCommander() {
-	// this.drone = new ARDrone();
-	// drone.start();
-	// initialize();
-	// }
-
 	/**
 	 * Constructor I
 	 * 
@@ -70,7 +57,7 @@ public class ARDroneCommander {
 	}
 
 	/**
-	 * move the drone in every direction
+	 * move the drone in every direction.
 	 * 
 	 * @param speedX
 	 *            the speed in direction X, can be positive (forward) or
@@ -79,22 +66,14 @@ public class ARDroneCommander {
 	 *            the speed in direction Y, can be positive (right) or negative
 	 *            (left)
 	 * @param speedZ
-	 *            the speed in direction Z, can be positive (up) or negative
-	 *            (down)
+	 *            the speed in direction Z, can be positive (down) or negative
+	 *            (up)
 	 * @param speedSpin
 	 *            the speed to spin, can be positive (clockwise) or negative
 	 *            (counterclockwise)
 	 */
 	public void moveDrone(float speedX, float speedY, float speedZ, float speedSpin) {
-
-		// speedX = perc2float(speedX);
-		// speedY = -perc2float(speedY);
-		// speedZ = perc2float(speedZ);
-		// speedSpin = perc2float(speedSpin);
-
 		cmd.move(perc2float(speedY), perc2float(-speedX), perc2float(-speedZ), perc2float(speedSpin));
-
-		// cmd.forward(20);
 	}
 
 	/**

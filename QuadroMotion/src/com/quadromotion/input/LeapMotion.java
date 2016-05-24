@@ -126,14 +126,14 @@ public class LeapMotion extends Listener {
 		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
 		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
 		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
-		services.setLeapConnected(true);
+		services.setLeapState(true);
 		services.computeGestures(this);
 	}
 
 	public void onDisconnect(Controller controller) {
 		// Note: not dispatched when running in a debugger.
 		System.out.println("Disconnected");
-		services.setLeapConnected(false);
+		services.setLeapState(false);
 		services.computeGestures(this);
 	}
 
