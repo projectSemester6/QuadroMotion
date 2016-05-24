@@ -115,10 +115,11 @@ public class SendThread implements Observer, Runnable {
 	public void run() {
 		boolean stop = false;
 		while (!stop) {
+			System.out.println("SendThread: "+ System.currentTimeMillis());
 			try {
 				if (changed) {
 					System.out.println(changed);
-					System.out.println("SendThread: "+ System.currentTimeMillis());
+					
 					sendCommand();
 					changed = false;
 				}

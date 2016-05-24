@@ -68,7 +68,8 @@ public class DataPanel extends JPanel implements Observer {
 		JLabel batteryLevelLabel = new JLabel("Battery level:");
 
 		this.setLayout(new GridBagLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Drohnendaten:"));
+
+		this.setBorder(BorderFactory.createTitledBorder("Daten:"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
