@@ -50,6 +50,7 @@ public class App {
 
 	private Model model = null;
 	private SendThread sender = null;
+	private Thread t = null;
 	private IARDrone drone = null;
 	private Controller leapController = null;
 	private LeapMotion leap = null;
@@ -95,20 +96,22 @@ public class App {
 			drone.addExceptionListener(new IExceptionListener() {
 
 				public void exeptionOccurred(ARDroneException exc) {
-					// viewController.disconnect();
-					// exc.printStackTrace();
-					// System.out.println("Suppressed: "+exc.getSuppressed());
-					 System.out.println("Message: " + exc.getClass().getSimpleName());
-					if (exc.getClass().getSimpleName().contains("NavDataException")||exc.getClass().getSimpleName().contains("CommandException")) {
+					System.out.println("Message: " + exc.getClass().getSimpleName());
+					if (exc.getClass().getSimpleName().contains("NavDataException")
+							|| exc.getClass().getSimpleName().contains("CommandException")) {
 						cleanup();
+						model.setControlState("-");
 						model.setDroneConnected(false);
 						viewController.getConnectionButton().setText("Drohne verbinden");
 					}
 				}
 			});
 		}
-		new Thread(new SendThread("Sender", model, drone)).start();
-		// sender = new SendThread("Sender", model, drone);
+		if (sender == null) {
+			sender = new SendThread("Sender", model, drone);
+			t = new Thread(sender);
+			t.start();
+		}
 		new NavDataController(model, drone);
 	}
 
