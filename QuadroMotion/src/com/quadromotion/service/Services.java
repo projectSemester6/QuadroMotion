@@ -28,7 +28,8 @@ import com.quadromotion.pilotingstates.PilotingStates;
  * drone commands using the chosen configuration and handles the commands
  * according to the current state.
  * 
- * @author Gabriel Urech
+ * @author Gabriel Urech<br>
+ *         Alexis Stephan
  *
  */
 public class Services {
@@ -260,19 +261,19 @@ public class Services {
 	private ArrayList<Converter> getConverterList() {
 		ArrayList<Converter> cl = new ArrayList<Converter>();
 
-		// direction x
+		// direction x converter
 		cl.add(new Converter(OffsetConfig.MAX_ANGLE_X, OffsetConfig.MAX_SPEED_X, OffsetConfig.SPEED_OFFSET_X,
 				OffsetConfig.ANGLE_OFFSET_X, OffsetConfig.FUNCTION_EXP_X));
 
-		// direction y
+		// direction y converter
 		cl.add(new Converter(OffsetConfig.MAX_ANGLE_Y, OffsetConfig.MAX_SPEED_Y, OffsetConfig.SPEED_OFFSET_Y,
 				OffsetConfig.ANGLE_OFFSET_Y, OffsetConfig.FUNCTION_EXP_Y));
 
-		// direction z
+		// direction z converter
 		cl.add(new Converter(OffsetConfig.MAX_ANGLE_Z, OffsetConfig.MAX_SPEED_Z, OffsetConfig.SPEED_OFFSET_Z,
 				OffsetConfig.ANGLE_OFFSET_Z, OffsetConfig.FUNCTION_EXP_Z));
 
-		// spin
+		// spin converter
 		cl.add(new Converter(OffsetConfig.MAX_ANGLE_SPIN, OffsetConfig.MAX_SPEED_SPIN, OffsetConfig.SPEED_OFFSET_SPIN,
 				OffsetConfig.ANGLE_OFFSET_SPIN, OffsetConfig.FUNCTION_EXP_SPIN));
 		return cl;

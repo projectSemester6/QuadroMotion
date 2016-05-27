@@ -19,8 +19,30 @@ package com.quadromotion.service;
 
 /**
  * This class is responsible to convert the input angle to the output speed.
+ * <p>
+ * The function used for the conversion is the following:
+ * <p>
+ * <b>y = [(x - a) / (b - a)]^p * (d - c) + c</b>
+ * <p>
+ * using<br><strong>x</strong> as the input angel and<br>
+ * <strong>y</strong> as the output speed<p>
+ * The function allows you to define:<br>
+ * - <strong>a:</strong> at which input angle the conversion should start <br>
+ * - <strong>b:</strong> the maximum angle, every angle above the maximum angle
+ * will be replaced by the maximum angle for further calculations <br>
+ * - <strong>c:</strong> the minimum output speed<br>
+ * - <strong>d:</strong> the maximum output speed<br>
+ * - <strong>p:</strong> how the function looks like:
  * 
- * @author Gabriel Urech, Alexis Stephan
+ * <pre>
+ * <strong>heavyside:</strong> p = 0
+ * <strong>logarithmic:</strong> 0 < p < 1
+ * <strong>linear:</strong> p = 1
+ * <strong>exponential:</strong> p > 1
+ * </pre>
+ * 
+ * @author Gabriel Urech<br>
+ *         Alexis Stephan
  *
  */
 public class Converter {
@@ -56,8 +78,12 @@ public class Converter {
 	private float functionExp;
 
 	/**
-	 * Constructor
-	 * 
+	 * Allocates a new <code>Converter</code> object so that it has
+	 * <code>maxAngle</code> as the maximum angle, has <code>maxSpeed</code> as
+	 * the maximum speed, has <code>speedOffset</code> as the minimum speed, has
+	 * <code>angleOffset</code> as the minimum angle and has
+	 * <code>functionExp</code> as the exponent of the function.
+	 *
 	 * @param maxAngle
 	 *            the maximum angle
 	 * @param maxSpeed
@@ -67,7 +93,7 @@ public class Converter {
 	 * @param angleOffset
 	 *            the minimum angle
 	 * @param functionExp
-	 *            the exponent for the function
+	 *            the exponent of the function
 	 */
 	public Converter(float maxAngle, float maxSpeed, float speedOffset, float angleOffset, float functionExp) {
 		super();
@@ -79,7 +105,7 @@ public class Converter {
 	}
 
 	/**
-	 * Calculates the speed using the input value.
+	 * Returns the calculated speed using the input value.
 	 * 
 	 * @param inputValue
 	 *            the angle to be converted.

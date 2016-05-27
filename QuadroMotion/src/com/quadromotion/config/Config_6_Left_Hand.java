@@ -22,17 +22,55 @@ import java.util.ArrayList;
 import com.quadromotion.input.LeapMotion;
 import com.quadromotion.service.Converter;
 
+/**
+ * This class defines the configuration 6. Only the left hand is needed for navigation (except landing).
+ * <p>
+ * The commands are the following:
+ * <p>
+ * Left hand:<br>
+ * <strong> hold the hand turned counterclockwise (yaw) for 2s:</strong> take
+ * off the drone<br>
+ * <strong> pitch forward:</strong> move forward<br>
+ * <strong> pitch backward: </strong> move backward<br>
+ * <strong> roll left:</strong> move left<br>
+ * <strong> roll right:</strong> move right<br>
+ * <strong> turn left (yaw):</strong> turn counterclockwise<br>
+ * <strong> turn right (yaw):</strong> turn clockwise<br>
+ * <strong> thrust up:</strong> move up<br>
+ * <strong> thrust down:</strong> move down<br>
+ * Note: The initial position for the thrust is between 130 mm and 160 mm above the leap motion device.
+ * <p>
+ * Right hand:<br>
+ * <strong> hold the hand in the leap motion field:</strong> land the drone<br>
+ * 
+ * @author Alexis Stephan<br>
+ *         Gabriel Urech<br>
+ *         Simon Henzmann
+ *
+ */
+
 public class Config_6_Left_Hand extends ConfigBase {
 
+	/**
+	 * The number of hands used in this configuration.
+	 */
 	private static final int COUNT_HANDS = 1;
-//	private Converter convertList[] = new Converter[4];
+
+	/**
+	 * The ArrayList containing all converter for each speed.
+	 */
 	private ArrayList<Converter> converterList = new ArrayList<Converter>();
 
-//	public Config_6_Left_Hand(Converter convertList[]) {
-//		super();
-//		this.convertList = convertList;
-//	}
+	/**
+	 * The name of this configuration.
+	 */
+	private final String name = "Linke-Hand-Steuerung";
 
+	/**
+	 * Allocates a new <code>Config_6_Left_Hand</code> object so that it has
+	 * <code>converterList</code> as the converter list.
+	 * @param converterList the list containing a converter for each speed.
+	 */
 	public Config_6_Left_Hand(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
 	}
@@ -41,7 +79,7 @@ public class Config_6_Left_Hand extends ConfigBase {
 
 		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-//		System.out.println(leap.getLeftHand() + "; " + leap.getRightHand());
+		
 		if (leap.getRightHand() && leap.getLeftHand()) {
 			outputValues[5] = 1; // landingGesture
 		} else if (leap.getLeftHand() && !leap.getRightHand()) {

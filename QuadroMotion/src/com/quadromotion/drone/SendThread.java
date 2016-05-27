@@ -26,20 +26,21 @@ import com.quadromotion.pilotingstates.PilotingStates;
 import de.yadrone.base.IARDrone;
 
 /**
- * This class sends the latest commands on every change to the drone
+ * This class sends the commands on every change to the drone. It implements the
+ * classes <code>Observer</code> and <code>Runnable</code>.
  * 
  * @author Gabriel
  *
  */
 public class SendThread implements Observer, Runnable {
 	// private Model model = null;
-//	private Model m = null;
+	// private Model m = null;
 	private float speedx = 0;
 	private float speedy = 0;
 	private float speedz = 0;
 	private float speedspin = 0;
 	private int state = 0;
-	
+	private String threadName;
 	private boolean changed;
 
 	private int rate = 2; // aktualisierungsrate in ms
@@ -57,8 +58,9 @@ public class SendThread implements Observer, Runnable {
 	 *            the ardrone
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
+		this.threadName = threadName;
 		this.droneCommander = new ARDroneCommander(drone);
-//		m = model;
+		// m = model;
 		changed = false;
 		// this.model = model;
 		model.addObserver(this);
@@ -83,7 +85,7 @@ public class SendThread implements Observer, Runnable {
 			droneCommander.hover();
 			break;
 		case PilotingStates.STATE_6_FLYING:
-			droneCommander.moveDrone(speedx,speedy, speedz, speedspin);
+			droneCommander.moveDrone(speedx, speedy, speedz, speedspin);
 			break;
 		case PilotingStates.STATE_7_LANDING:
 			droneCommander.landing();
@@ -98,7 +100,7 @@ public class SendThread implements Observer, Runnable {
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
-		if (m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
+		if (state != m.getPilotingState() || m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
 				|| m.getPilotingState() == PilotingStates.STATE_5_HOVERING
 				|| m.getPilotingState() == PilotingStates.STATE_6_FLYING
 				|| m.getPilotingState() == PilotingStates.STATE_7_LANDING) {
@@ -107,27 +109,33 @@ public class SendThread implements Observer, Runnable {
 			speedz = m.getSpeedZ();
 			speedspin = m.getSpeedSpin();
 			state = m.getPilotingState();
-			changed = true;
+			// changed = true;
+			sendCommand();
 		}
 	}
 
 	@Override
 	public void run() {
-		boolean stop = false;
-		while (!stop) {
-			System.out.println("SendThread: "+ System.currentTimeMillis());
-			try {
-				if (changed) {
-					System.out.println(changed);
-					
-					sendCommand();
-					changed = false;
-				}
-				Thread.sleep(rate);
-			} catch (Exception ignore) {
-				stop = true;
-				droneCommander.cleanup();
-			}
-		}
+		// boolean stop = false;
+		// while (!stop) {
+		// System.out.println("SendThread: " + System.currentTimeMillis());
+		// try {
+		// if (changed) {
+		// System.out.println(changed);
+		//
+		// sendCommand();
+		// changed = false;
+		// }
+		// Thread.sleep(rate);
+		// } catch (Exception ignore) {
+		// stop = true;
+		// droneCommander.cleanup();
+		// }
+		// }
 	}
+
+	public String getThreadName() {
+		return threadName;
+	}
+
 }

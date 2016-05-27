@@ -21,15 +21,17 @@ import com.quadromotion.model.Model;
 
 /**
  * The input controller which saves the input of the input device to the model.
- * @author Gabriel
+ * 
+ * @author Gabriel Urech
  *
  */
-public class InputController implements IInputController{
+public class InputController implements IInputController {
 
 	private Model model = null;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param model
 	 */
 	public InputController(Model model) {
@@ -38,10 +40,6 @@ public class InputController implements IInputController{
 
 	@Override
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin) {
-//		model.setSpeedX(speedX);
-//		model.setSpeedY(speedY);
-//		model.setSpeedZ(speedZ);
-//		model.setSpeedSpin(speedSpin);
 		model.setSpeed(speedX, speedY, speedZ, speedSpin);
 	}
 
@@ -89,9 +87,9 @@ public class InputController implements IInputController{
 	public void setSelectedConfig(int config) {
 		model.setSelectedConfig(config);
 	}
-	
+
 	@Override
-	public String getControlState(){
+	public String getControlState() {
 		return model.getControlState();
 	}
 }

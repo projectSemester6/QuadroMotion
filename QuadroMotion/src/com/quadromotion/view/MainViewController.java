@@ -65,7 +65,7 @@ public class MainViewController {
 		setDroneConnected(false);
 		connectionButton.setText("Drohne verbinden");
 		model.setBatLevel(0);
-		app.cleanup();
+		app.cleanupDrone();
 	}
 
 	public Model getModel() {

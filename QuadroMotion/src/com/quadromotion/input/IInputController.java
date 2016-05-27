@@ -19,7 +19,7 @@ package com.quadromotion.input;
 
 /**
  * The interface between the input device and the model class.
- * @author Gabriel
+ * @author Gabriel Urech
  *
  */
 public interface IInputController {

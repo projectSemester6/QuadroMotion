@@ -19,16 +19,32 @@ package com.quadromotion.input;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Controller;
-//import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
 import com.quadromotion.service.Services;
 
+/**
+ * This class is responsible for receiving the data from the leap motion.<br>
+ * The method onFrame() is called from the listener every time a new frame
+ * arrives from the leap motion.
+ * 
+ * @author Gabriel Urech <br>
+ *         Alexis Stephan
+ *
+ */
 public class LeapMotion extends Listener {
 
+	/**
+	 * The services class
+	 */
 	private Services services = null;
+
+	/**
+	 * the number of hands in the current frame
+	 */
 	private int anzahlHaenden = 0;
+
 	private boolean rightHand;
 	private boolean leftHand;
 
@@ -48,32 +64,49 @@ public class LeapMotion extends Listener {
 	private float linkSide = 0; // X direcgion of leap motion
 	private float linkForBack = 0; // Z direcgion of leap motion
 
+	/**
+	 * The rate in milliseconds at which the frames should be analyzed. <br>
+	 * As test has shown, a frame arrives every millisecond. <br>
+	 * This is way to much, therefore we inserted this variable to let the
+	 * Thread sleep for this time.
+	 */
+	private final int rate = 20;
 	private long timeStamp = 0;
 	private long timeNow;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param s
+	 *            the services class
+	 */
 	public LeapMotion(Services s) {
 		super();
 		this.services = s;
 	}
 
 	/**
-	 * @param on
-	 *            frame
+	 * This method is called by the leap listener on every frame received from
+	 * the leap motion.
+	 * 
+	 * @param controller
+	 *            the controller, which is responsible for the connection<br>
+	 *            and the communication to the leap motion device
 	 */
 	public void onFrame(Controller controller) {
 		timeStamp = System.currentTimeMillis();
 		Frame frame = controller.frame();
 
 		setAnzahlHaenden(frame.hands().count());
-		// GestureList gestures = frame.gestures();
 
-		if (anzahlHaenden > 0) {
+		if (anzahlHaenden > 0 && anzahlHaenden <= 2) {
 			rightHand = false;
 			leftHand = false;
 			// Get hands
 			for (Hand hand : frame.hands()) {
 
-				// Get the hand's normal vector and direction
+				// Get the hand's normal vector and direction as well as the
+				// position of the hand
 
 				Vector normal = hand.palmNormal();
 				Vector direction = hand.direction();
@@ -81,24 +114,24 @@ public class LeapMotion extends Listener {
 
 				if (hand.isRight()) {
 					rightHand = hand.isRight();
-					setRechtPitch((float) Math.toDegrees(direction.pitch()));
-					setRechtYaw((float) Math.toDegrees(direction.yaw()));
-					setRechtRoll((float) Math.toDegrees(normal.roll()));
-					setRechtSphereRadius(hand.sphereRadius());
-					setRechtThrust(handCenter.getY());
-					setRechtSide(handCenter.getX());
-					setRechtForBack(handCenter.getZ());
+					rechtPitch = (float) Math.toDegrees(direction.pitch());
+					rechtYaw = (float) Math.toDegrees(direction.yaw());
+					rechtRoll = (float) Math.toDegrees(normal.roll());
+					rechtSphereRadius = hand.sphereRadius();
+					rechtThrust = handCenter.getY();
+					rechtSide = handCenter.getX();
+					rechtForBack = handCenter.getZ();
 				}
 
 				if (hand.isLeft()) {
 					leftHand = hand.isLeft();
-					setLinkPitch((float) Math.toDegrees(direction.pitch()));
-					setLinkRoll((float) Math.toDegrees(normal.roll()));
-					setLinkYaw((float) Math.toDegrees(direction.yaw()));
-					setLinkSphereRadius(hand.sphereRadius());
-					setLinkThrust(handCenter.getY());
-					setLinkSide(handCenter.getX());
-					setLinkForBack(handCenter.getZ());
+					linkPitch = (float) Math.toDegrees(direction.pitch());
+					linkRoll = (float) Math.toDegrees(normal.roll());
+					linkYaw = (float) Math.toDegrees(direction.yaw());
+					linkSphereRadius = hand.sphereRadius();
+					linkThrust = handCenter.getY();
+					linkSide = handCenter.getX();
+					linkForBack = handCenter.getZ();
 				}
 			}
 		} else {
@@ -107,13 +140,13 @@ public class LeapMotion extends Listener {
 		}
 		services.computeGestures(this);
 		try {
-			Thread.sleep(20);
+			Thread.sleep(rate);
 		} catch (Exception ignore) {
 
 		}
 		timeNow = System.currentTimeMillis();
-//		System.out.println("onFrame: "+(timeNow-timeStamp));
-//		System.out.println("LeapMotion: "+ System.currentTimeMillis());
+		// System.out.println("onFrame: "+(timeNow-timeStamp));
+		// System.out.println("LeapMotion: "+ System.currentTimeMillis());
 	}
 
 	public void onInit(Controller controller) {
@@ -122,10 +155,6 @@ public class LeapMotion extends Listener {
 
 	public void onConnect(Controller controller) {
 		System.out.println("Connected");
-		// controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-		// controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-		// controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
-		// controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
 		services.setLeapState(true);
 		services.computeGestures(this);
 	}
@@ -183,73 +212,6 @@ public class LeapMotion extends Listener {
 
 	public void setAnzahlHaenden(int anzahlHaenden) {
 		this.anzahlHaenden = anzahlHaenden;
-
-	}
-
-	public void setRechtPitch(float rechtPitch) {
-		this.rechtPitch = rechtPitch;
-
-	}
-
-	public void setRechtYaw(float rechtYaw) {
-		this.rechtYaw = rechtYaw;
-
-	}
-
-	public void setRechtRoll(float rechtRoll) {
-		this.rechtRoll = rechtRoll;
-
-	}
-
-	public void setRechtSphereRadius(float rechtSphereRadius) {
-		this.rechtSphereRadius = rechtSphereRadius;
-
-	}
-
-	public void setRechtThrust(float rechtThrust) {
-		this.rechtThrust = rechtThrust;
-
-	}
-
-	public float getRechtSide() {
-		return rechtSide;
-	}
-
-	public void setRechtSide(float rechtSide) {
-		this.rechtSide = rechtSide;
-	}
-
-	public float getRechtForBack() {
-		return rechtForBack;
-	}
-
-	public void setRechtForBack(float rechtForBack) {
-		this.rechtForBack = rechtForBack;
-	}
-
-	public void setLinkPitch(float linkPitch) {
-		this.linkPitch = linkPitch;
-
-	}
-
-	public void setLinkYaw(float linkYaw) {
-		this.linkYaw = linkYaw;
-
-	}
-
-	public void setLinkRoll(float linkRoll) {
-		this.linkRoll = linkRoll;
-
-	}
-
-	public void setLinkSphereRadius(float linkSphereRadius) {
-		this.linkSphereRadius = linkSphereRadius;
-
-	}
-
-	public void setLinkThrust(float linkThrust) {
-		this.linkThrust = linkThrust;
-
 	}
 
 	public int getAnzahlHaenden() {
@@ -274,9 +236,5 @@ public class LeapMotion extends Listener {
 
 	public float getLinkForBack() {
 		return linkForBack;
-	}
-
-	public void setLinkForBack(float linkForBack) {
-		this.linkForBack = linkForBack;
 	}
 }

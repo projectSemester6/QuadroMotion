@@ -31,32 +31,66 @@ import de.yadrone.base.exception.ARDroneException;
 import de.yadrone.base.exception.IExceptionListener;
 
 /**
- * Diese Klasse verwaltet alle Komponenten und enthaelt die boot() und die run()
- * Methode zum Booten und Starten der Komponentent
+ * This class holds all components and provides the two methods
+ * <code>boot()</code> and <code>run()</code>.<br>
  * 
- * @author Alexis, Gabriel
+ * @author Alexis Stephan<br>
+ *         Gabriel Urech
  *
  */
 public class App {
 
+	/**
+	 * The model.
+	 */
 	private Model model = null;
+
+	/**
+	 * The send thread.
+	 */
 	private SendThread sender = null;
-	private Thread t = null;
+
+	/**
+	 * The ardrone interface.
+	 */
 	private IARDrone drone = null;
+
+	/**
+	 * The leap motion controller.
+	 */
 	private Controller leapController = null;
+
+	/**
+	 * The leap motion.
+	 */
 	private LeapMotion leap = null;
+
+	/**
+	 * The services class.
+	 */
 	private Services service = null;
+
+	/**
+	 * The main view controller.
+	 */
 	private MainViewController viewController = null;
 
 	/**
-	 * Constructor
+	 * The Thread in which the send thread runs.
+	 */
+	private Thread t = null;
+
+	/**
+	 * Allocates a new <code> App</code> object and creates a new
+	 * <code>model</code> object.
 	 */
 	public App() {
 		this.model = new Model();
 	}
 
 	/**
-	 * kreiert die GUI und alle Komponenten für das Leap Motion
+	 * Instantiate the main view and all components for needed for the leap
+	 * motion.
 	 */
 	public void boot() {
 		initView();
@@ -64,18 +98,21 @@ public class App {
 	}
 
 	/**
-	 * startet die Drohne
+	 * Instantiates the drone and the send thread and starts them.
 	 */
 	public void run() {
 		initDrone();
 		drone.start();
 		if (sender == null) {
 			sender = new SendThread("Sender", model, drone);
-			t = new Thread(sender);
+			t = new Thread(null, sender, sender.getThreadName());
 			t.start();
 		}
 	}
 
+	/**
+	 * Initializes all components needed for the leap motion.
+	 */
 	private void initLeap() {
 		service = new Services();
 		service.setInputController(new InputController(model));
@@ -84,14 +121,19 @@ public class App {
 		leapController.addListener(leap);
 	}
 
+	/**
+	 * Initializes the main view.
+	 */
 	private void initView() {
 		viewController = new MainViewController(model, drone);
 		viewController.setApp(this);
 		viewController.showView();
 	}
 
+	/**
+	 * Initializes the ardrone.
+	 */
 	private void initDrone() {
-
 		if (drone == null) {
 			drone = new ARDrone();
 			drone.addExceptionListener(new IExceptionListener() {
@@ -100,7 +142,7 @@ public class App {
 					System.out.println("Message: " + exc.getClass().getSimpleName());
 					if (exc.getClass().getSimpleName().contains("NavDataException")
 							|| exc.getClass().getSimpleName().contains("CommandException")) {
-						cleanup();
+						cleanupDrone();
 						model.setControlState("-");
 						model.setDroneConnected(false);
 						viewController.getConnectionButton().setText("Drohne verbinden");
@@ -111,7 +153,10 @@ public class App {
 		new NavDataController(model, drone);
 	}
 
-	public void cleanup() {
+	/**
+	 * Stops and cleans up the the ardrone.
+	 */
+	public void cleanupDrone() {
 		if (drone != null) {
 			drone.stop();
 			drone = null;

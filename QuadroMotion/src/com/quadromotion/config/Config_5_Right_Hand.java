@@ -22,12 +22,59 @@ import java.util.ArrayList;
 import com.quadromotion.input.LeapMotion;
 import com.quadromotion.service.Converter;
 
+/**
+ * This class defines the configuration 5. Only the right hand is needed for
+ * navigation (except landing).
+ * <p>
+ * The commands are the following:
+ * <p>
+ * Right hand:<br>
+ * <strong> hold the hand turned counterclockwise (yaw) for 2s:</strong> take
+ * off the drone<br>
+ * <strong> pitch forward:</strong> move forward<br>
+ * <strong> pitch backward: </strong> move backward<br>
+ * <strong> roll left:</strong> move left<br>
+ * <strong> roll right:</strong> move right<br>
+ * <strong> turn left (yaw):</strong> turn counterclockwise<br>
+ * <strong> turn right (yaw):</strong> turn clockwise<br>
+ * <strong> thrust up:</strong> move up<br>
+ * <strong> thrust down:</strong> move down<br>
+ * Note: The initial position for the thrust is between 130 mm and 160 mm above
+ * the leap motion device.
+ * <p>
+ * Left hand:<br>
+ * <strong> hold the hand in the leap motion field:</strong> land the drone<br>
+ * 
+ * @author Alexis Stephan<br>
+ *         Gabriel Urech<br>
+ *         Simon Henzmann
+ *
+ */
+
 public class Config_5_Right_Hand extends ConfigBase {
 
+	/**
+	 * The number of hands used in this configuration.
+	 */
 	private static final int COUNT_HANDS = 1;
-	private ArrayList<Converter> converterList = new ArrayList<Converter>();
-//	private final String NAME = "Rechte-Hand-Steuerung";
 
+	/**
+	 * The ArrayList containing all converter for each speed.
+	 */
+	private ArrayList<Converter> converterList = new ArrayList<Converter>();
+
+	/**
+	 * The name of this configuration.
+	 */
+	private final String name = "Rechte-Hand-Steuerung";
+
+	/**
+	 * Allocates a new <code>Config_5_Right_Hand</code> object so that it has
+	 * <code>converterList</code> as the converter list.
+	 * 
+	 * @param converterList
+	 *            the list containing a converter for each speed.
+	 */
 	public Config_5_Right_Hand(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
 	}

@@ -22,20 +22,47 @@ import java.util.Observable;
 import com.quadromotion.config.GestureConfig;
 
 /**
- * This class holds the data
+ * This class holds the data and extends the <code>Observable</code> class.
  * 
- * @author Gabriel
+ * @author Gabriel Urech<br>
+ *         Alexis Stephan
  *
  */
 public class Model extends Observable {
 
+	/**
+	 * The speed in direction x (forward / backward)
+	 */
 	private float speedX;
+	
+	/**
+	 * The speed in direction y (right / left)
+	 */
 	private float speedY;
+	
+	/**
+	 * The speed in direction z (down / up)
+	 */
 	private float speedZ;
+	
+	/**
+	 * The spin speed (clockwise / counterclockwise)
+	 */
 	private float speedSpin;
 
+	/**
+	 * The battery level of the drone
+	 */
 	private int batLevel;
+	
+	/**
+	 * The altitude of the drone
+	 */
 	private int altitude;
+	
+	/**
+	 * The countdown time starting from the until the drone will take off
+	 */
 	private int timeUntilTakeOff;
 	private final int TAKE_OFF_DELAY = 2000;
 

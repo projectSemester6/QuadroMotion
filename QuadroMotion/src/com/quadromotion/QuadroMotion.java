@@ -20,26 +20,36 @@ package com.quadromotion;
 import com.quadromotion.app.App;
 
 /**
- * This class is the main entry of the QuadroMotion app
+ * This class is the main entry of the QuadroMotion application.
  * 
  * @author Gabriel
  *
  */
 public class QuadroMotion {
 
+	/**
+	 * The app.
+	 */
 	private static App app = null;
 
+	/**
+	 * Constructor
+	 */
 	public QuadroMotion() {
 		initialize();
 	}
 
+	/**
+	 * The initialize method. Creates a new object of the <code>App</code> class
+	 * and calls its <code>boot()</code> method.
+	 */
 	private void initialize() {
 		try {
 			app = new App();
 			app.boot();
 		} catch (Exception exc) {
 			exc.printStackTrace();
-			app.cleanup();
+			app.cleanupDrone();
 			System.exit(-1);
 		}
 	}

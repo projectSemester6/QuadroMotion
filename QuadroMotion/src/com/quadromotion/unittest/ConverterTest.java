@@ -13,8 +13,8 @@ public class ConverterTest {
 
 	@Test
 	public void testExpConverter() {
-		Converter converter = new Converter(70, 50, 10, 0, 2.1f);
-		assertEquals("exponentiell", 50, converter.convert(80), 0.5);
+		Converter converter = new Converter(70, 50, 10, 10, 0);
+		assertEquals("exponentiell", 50, converter.convert(10), 0);
 	}
 
 //	@Test

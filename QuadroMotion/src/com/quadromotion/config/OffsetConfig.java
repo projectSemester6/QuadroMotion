@@ -17,42 +17,130 @@
  */
 package com.quadromotion.config;
 
+/**
+ * This class contains all constants used to convert the leap motion input to
+ * the speed. The values can be accessed in a static way.
+ * 
+ * @author Gabriel Urech<br>
+ *         Alexis Stephan<br>
+ *         Simon Henzmann
+ *
+ */
+
 public class OffsetConfig {
-	
+
+	/**
+	 * The maximal angle for the speed x.
+	 */
 	public static final float MAX_ANGLE_X = 40;
+	
+	/**
+	 * The maximal speed x.
+	 */
 	public static final float MAX_SPEED_X = 80;
+	
+	/**
+	 * The minimal speed x.
+	 */
 	public static final float SPEED_OFFSET_X = 0;
-	public static final float ANGLE_OFFSET_X = 10;
+	
+	/**
+	 * The minimal angle for the speed x.
+	 */
+	public static final float ANGLE_OFFSET_X = 5;
+	
+	/**
+	 * The exponent of the function for the speed x.
+	 */
 	public static final float FUNCTION_EXP_X = 2.1F;
 	
-	public static final float MAX_ANGLE_Y = 35;
+	/**
+	 * The maximal angle for the speed y.
+	 */
+	public static final float MAX_ANGLE_Y = 40;
+	
+	/**
+	 * The maximal speed y.
+	 */
 	public static final float MAX_SPEED_Y = 80;
+	
+	/**
+	 * The minimal speed y.
+	 */
 	public static final float SPEED_OFFSET_Y = 0;
-	public static final float ANGLE_OFFSET_Y = 10;
+	
+	/**
+	 * The minimal angle for the speed y.
+	 */
+	public static final float ANGLE_OFFSET_Y = 5;
+	
+	/**
+	 * The exponent of the function for the speed y.
+	 */
 	public static final float FUNCTION_EXP_Y = 2.1F;
 	
-	public static final float MAX_ANGLE_Z = 30;
+	/**
+	 * The maximal angle for the speed z.
+	 */
+	public static final float MAX_ANGLE_Z = 40;
+	
+	/**
+	 * The maximal speed z.
+	 */
 	public static final float MAX_SPEED_Z = 80;
+	
+	/**
+	 * The minimal speed z.
+	 */
 	public static final float SPEED_OFFSET_Z = 0;
-	public static final float ANGLE_OFFSET_Z = 10;
+	
+	/**
+	 * The minimal angle for the speed z.
+	 */
+	public static final float ANGLE_OFFSET_Z = 5;
+	
+	/**
+	 * The exponent of the function for the speed z.
+	 */
 	public static final float FUNCTION_EXP_Z = 2.1F;
 	
-	public static final float MAX_ANGLE_SPIN = 30;
-	public static final float MAX_SPEED_SPIN = 100;
+	/**
+	 * The maximal angle for the speed y.
+	 */
+	public static final float MAX_ANGLE_SPIN = 40;
+	
+	/**
+	 * The maximal speed spin.
+	 */
+	public static final float MAX_SPEED_SPIN = 80;
+	
+	/**
+	 * The minimal speed spin.
+	 */
 	public static final float SPEED_OFFSET_SPIN = 0;
-	public static final float ANGLE_OFFSET_SPIN = 10;
+	
+	/**
+	 * The minimal angle for the speed spin.
+	 */
+	public static final float ANGLE_OFFSET_SPIN = 5;
+	
+	/**
+	 * The exponent of the function for the speed spin.
+	 */
 	public static final float FUNCTION_EXP_SPIN = 2.1F;
 	
+	/**
+	 * The maximal angle for the speed x.
+	 */
 	public static final float MAX_HAND_YAW = 35;
+	
+	/**
+	 * The maximal angle for the speed x.
+	 */
 	public static final float MAX_HAND_THRUST = 30;
+	
+	/**
+	 * The maximal angle for the speed x.
+	 */
 	public static final float HAND_THRUST_OFFSET = 140;
-	
-//	/**
-//	 * 
-//	 */
-//	public OffsetConfig(){
-//		
-//	}
-	
-
 }
