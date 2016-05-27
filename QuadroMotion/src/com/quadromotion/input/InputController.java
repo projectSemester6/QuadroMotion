@@ -27,12 +27,15 @@ import com.quadromotion.model.Model;
  */
 public class InputController implements IInputController {
 
+	/**
+	 * The model.
+	 */
 	private Model model = null;
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>InputController</code> object so that it has <code>model</code> as the model.
 	 * 
-	 * @param model
+	 * @param model the model.
 	 */
 	public InputController(Model model) {
 		this.model = model;

@@ -18,41 +18,65 @@
 package com.quadromotion.navdata;
 
 import com.quadromotion.model.Model;
-import com.quadromotion.pilotingstates.PilotingStates;
 
 import de.yadrone.base.IARDrone;
 
+/**
+ * This class stores the data received from the drone.
+ * 
+ * @author Gabriel Urech
+ *
+ */
 public class NavDataController {
 
+	/**
+	 * The model.
+	 */
 	private Model model = null;
-	private NavDataListener navDataListener = null;
 
+	/**
+	 * Allocates a new <code>NavDataController</code> object so that it has
+	 * <code>model</code> as the model and has <code>drone</code> as the drone.
+	 * 
+	 * @param model
+	 *            the reference to the model object.
+	 * @param drone
+	 *            the reference to the drone object.
+	 */
 	public NavDataController(Model model, IARDrone drone) {
 		this.model = model;
-		this.navDataListener = new NavDataListener(drone, this);
+		new NavDataListener(drone, this);
 	}
 
+	/**
+	 * Stores the battery level.
+	 * 
+	 * @param percentage
+	 *            the level of the battery in percent.
+	 */
 	public void setBatteryLevel(int percentage) {
 		if (percentage != model.getBatLevel())
 			model.setBatLevel(percentage);
 	}
 
+	/**
+	 * Stores the altitude.
+	 * 
+	 * @param altitude
+	 *            the altitude of the drone.
+	 */
 	public void setAltitude(int altitude) {
 		if (altitude != model.getAltitude())
 			model.setAltitude(altitude);
 	}
 
+	/**
+	 * Stores the control state of the drone.
+	 * @param string
+	 */
 	public void setControlState(String string) {
 		if (!string.equals(model.getControlState())) {
 			model.setControlState(string);
 		}
-	}
-
-	public NavDataListener getNavDataListener() {
-		return navDataListener;
-	}
-
-	public void setNavDataListener(NavDataListener navDataListener) {
-		this.navDataListener = navDataListener;
 	}
 }

@@ -27,14 +27,13 @@ import de.yadrone.base.IARDrone;
 
 /**
  * This class sends the commands on every change to the drone. It implements the
- * classes <code>Observer</code> and <code>Runnable</code>.
+ * classes <code>Observer</code> and <code>Runnable</code>, so it can be run in
+ * a separate <code>thread</code>.
  * 
- * @author Gabriel
+ * @author Gabriel Urech
  *
  */
 public class SendThread implements Observer, Runnable {
-	// private Model model = null;
-	// private Model m = null;
 	private float speedx = 0;
 	private float speedy = 0;
 	private float speedz = 0;
@@ -48,7 +47,9 @@ public class SendThread implements Observer, Runnable {
 	private ARDroneCommander droneCommander = null;
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>SendThread</code> object so that it has
+	 * <code>threadName</code> as name of the thread, has <code>model</code> as
+	 * the model to be observed and has <code>drone</code> as the ardrone.
 	 * 
 	 * @param threadName
 	 *            the thread name
@@ -67,7 +68,7 @@ public class SendThread implements Observer, Runnable {
 	}
 
 	/**
-	 * sends the commands to the droneCommander
+	 * Sends the commands to the droneCommander according to the current piloting state.
 	 */
 	private void sendCommand() {
 
@@ -134,6 +135,10 @@ public class SendThread implements Observer, Runnable {
 		// }
 	}
 
+	/**
+	 * 
+	 * @return the name of the thread.
+	 */
 	public String getThreadName() {
 		return threadName;
 	}

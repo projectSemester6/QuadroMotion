@@ -64,8 +64,11 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 	private IInputController controller = null;
 
 	/**
-	 * Constructor
-	 * @param configArray the array containing all radio buttons to select the config.
+	 * Allocates a new <code>KeyBoardCommands</code> object so that it has
+	 * <code>configArray</code> as the array containing a radio button for each configuration.
+	 * 
+	 * @param configArray
+	 *            the array containing all radio buttons to select the config.
 	 */
 	public KeyBoardCommands(JRadioButton[] configArray) {
 		this.setLayout(new BorderLayout());
@@ -180,14 +183,14 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		case KeyEvent.VK_A:
 			if (controller.getPilotingState() == PilotingStates.STATE_5_HOVERING) {
 				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
-				controller.setSpeed(0, 0, 0, -speed-20);
+				controller.setSpeed(0, 0, 0, -speed - 20);
 				System.out.println("turncounterclockwise");
 			}
 			break;
 		case KeyEvent.VK_D:
 			if (controller.getPilotingState() == PilotingStates.STATE_5_HOVERING) {
 				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
-				controller.setSpeed(0, 0, 0, speed+20);
+				controller.setSpeed(0, 0, 0, speed + 20);
 				System.out.println("turnclockwise");
 			}
 			break;
@@ -224,64 +227,6 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 				isFlying = false;
 			}
 			break;
-		// case KeyEvent.VK_ENTER:
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// System.out.println("hovering");
-		// break;
-		// case KeyEvent.VK_LEFT:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// }
-		// break;
-		// case KeyEvent.VK_RIGHT:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// }
-		// break;
-		// case KeyEvent.VK_UP:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("foreward");
-		// }
-		// break;
-		// case KeyEvent.VK_DOWN:
-		//
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("backwards");
-		//
-		// break;
-		// case KeyEvent.VK_A:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("turncounterclockwise");
-		// }
-		// break;
-		// case KeyEvent.VK_D:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("turnclockwise");
-		// }
-		// break;
-		// case KeyEvent.VK_W:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("up");
-		// }
-		// break;
-		// case KeyEvent.VK_S:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("down");
-		// }
-		// break;
 		default:
 			if (controller.getPilotingState() != PilotingStates.STATE_2_READY) {
 				controller.setSpeed(0, 0, 0, 0);

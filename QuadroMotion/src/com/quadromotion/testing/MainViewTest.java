@@ -8,7 +8,7 @@ public class MainViewTest {
 	public MainViewTest() {
 
 		try {
-			new MainView(new Model());
+//			new MainView(new Model());
 
 		} catch (Exception exc)
 

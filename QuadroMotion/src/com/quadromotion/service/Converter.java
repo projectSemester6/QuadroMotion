@@ -22,7 +22,7 @@ package com.quadromotion.service;
  * <p>
  * The function used for the conversion is the following:
  * <p>
- * <b>y = [(x - a) / (b - a)]^p * (d - c) + c</b>
+ * <b>y(x) = [(x - a) / (b - a)]^p * (d - c) + c</b>
  * <p>
  * using<br><strong>x</strong> as the input angel and<br>
  * <strong>y</strong> as the output speed<p>

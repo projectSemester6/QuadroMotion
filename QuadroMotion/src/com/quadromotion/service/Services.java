@@ -24,9 +24,9 @@ import com.quadromotion.input.*;
 import com.quadromotion.pilotingstates.PilotingStates;
 
 /**
- * This class is responsible for the conversion of the leap motion input to the
- * drone commands using the chosen configuration and handles the commands
- * according to the current state.
+ * This class receives the input values from the <code>LeapMotion</code> class
+ * and delegates them to the converter using the selected configuration.<br>
+ * Furthermore it handles the commands according to the current state.
  * 
  * @author Gabriel Urech<br>
  *         Alexis Stephan
@@ -118,7 +118,8 @@ public class Services {
 	private long hoveringDuration = 0;
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>Services</code> object and generates the converter
+	 * list as well as the configuration list.
 	 */
 	public Services() {
 		converterList = getConverterList();
@@ -254,7 +255,7 @@ public class Services {
 	}
 
 	/**
-	 * Gets the converter list.
+	 * Generates the converter list.
 	 * 
 	 * @return the converter list
 	 */
@@ -280,7 +281,7 @@ public class Services {
 	}
 
 	/**
-	 * Gets the configuration list.
+	 * Generates the configuration list.
 	 * 
 	 * @return the configuration list
 	 */
@@ -300,7 +301,7 @@ public class Services {
 	}
 
 	/**
-	 * Sets the state of the leap motion.
+	 * Sets the connection state of the leap motion.
 	 * 
 	 * @param leapState
 	 *            True if the leap motion is connected, else false.
@@ -315,10 +316,10 @@ public class Services {
 	/**
 	 * Sets the input controller.
 	 * 
-	 * @param ic
+	 * @param controller
 	 *            the input controller.
 	 */
-	public void setInputController(InputController ic) {
-		this.controller = ic;
+	public void setInputController(InputController controller) {
+		this.controller = controller;
 	}
 }

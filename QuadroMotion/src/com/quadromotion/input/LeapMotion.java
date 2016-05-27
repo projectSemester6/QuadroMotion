@@ -26,7 +26,7 @@ import com.quadromotion.service.Services;
 
 /**
  * This class is responsible for receiving the data from the leap motion.<br>
- * The method onFrame() is called from the listener every time a new frame
+ * The method <code>onFrame()</code> is called from the listener every time a new frame
  * arrives from the leap motion.
  * 
  * @author Gabriel Urech <br>
@@ -36,32 +36,86 @@ import com.quadromotion.service.Services;
 public class LeapMotion extends Listener {
 
 	/**
-	 * The services class
+	 * The services class.
 	 */
 	private Services services = null;
 
 	/**
-	 * the number of hands in the current frame
+	 * The number of hands in the current frame.
 	 */
 	private int anzahlHaenden = 0;
 
 	private boolean rightHand;
 	private boolean leftHand;
 
+	/**
+	 * The right pitch.
+	 */
 	private float rechtPitch = 0;
+	
+	/**
+	 * The right yaw.
+	 */
 	private float rechtYaw = 0;
+	
+	/**
+	 * The right roll.
+	 */
 	private float rechtRoll = 0;
+	
+	/**
+	 * The right sphere radius.
+	 */
 	private float rechtSphereRadius = 0;
+	
+	/**
+	 * The right thrust.
+	 */
 	private float rechtThrust = 0; // Y direcgion of leap motion
+	
+	/**
+	 * The distance from the right hand to the center in direction x.
+	 */
 	private float rechtSide = 0; // X direcgion of leap motion
+	
+	/**
+	 * The distance from the right hand to the center in direction z.
+	 */
 	private float rechtForBack = 0; // Z direcgion of leap motion
 
+	/**
+	 * The left pitch.
+	 */
 	private float linkPitch = 0;
+	
+	/**
+	 * The left yaw.
+	 */
 	private float linkYaw = 0;
+	
+	/**
+	 * The left roll.
+	 */
 	private float linkRoll = 0;
+	
+	/**
+	 * The left sphere radius.
+	 */
 	private float linkSphereRadius = 0;
+	
+	/**
+	 * The left thrust.
+	 */
 	private float linkThrust = 0; // Y direction of leap motion
+	
+	/**
+	 * The  distance from the left hand to the center in direction x.
+	 */
 	private float linkSide = 0; // X direcgion of leap motion
+	
+	 /**
+	  * The distance from the left hand to the center in direction z.
+	  */
 	private float linkForBack = 0; // Z direcgion of leap motion
 
 	/**
@@ -75,14 +129,15 @@ public class LeapMotion extends Listener {
 	private long timeNow;
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>LeapMotion</code> object so that it has
+	 * <code>services</code> as the intelligence of the program.
 	 * 
-	 * @param s
-	 *            the services class
+	 * @param services
+	 *            the services class.
 	 */
-	public LeapMotion(Services s) {
+	public LeapMotion(Services services) {
 		super();
-		this.services = s;
+		this.services = services;
 	}
 
 	/**
@@ -91,13 +146,13 @@ public class LeapMotion extends Listener {
 	 * 
 	 * @param controller
 	 *            the controller, which is responsible for the connection<br>
-	 *            and the communication to the leap motion device
+	 *            and the communication to the leap motion device.
 	 */
 	public void onFrame(Controller controller) {
 		timeStamp = System.currentTimeMillis();
 		Frame frame = controller.frame();
 
-		setAnzahlHaenden(frame.hands().count());
+		anzahlHaenden = frame.hands().count();
 
 		if (anzahlHaenden > 0 && anzahlHaenden <= 2) {
 			rightHand = false;
@@ -170,71 +225,141 @@ public class LeapMotion extends Listener {
 		System.out.println("Exited");
 	}
 
+	/**
+	 * 
+	 * @return the pitch of the right hand.
+	 */
 	public float getPitchRightHand() {
 		return rechtPitch;
 	}
 
+	/**
+	 * 
+	 * @return the roll of the right hand.
+	 */
 	public float getRollRightHand() {
 		return rechtRoll;
 	}
 
+	/**
+	 * 
+	 * @return the yaw of the right hand.
+	 */
 	public float getYawRightHand() {
 		return rechtYaw;
 	}
 
+	/**
+	 * 
+	 * @return the thrust of the right hand.
+	 */
 	public float getThrustRightHand() {
 		return rechtThrust;
 	}
 
+	/**
+	 * 
+	 * @return the sphere radius of the right hand.
+	 */
 	public float getSphereRadiusRightHand() {
 		return rechtSphereRadius;
 	}
 
+	/**
+	 * 
+	 * @return the pitch of the left hand.
+	 */
 	public float getPitchLeftHand() {
 		return linkPitch;
 	}
 
+	/**
+	 * 
+	 * @return the roll of the left hand.
+	 */
 	public float getRollLeftHand() {
 		return linkRoll;
 	}
 
+	/**
+	 * 
+	 * @return the yaw of the left hand.
+	 */
 	public float getYawLeftHand() {
 		return linkYaw;
 	}
 
+	/**
+	 * 
+	 * @return the thrust of the left hand.
+	 */
 	public float getThrustLeftHand() {
 		return linkThrust;
 	}
 
+	/**
+	 * 
+	 * @return the sphere radius of the left hand.
+	 */
 	public float getSpehreRadiusLeftHand() {
 		return linkSphereRadius;
 	}
 
-	public void setAnzahlHaenden(int anzahlHaenden) {
-		this.anzahlHaenden = anzahlHaenden;
-	}
-
+	/**
+	 * 
+	 * @return the number of hands.
+	 */
 	public int getAnzahlHaenden() {
 		return anzahlHaenden;
 	}
 
+	/**
+	 * 
+	 * @return true, if the right hand is in the frame<br>
+	 *         false, if the right hand is missing.
+	 */
 	public boolean getRightHand() {
 		return rightHand;
 	}
 
+	/**
+	 * 
+	 * @return true, if the left hand is in the frame<br>
+	 *         false, if the left hand is missing.
+	 */
 	public boolean getLeftHand() {
 		return leftHand;
 	}
 
+	/**
+	 * 
+	 * @return the distance from the left hand to the center of the leap motion in direction x.
+	 */
 	public float getLinkSide() {
 		return linkSide;
 	}
 
-	public void setLinkSide(float linkSide) {
-		this.linkSide = linkSide;
+	/**
+	 * 
+	 * @return the distance from the left hand to the center of the leap motion in direction x.
+	 */
+	public float getRechtSide() {
+		return rechtSide;
 	}
 
+	/**
+	 * 
+	 * @return the distance from the left hand to the center of the leap motion in direction z.
+	 */
 	public float getLinkForBack() {
 		return linkForBack;
+	}
+	
+	/**
+	 * 
+	 * @return the distance from the right hand to the center of the leap motion in direction z.
+	 */
+	public float getRechtForBack() {
+		return rechtForBack;
 	}
 }

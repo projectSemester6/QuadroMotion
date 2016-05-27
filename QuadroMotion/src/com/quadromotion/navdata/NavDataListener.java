@@ -27,13 +27,27 @@ import de.yadrone.base.navdata.DroneState;
 import de.yadrone.base.navdata.StateListener;
 import de.yadrone.base.navdata.VelocityListener;
 
+/**
+ * The navigation data listener.
+ * 
+ * @author Gabriel Urech
+ *
+ */
 public class NavDataListener {
 
-	private BatteryListener batListener = null;
-
+	/**
+	 * Adds the different listener to the drone object.
+	 * @param drone
+	 *            the ardrone.
+	 * @param controller
+	 *            the navigation data controller <code>NavDataController</code>
+	 */
 	public NavDataListener(IARDrone drone, NavDataController controller) {
 
-		batListener = new BatteryListener() {
+		/*
+		 * Battery Listener
+		 */
+		drone.getNavDataManager().addBatteryListener(new BatteryListener() {
 
 			public void batteryLevelChanged(int percentage) {
 				controller.setBatteryLevel(percentage);
@@ -41,14 +55,9 @@ public class NavDataListener {
 
 			public void voltageChanged(int vbat_raw) {
 			}
-		};
+		});
 
-		/**
-		 * Battery Listener
-		 */
-		drone.getNavDataManager().addBatteryListener(batListener);
-
-		/**
+		/*
 		 * Altitude Listener
 		 */
 		drone.getNavDataManager().addAltitudeListener(new AltitudeListener() {
@@ -61,7 +70,7 @@ public class NavDataListener {
 			}
 		});
 
-		/**
+		/*
 		 * Velocity Listener
 		 */
 		// drone.getNavDataManager().addVelocityListener(new VelocityListener()
@@ -71,7 +80,7 @@ public class NavDataListener {
 		// }
 		// });
 
-		/**
+		/*
 		 * Attitude Listener
 		 */
 		// drone.getNavDataManager().addAttitudeListener(new AttitudeListener()
@@ -89,7 +98,7 @@ public class NavDataListener {
 		// }
 		// });
 
-		/**
+		/*
 		 * State Listener
 		 */
 		drone.getNavDataManager().addStateListener(new StateListener() {
@@ -102,9 +111,5 @@ public class NavDataListener {
 				controller.setControlState(state.toString());
 			}
 		});
-	}
-
-	public BatteryListener getBatteryListener() {
-		return batListener;
 	}
 }

@@ -29,6 +29,11 @@ import javax.swing.JProgressBar;
 
 import com.quadromotion.model.Model;
 
+/**
+ * This class defines each element in the data panel of the main view.
+ * @author Gabriel Urech
+ *
+ */
 public class DataPanel extends JPanel implements Observer {
 
 	JProgressBar batteryLevelValue;
@@ -44,6 +49,13 @@ public class DataPanel extends JPanel implements Observer {
 	private long timeNow = 0;
 	private int rate = 10;
 
+	/**
+	 * Allocates a new <code>DataPanel</code> object so that it has
+	 * <code>model</code> as the model.
+	 * 
+	 * @param m
+	 *            the model.
+	 */
 	public DataPanel(Model m) {
 
 		m.addObserver(this);
@@ -168,11 +180,11 @@ public class DataPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		timeNow = System.currentTimeMillis();
 		Model m = (Model) o;
-		
+
 		if (timeNow - timeStamp >= rate || m.getSelectedConfig() == 3) {
-//			System.out.println(timeNow - timeStamp);
+			// System.out.println(timeNow - timeStamp);
 			timeStamp = timeNow;
-			
+
 			speedXValue.setText(String.valueOf((int) m.getSpeedX()) + " %");
 			speedYValue.setText(String.valueOf((int) m.getSpeedY()) + " %");
 			speedZValue.setText(String.valueOf((int) m.getSpeedZ()) + " %");
