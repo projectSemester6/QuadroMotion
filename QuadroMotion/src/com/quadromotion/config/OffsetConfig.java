@@ -82,7 +82,7 @@ public class OffsetConfig {
 	/**
 	 * The maximal angle for the speed z.
 	 */
-	public static final float MAX_ANGLE_Z = 40;
+	public static final float MAX_ANGLE_Z = 35;
 	
 	/**
 	 * The maximal speed z.
@@ -107,7 +107,7 @@ public class OffsetConfig {
 	/**
 	 * The maximal angle for the speed y.
 	 */
-	public static final float MAX_ANGLE_SPIN = 40;
+	public static final float MAX_ANGLE_SPIN = 30;
 	
 	/**
 	 * The maximal speed spin.
@@ -127,7 +127,7 @@ public class OffsetConfig {
 	/**
 	 * The exponent of the function for the speed spin.
 	 */
-	public static final float FUNCTION_EXP_SPIN = 2.1F;
+	public static final float FUNCTION_EXP_SPIN = 2.4F;
 	
 	/**
 	 * The maximal angle for the speed x.

@@ -244,10 +244,10 @@ public class Model extends Observable {
 	 */
 	public void setAltitude(int altitude) {
 		this.altitude = altitude;
-		if (countObservers() > 0) {
-			setChanged();
-			notifyObservers(this.altitude);
-		}
+//		if (countObservers() > 0) {
+//			setChanged();
+//			notifyObservers(this.altitude);
+//		}
 	}
 
 	/**

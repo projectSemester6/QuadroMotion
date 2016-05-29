@@ -68,7 +68,8 @@ public class SendThread implements Observer, Runnable {
 	}
 
 	/**
-	 * Sends the commands to the droneCommander according to the current piloting state.
+	 * Sends the commands to the droneCommander according to the current
+	 * piloting state.
 	 */
 	private void sendCommand() {
 
@@ -78,6 +79,7 @@ public class SendThread implements Observer, Runnable {
 		case PilotingStates.STATE_2_READY:
 			break;
 		case PilotingStates.STATE_3_TAKINGOFF:
+			droneCommander.animateLEDs();
 			droneCommander.takeOff();
 			break;
 		case PilotingStates.STATE_4_WAITINGTAKEOFF:
@@ -102,6 +104,7 @@ public class SendThread implements Observer, Runnable {
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
 		if (state != m.getPilotingState() || m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
+				|| m.getPilotingState() == PilotingStates.STATE_4_WAITINGTAKEOFF
 				|| m.getPilotingState() == PilotingStates.STATE_5_HOVERING
 				|| m.getPilotingState() == PilotingStates.STATE_6_FLYING
 				|| m.getPilotingState() == PilotingStates.STATE_7_LANDING) {

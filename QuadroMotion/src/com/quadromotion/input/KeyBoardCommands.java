@@ -57,7 +57,7 @@ import com.quadromotion.pilotingstates.PilotingStates;
  */
 public class KeyBoardCommands extends JFrame implements KeyListener {
 
-	private int speed = 30;
+	private int speed = 25;
 	private boolean exit = false;
 	private boolean isFlying = false;
 
