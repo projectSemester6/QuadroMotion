@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import com.leapmotion.leap.Controller;
 import com.quadromotion.app.App;
-import com.quadromotion.gestures.LeapMotion;
+import com.quadromotion.input.LeapMotion;
 import com.quadromotion.model.Model;
-import com.quadromotion.model.Services;
+import com.quadromotion.service.Services;
 import com.quadromotion.testing.ChangeModel;
 import com.quadromotion.util.Util;
 import com.quadromotion.view.CockpitViewController;

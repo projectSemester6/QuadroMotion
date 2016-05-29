@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.command.VideoChannel;
-import de.yadrone.base.video.ImageListener;
+import de.yadrone.base.video.*;
 
 public class VideoListener extends JFrame {
 

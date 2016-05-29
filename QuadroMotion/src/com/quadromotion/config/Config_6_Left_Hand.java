@@ -23,24 +23,25 @@ import com.quadromotion.input.LeapMotion;
 import com.quadromotion.service.Converter;
 
 /**
- * This class defines the configuration 1.
+ * This class defines the configuration 6. Only the left hand is needed for navigation (except landing).
  * <p>
  * The commands are the following:
  * <p>
- * Right hand:<br>
+ * Left hand:<br>
  * <strong> hold the hand turned counterclockwise (yaw) for 2s:</strong> take
  * off the drone<br>
  * <strong> pitch forward:</strong> move forward<br>
  * <strong> pitch backward: </strong> move backward<br>
  * <strong> roll left:</strong> move left<br>
- * <strong> roll right:</strong> move right
+ * <strong> roll right:</strong> move right<br>
+ * <strong> turn left (yaw):</strong> turn counterclockwise<br>
+ * <strong> turn right (yaw):</strong> turn clockwise<br>
+ * <strong> thrust up:</strong> move up<br>
+ * <strong> thrust down:</strong> move down<br>
+ * Note: The initial position for the thrust is between 130 mm and 160 mm above the leap motion device.
  * <p>
- * Left hand:<br>
- * <strong> roll left:</strong> turn counterclockwise<br>
- * <strong> roll right:</strong> turn clockwise<br>
- * <strong> pitch backward:</strong> move up<br>
- * <strong> pitch forward:</strong> move down<br>
- * <strong> turn the hand clockwise (yaw):</strong> land the drone<br>
+ * Right hand:<br>
+ * <strong> hold the hand in the leap motion field:</strong> land the drone<br>
  * 
  * @author Alexis Stephan<br>
  *         Gabriel Urech<br>
@@ -48,12 +49,12 @@ import com.quadromotion.service.Converter;
  *
  */
 
-public class Config_1_Two_Hands extends ConfigBase {
+public class Config_6_Left_Hand extends ConfigBase {
 
 	/**
 	 * The number of hands used in this configuration.
 	 */
-	private static final int COUNT_HANDS = 2;
+	private static final int COUNT_HANDS = 1;
 
 	/**
 	 * The ArrayList containing all converter for each speed.
@@ -63,34 +64,41 @@ public class Config_1_Two_Hands extends ConfigBase {
 	/**
 	 * The name of this configuration.
 	 */
-	private final String name = "Zwei-Hand-Steuerung 1";
-	
+	private final String name = "Linke-Hand-Steuerung";
+
 	/**
-	 * Allocates a new <code>Config_1_Two_Hands</code> object so that it has
+	 * Allocates a new <code>Config_6_Left_Hand</code> object so that it has
 	 * <code>converterList</code> as the converter list.
 	 * @param converterList the list containing a converter for each speed.
 	 */
-	public Config_1_Two_Hands(ArrayList<Converter> converterList) {
+	public Config_6_Left_Hand(ArrayList<Converter> converterList) {
 		this.converterList = converterList;
 	}
 
 	public int[] convertLeapInput(LeapMotion leap) {
-		int leapValues[] = { 0, 0, 0, 0 };
+
+		int speedValues[] = { 0, 0, 0, 0 };
 		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
-		if (leap.getLeftHand() && leap.getRightHand()) {
+		
+		if (leap.getRightHand() && leap.getLeftHand()) {
+			outputValues[5] = 1; // landingGesture
+		} else if (leap.getLeftHand() && !leap.getRightHand()) {
 			for (int i = 0; i < 4; i++) {
 				switch (i) {
 				case 0:
-					leapValues[i] = (int) leap.getPitchRightHand(); // speedX
+					speedValues[i] = (int) leap.getPitchLeftHand(); // speedX,
+																	// forward/backward
 					break;
 				case 1:
-					leapValues[i] = (int) leap.getRollRightHand(); // speedY
+					speedValues[i] = (int) leap.getRollLeftHand(); // speedY,
+																	// right/left
 					break;
 				case 2:
-					leapValues[i] = (int) leap.getPitchLeftHand(); // speedZ
+					speedValues[i] = (int) (leap.getThrustLeftHand() - OffsetConfig.HAND_THRUST_OFFSET) / 2; // speedZ,
+					// down/up
 					break;
 				case 3:
-					leapValues[i] = (int) leap.getRollLeftHand(); // speedSpin
+					speedValues[i] = (int) leap.getYawLeftHand(); // speedSpin
 					break;
 				default:
 					break;
@@ -98,21 +106,22 @@ public class Config_1_Two_Hands extends ConfigBase {
 			}
 
 			for (int i = 0; i < 4; i++) {
-				outputValues[i] = (int) converterList.get(i).convert(leapValues[i]); // speed
+				outputValues[i] = (int) converterList.get(i).convert(speedValues[i]); // speed
 			}
 
 			for (int i = 4; i < 7; i++) {
 				switch (i) {
 				case 4:
-					if (leap.getYawRightHand() < -35)
+					if (leap.getYawLeftHand() > 35)
 						outputValues[i] = 1; // takeOffGesture
 					break;
 				case 5:
-					if (leap.getYawLeftHand() > 45)
-						outputValues[i] = 1; // landingGesture
+					if (leap.getRollLeftHand() > 100)
+//						outputValues[i] = 1; // landingGesture
 					break;
 				case 6:
-					outputValues[i] = leap.getAnzahlHaenden(); // countHands
+					// countHands
+					outputValues[i] = 1;
 					break;
 				default:
 					break;
@@ -125,4 +134,5 @@ public class Config_1_Two_Hands extends ConfigBase {
 	public int getCountHands() {
 		return COUNT_HANDS;
 	}
+
 }

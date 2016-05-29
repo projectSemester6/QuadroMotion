@@ -1,3 +1,20 @@
+/* Copyright 2016 Gabriel Urech, Alexis Stephan, Simon Henzmann
+ * 
+ * This file is part of QuadroMotion.
+ * 
+ * QuadroMotion is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * QuadroMotion is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DokChess.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.quadromotion.view;
 
 import java.awt.GridBagConstraints;
@@ -12,6 +29,11 @@ import javax.swing.JProgressBar;
 
 import com.quadromotion.model.Model;
 
+/**
+ * This class defines each element in the data panel of the main view.
+ * @author Gabriel Urech
+ *
+ */
 public class DataPanel extends JPanel implements Observer {
 
 	JProgressBar batteryLevelValue;
@@ -23,7 +45,17 @@ public class DataPanel extends JPanel implements Observer {
 	JLabel altitudeValue;
 	JLabel timeUntilTakeOffLabel;
 	JLabel timeUntilTakeOffValue;
+	private long timeStamp = 0;
+	private long timeNow = 0;
+	private int rate = 10;
 
+	/**
+	 * Allocates a new <code>DataPanel</code> object so that it has
+	 * <code>model</code> as the model.
+	 * 
+	 * @param m
+	 *            the model.
+	 */
 	public DataPanel(Model m) {
 
 		m.addObserver(this);
@@ -48,7 +80,8 @@ public class DataPanel extends JPanel implements Observer {
 		JLabel batteryLevelLabel = new JLabel("Battery level:");
 
 		this.setLayout(new GridBagLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Drone data:"));
+
+		this.setBorder(BorderFactory.createTitledBorder("Daten:"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
@@ -145,15 +178,20 @@ public class DataPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		timeNow = System.currentTimeMillis();
 		Model m = (Model) o;
 
-		speedXValue.setText(String.valueOf((int) m.getSpeedX()) + " %");
-		speedYValue.setText(String.valueOf((int) m.getSpeedY()) + " %");
-		speedZValue.setText(String.valueOf((int) m.getSpeedZ()) + " %");
-		speedSpinValue.setText(String.valueOf((int) m.getSpeedSpin()) + " %");
-		batteryLevelValue.setValue((int) m.getBatLevel());
-		altitudeValue.setText(m.getAltitudeString() + " mm");
-		timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
-	}
+		if (timeNow - timeStamp >= rate || m.getSelectedConfig() == 3) {
+			// System.out.println(timeNow - timeStamp);
+			timeStamp = timeNow;
 
+			speedXValue.setText(String.valueOf((int) m.getSpeedX()) + " %");
+			speedYValue.setText(String.valueOf((int) m.getSpeedY()) + " %");
+			speedZValue.setText(String.valueOf((int) m.getSpeedZ()) + " %");
+			speedSpinValue.setText(String.valueOf((int) m.getSpeedSpin()) + " %");
+			batteryLevelValue.setValue((int) m.getBatLevel());
+			altitudeValue.setText(m.getAltitudeString() + " mm");
+			timeUntilTakeOffValue.setText(String.valueOf(m.getTimeUntilTakeOff()) + " ms");
+		}
+	}
 }

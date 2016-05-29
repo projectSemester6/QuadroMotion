@@ -38,22 +38,22 @@ public FSM(Model model){
 
 	// 5. All client requests are simply delegated to the current state object
 	public void off() {
-		states[current].off();
+//		states[current].off();
 		next(0);
 	}
 
 	public void on() {
-		states[current].on();
+//		states[current].on();
 		next(1);
 	}
 
 	public void noHands() {
-		states[current].noHands();
+//		states[current].noHands();
 		next(2);
 	}
 
 	public void handsOk() {
-		states[current].handsOk();
+//		states[current].handsOk();
 		next(3);
 	}
 
@@ -63,12 +63,12 @@ public FSM(Model model){
 	}
 
 	public void noCommand() {
-		states[current].noCommand();
+//		states[current].noCommand();
 		next(5);
 	}
 
 	public void commandMove() {
-		states[current].commandMove(40,30,20,10);
+//		states[current].commandMove(40,30,20,10);
 		next(6);
 	}
 

@@ -103,7 +103,7 @@
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="13"/>  
   </message>  
-  <message id="15" operation="expConverter(float):float" asynchronous="false">    
+  <message id="15" operation="convert(float):float" asynchronous="false">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="16"/>  
   </message>  
