@@ -25,6 +25,12 @@ import com.quadromotion.model.Model;
 import de.yadrone.apps.tutorial.TutorialVideoListener;
 import de.yadrone.base.IARDrone;
 
+/**
+ * The main view controller.
+ * 
+ * @author Gabriel Urech
+ *
+ */
 public class MainViewController {
 
 	private Model model = null;
@@ -34,13 +40,13 @@ public class MainViewController {
 	private JButton connectionButton = null;
 
 	/**
-	 * Constructor I
+	 * * Allocates a new <code>MainViewController</code> object so that it has
+	 * <code>model</code> as the model and has <code>drone</code> as the drone.
 	 * 
 	 * @param model
-	 *            the model
-	 * @param droneAttitude
-	 * @param mainView
-	 *            the view
+	 *            the model.
+	 * @param drone
+	 *            the drone.
 	 */
 	public MainViewController(Model model, IARDrone drone) {
 		this.model = model;
@@ -48,10 +54,16 @@ public class MainViewController {
 
 	}
 
+	/**
+	 * Creates a new main view.
+	 */
 	public void showView() {
 		view = new MainView(model, drone, this);
 	}
 
+	/**
+	 * Connects to the drone.
+	 */
 	public void connect() {
 		app.run();
 	}
@@ -60,12 +72,15 @@ public class MainViewController {
 		model.setDroneConnected(connection);
 	}
 
+	/**
+	 * Disconnects from the drone.
+	 */
 	public void disconnect() {
 		model.setControlState("-");
 		setDroneConnected(false);
 		connectionButton.setText("Drohne verbinden");
 		model.setBatLevel(0);
-		app.cleanup();
+		app.cleanupDrone();
 	}
 
 	public Model getModel() {
@@ -76,6 +91,12 @@ public class MainViewController {
 		this.model = model;
 	}
 
+	/**
+	 * Is called by the class <code>App</code> to give a reference back to
+	 * itself.
+	 * 
+	 * @param app the App.
+	 */
 	public void setApp(App app) {
 		this.app = app;
 	}
@@ -86,16 +107,16 @@ public class MainViewController {
 			connectionButton.setText("Drohne trennen");
 			setDroneConnected(true);
 			connect();
-			// connectionButton.removeActionListener(this);
 		} else {
 			disconnect();
 		}
 
 	}
 
-	public JButton getConnectionButton(){
+	public JButton getConnectionButton() {
 		return connectionButton;
 	}
+
 	public void setConnectionButton(JButton connectionButton) {
 		this.connectionButton = connectionButton;
 	}

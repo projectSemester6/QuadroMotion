@@ -26,18 +26,22 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.quadromotion.input.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
+/**
+ * This class defines each element in the control panel of the main view.
+ * @author Gabriel Urech
+ *
+ */
 public class ControlStatePanel extends JPanel implements Observer {
 
 	JLabel controlState;
 	JLabel connected;
-	
+
 	public ControlStatePanel(Model m) {
 		m.addObserver(this);
 		controlState = new JLabel(m.getControlState());
-		connected = new JLabel(String.valueOf(m.isDroneConnected()));
+		connected = new JLabel("Nein");
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Kontrollstatus:"));
 		this.setSize(80, 80);
@@ -61,8 +65,11 @@ public class ControlStatePanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
-			controlState.setText(m.getControlState());
-			connected.setText(String.valueOf(m.isDroneConnected()));
-			if(!m.isDroneConnected()) controlState.setText("-");
+		controlState.setText(m.getControlState());
+		if (m.isDroneConnected())
+			connected.setText("Ja");
+		else connected.setText("Nein");
+		if (!m.isDroneConnected())
+			controlState.setText("-");
 	}
 }

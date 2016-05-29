@@ -19,72 +19,96 @@ package com.quadromotion.input;
 
 /**
  * The interface between the input device and the model class.
- * @author Gabriel
+ * 
+ * @author Gabriel Urech
  *
  */
 public interface IInputController {
 
 	/**
-	 * Speichert alle Geschwindigkeiten im model.
+	 * Saves all speeds in the model.
+	 * 
 	 * @param speedX
+	 *            the speed in direction x.
 	 * @param speedY
+	 *            the speed in direction y.
 	 * @param speedZ
+	 *            the speed in direction z.
 	 * @param speedSpin
+	 *            the spin speed.
 	 */
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin);
 
 	/**
-	 * Gets the current piloting state
+	 * Gets the current piloting state.
+	 * 
+	 * @return the current piloting state.
 	 */
 	public int getPilotingState();
 
 	/**
 	 * Sets the piloting state.
+	 * 
 	 * @param pilotingState
+	 *            the piloting state.
 	 */
 	public void setPilotingState(int pilotingState);
 
 	/**
-	 * Gets the current flying configureation.
+	 * Gets the current flying configuration.
+	 * 
 	 * @return the selected flying configuration
 	 */
 	public int getSelectedConfig();
-	
+
 	/**
 	 * Sets the flying configuration.
-	 * @param config the configuration
+	 * 
+	 * @param config
+	 *            the configuration
 	 */
 	public void setSelectedConfig(int config);
 
 	/**
 	 * Gets the current state of the input device.
-	 * @return true, if the input device is connected; false, if the input device is disconnected
+	 * 
+	 * @return true, if the input device is connected<br>
+	 *         false, if the input device is disconnected
 	 */
 	public boolean isInputDeviceConnected();
 
 	/**
-	 * Sets the current state of the input device. The state can be true or false.
+	 * Sets the current state of the input device.<br>
+	 * The state can be true or false.
+	 * 
 	 * @param inputDeviceState
 	 */
 	public void setInputDeviceState(boolean inputDeviceState);
 
 	/**
 	 * Gets the value of the TAKE_OFF_DELAY.
-	 * @return the value of the TAKE_OFF_DELAY.
+	 * 
+	 * @return TAKE_OFF_DELAY.
 	 */
 	public int getTAKE_OFF_DELAY();
 
 	/**
 	 * Sets the time until the drone will take off.
+	 * 
 	 * @param timeUntilTakeOff
 	 */
 	public void setTimeUntilTakeOff(int timeUntilTakeOff);
 
 	/**
 	 * Gets the time in ms until the drone will take off.
+	 * 
 	 * @return the time in ms until the drone will take off.
 	 */
 	public int getTimeUntilTakeOff();
 
+	/**
+	 * 
+	 * @return the current control state of the ardrone.
+	 */
 	public String getControlState();
 }

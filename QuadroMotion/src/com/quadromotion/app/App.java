@@ -17,10 +17,6 @@
  */
 package com.quadromotion.app;
 
-import java.awt.image.BufferedImage;
-
-import javax.swing.SwingUtilities;
-
 import com.leapmotion.leap.Controller;
 import com.quadromotion.drone.SendThread;
 import com.quadromotion.input.*;
@@ -29,52 +25,94 @@ import com.quadromotion.service.Services;
 import com.quadromotion.navdata.*;
 import com.quadromotion.view.*;
 
-import de.yadrone.apps.controlcenter.CCFrame;
-import de.yadrone.apps.controlcenter.plugins.video.VideoCanvas;
-import de.yadrone.apps.controlcenter.plugins.video.VideoPanel;
-import de.yadrone.apps.tutorial.TutorialVideoListener;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 import de.yadrone.base.exception.ARDroneException;
 import de.yadrone.base.exception.IExceptionListener;
-import de.yadrone.base.video.ImageListener;
-import de.yadrone.base.video.VideoManager;
 
 /**
- * Diese Klasse enthaelt die boot() und die run() Methode
+ * This class holds all components and provides the two methods
+ * <code>boot()</code> and <code>run()</code>.<br>
  * 
- * @author Alexis
+ * @author Alexis Stephan<br>
+ *         Gabriel Urech
  *
  */
 public class App {
 
+	/**
+	 * The model.
+	 */
 	private Model model = null;
-	private SendThread sender = null;
-	private Thread t = null;
-	private IARDrone drone = null;
-	private Controller leapController = null;
-	private LeapMotion leap = null;
-	private Services service = null;
-	private MainViewController viewController = null;
-	// private NavDataController navDataController = null;
 
+	/**
+	 * The send thread.
+	 */
+	private SendThread sender = null;
+
+	/**
+	 * The ardrone interface.
+	 */
+	private IARDrone drone = null;
+
+	/**
+	 * The leap motion controller.
+	 */
+	private Controller leapController = null;
+
+	/**
+	 * The leap motion.
+	 */
+	private LeapMotion leap = null;
+
+	/**
+	 * The services class.
+	 */
+	private Services service = null;
+
+	/**
+	 * The main view controller.
+	 */
+	private MainViewController viewController = null;
+
+	/**
+	 * The Thread in which the send thread runs.
+	 */
+	private Thread t = null;
+
+	/**
+	 * Allocates a new <code> App</code> object and creates a new
+	 * <code>model</code> object.
+	 */
 	public App() {
 		this.model = new Model();
 	}
 
+	/**
+	 * Instantiate the main view and all components for needed for the leap
+	 * motion.
+	 */
 	public void boot() {
 		initView();
 		initLeap();
 	}
 
+	/**
+	 * Instantiates the drone and the send thread and starts them.
+	 */
 	public void run() {
 		initDrone();
 		drone.start();
-		// sender.start();
-		// new VideoListener(drone);
-		// new TutorialVideoListener(drone);
+		if (sender == null) {
+			sender = new SendThread("Sender", model, drone);
+			t = new Thread(null, sender, sender.getThreadName());
+			t.start();
+		}
 	}
 
+	/**
+	 * Initializes all components needed for the leap motion.
+	 */
 	private void initLeap() {
 		service = new Services();
 		service.setInputController(new InputController(model));
@@ -83,14 +121,19 @@ public class App {
 		leapController.addListener(leap);
 	}
 
+	/**
+	 * Initializes the main view.
+	 */
 	private void initView() {
 		viewController = new MainViewController(model, drone);
 		viewController.setApp(this);
 		viewController.showView();
 	}
 
+	/**
+	 * Initializes the ardrone.
+	 */
 	private void initDrone() {
-
 		if (drone == null) {
 			drone = new ARDrone();
 			drone.addExceptionListener(new IExceptionListener() {
@@ -99,7 +142,7 @@ public class App {
 					System.out.println("Message: " + exc.getClass().getSimpleName());
 					if (exc.getClass().getSimpleName().contains("NavDataException")
 							|| exc.getClass().getSimpleName().contains("CommandException")) {
-						cleanup();
+						cleanupDrone();
 						model.setControlState("-");
 						model.setDroneConnected(false);
 						viewController.getConnectionButton().setText("Drohne verbinden");
@@ -107,15 +150,13 @@ public class App {
 				}
 			});
 		}
-		if (sender == null) {
-			sender = new SendThread("Sender", model, drone);
-			t = new Thread(sender);
-			t.start();
-		}
 		new NavDataController(model, drone);
 	}
 
-	public void cleanup() {
+	/**
+	 * Stops and cleans up the the ardrone.
+	 */
+	public void cleanupDrone() {
 		if (drone != null) {
 			drone.stop();
 			drone = null;

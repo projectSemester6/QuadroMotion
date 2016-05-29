@@ -32,15 +32,45 @@ import javax.swing.JRadioButton;
 
 import com.quadromotion.pilotingstates.PilotingStates;
 
+/**
+ * This class lets you control the drone using the keyboard as input device.
+ * <br>
+ * It has originally been written to test the communication to the drone without
+ * the leap motion device connected.
+ * <p>
+ * The commands are the following:
+ * <p>
+ * <strong> enter:</strong> take off the drone<br>
+ * <strong> Arrow up:</strong> move forward<br>
+ * <strong> Arrow down: </strong> move backward<br>
+ * <strong> Arrow left:</strong> move left<br>
+ * <strong> Arrow right:</strong> move right<br>
+ * <strong> a:</strong> turn counterclockwise<br>
+ * <strong> d:</strong> turn clockwise<br>
+ * <strong> w:</strong> move up<br>
+ * <strong> s:</strong> move down<br>
+ * <strong> space:</strong> land the drone<br>
+ * 
+ * @author Gabriel Urech <br>
+ *         Simon Henzmann
+ *
+ */
 public class KeyBoardCommands extends JFrame implements KeyListener {
 
-	private int speed = 15;
+	private int speed = 25;
 	private boolean exit = false;
 	private boolean isFlying = false;
 
 	private IInputController controller = null;
 
-	public KeyBoardCommands(JRadioButton[] config) {
+	/**
+	 * Allocates a new <code>KeyBoardCommands</code> object so that it has
+	 * <code>configArray</code> as the array containing a radio button for each configuration.
+	 * 
+	 * @param configArray
+	 *            the array containing all radio buttons to select the config.
+	 */
+	public KeyBoardCommands(JRadioButton[] configArray) {
 		this.setLayout(new BorderLayout());
 		JLabel label = new JLabel("Tastatursteuerung");
 		this.addKeyListener(this);
@@ -89,8 +119,8 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 			}
 
 			public void windowClosed(WindowEvent e) {
-				config[0].setSelected(true);
-				config[3].setSelected(false);
+				configArray[0].setSelected(true);
+				configArray[3].setSelected(false);
 				controller.setSelectedConfig(0);
 				if (controller.getPilotingState() == PilotingStates.STATE_2_READY)
 					controller.setPilotingState(PilotingStates.STATE_0_OFF);
@@ -153,14 +183,14 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		case KeyEvent.VK_A:
 			if (controller.getPilotingState() == PilotingStates.STATE_5_HOVERING) {
 				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
-				controller.setSpeed(0, 0, 0, -speed);
+				controller.setSpeed(0, 0, 0, -speed - 20);
 				System.out.println("turncounterclockwise");
 			}
 			break;
 		case KeyEvent.VK_D:
 			if (controller.getPilotingState() == PilotingStates.STATE_5_HOVERING) {
 				controller.setPilotingState(PilotingStates.STATE_6_FLYING);
-				controller.setSpeed(0, 0, 0, speed);
+				controller.setSpeed(0, 0, 0, speed + 20);
 				System.out.println("turnclockwise");
 			}
 			break;
@@ -197,66 +227,8 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 				isFlying = false;
 			}
 			break;
-		// case KeyEvent.VK_ENTER:
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// System.out.println("hovering");
-		// break;
-		// case KeyEvent.VK_LEFT:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// }
-		// break;
-		// case KeyEvent.VK_RIGHT:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// }
-		// break;
-		// case KeyEvent.VK_UP:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("foreward");
-		// }
-		// break;
-		// case KeyEvent.VK_DOWN:
-		//
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("backwards");
-		//
-		// break;
-		// case KeyEvent.VK_A:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("turncounterclockwise");
-		// }
-		// break;
-		// case KeyEvent.VK_D:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("turnclockwise");
-		// }
-		// break;
-		// case KeyEvent.VK_W:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("up");
-		// }
-		// break;
-		// case KeyEvent.VK_S:
-		// if (controller.getControlState().equals("FLYING")) {
-		// controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
-		// controller.setSpeed(0, 0, 0, 0);
-		// System.out.println("down");
-		// }
-		// break;
 		default:
-			if (controller.getPilotingState() != PilotingStates.STATE_2_READY){
+			if (controller.getPilotingState() != PilotingStates.STATE_2_READY) {
 				controller.setSpeed(0, 0, 0, 0);
 				controller.setPilotingState(PilotingStates.STATE_5_HOVERING);
 			}
@@ -272,7 +244,7 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 	public void anzeigen(boolean v) {
 		this.setVisible(v);
 	}
-	
+
 	public void setInputController(IInputController controller) {
 		this.controller = controller;
 	}

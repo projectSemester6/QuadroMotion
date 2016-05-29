@@ -19,18 +19,28 @@ package com.quadromotion.config;
 
 import com.quadromotion.input.LeapMotion;
 
+/**
+ * This class is the abstract class for all configuration classes.
+ * @author Gabriel Urech
+ *
+ */
 public abstract class ConfigBase {
 
-//	public ConfigBase() {
-//
-//	}
-
+	/**
+	 * Converts the input values from the leap motion to the drone commands.
+	 * @param leap the leap motion containing all input values.
+	 * @return The array containing all commands used to navigate the drone.
+	 */
 	public int[] convertLeapInput(LeapMotion leap) {
 		System.err.println("error");
 		int values[] = {};
 		return values;
 	}
 	
+	/**
+	 * 
+	 * @return The number of the hands used in the current configuration.
+	 */
 	public int getCountHands(){
 		System.err.println("error");
 		return 0;

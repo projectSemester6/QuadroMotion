@@ -29,6 +29,12 @@ import javax.swing.JRadioButton;
 import com.quadromotion.model.Model;
 import com.quadromotion.pilotingstates.PilotingStates;
 
+/**
+ * This class defines each element in the state panel of the main view.
+ * 
+ * @author Gabriel Urech
+ *
+ */
 public class StatePanel extends JPanel implements Observer {
 
 	private JRadioButton[] states = { null, null, null, null, null, null, null };
@@ -37,6 +43,13 @@ public class StatePanel extends JPanel implements Observer {
 	private long timeStamp = 0;
 	private int rate = 0;
 
+	/**
+	 * Allocates a new <code>ConfigPanel</code> object so that it has
+	 * <code>m</code> as the model.
+	 * 
+	 * @param m
+	 *            the model.
+	 */
 	public StatePanel(Model m) {
 		m.addObserver(this);
 		for (int i = 0; i < stateNames.length; i++) {
@@ -65,11 +78,11 @@ public class StatePanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		timeNow = System.currentTimeMillis();
 		Model m = (Model) o;
-		
+
 		if (timeNow - timeStamp >= rate || m.getSelectedConfig() == 3) {
-//			System.out.println(timeNow - timeStamp);
+			// System.out.println(timeNow - timeStamp);
 			timeStamp = timeNow;
-			
+
 			states[0].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_0_OFF));
 			states[1].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_1_INIT));
 			states[2].setSelected(checkState(m.getPilotingState(), PilotingStates.STATE_2_READY));

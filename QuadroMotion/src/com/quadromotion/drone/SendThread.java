@@ -26,20 +26,20 @@ import com.quadromotion.pilotingstates.PilotingStates;
 import de.yadrone.base.IARDrone;
 
 /**
- * This class sends the latest commands on every change to the drone
+ * This class sends the commands on every change to the drone. It implements the
+ * classes <code>Observer</code> and <code>Runnable</code>, so it can be run in
+ * a separate <code>thread</code>.
  * 
- * @author Gabriel
+ * @author Gabriel Urech
  *
  */
 public class SendThread implements Observer, Runnable {
-	// private Model model = null;
-//	private Model m = null;
 	private float speedx = 0;
 	private float speedy = 0;
 	private float speedz = 0;
 	private float speedspin = 0;
 	private int state = 0;
-	
+	private String threadName;
 	private boolean changed;
 
 	private int rate = 2; // aktualisierungsrate in ms
@@ -47,7 +47,9 @@ public class SendThread implements Observer, Runnable {
 	private ARDroneCommander droneCommander = null;
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>SendThread</code> object so that it has
+	 * <code>threadName</code> as name of the thread, has <code>model</code> as
+	 * the model to be observed and has <code>drone</code> as the ardrone.
 	 * 
 	 * @param threadName
 	 *            the thread name
@@ -57,15 +59,17 @@ public class SendThread implements Observer, Runnable {
 	 *            the ardrone
 	 */
 	public SendThread(String threadName, Model model, IARDrone drone) {
+		this.threadName = threadName;
 		this.droneCommander = new ARDroneCommander(drone);
-//		m = model;
+		// m = model;
 		changed = false;
 		// this.model = model;
 		model.addObserver(this);
 	}
 
 	/**
-	 * sends the commands to the droneCommander
+	 * Sends the commands to the droneCommander according to the current
+	 * piloting state.
 	 */
 	private void sendCommand() {
 
@@ -75,6 +79,7 @@ public class SendThread implements Observer, Runnable {
 		case PilotingStates.STATE_2_READY:
 			break;
 		case PilotingStates.STATE_3_TAKINGOFF:
+			droneCommander.animateLEDs();
 			droneCommander.takeOff();
 			break;
 		case PilotingStates.STATE_4_WAITINGTAKEOFF:
@@ -83,7 +88,7 @@ public class SendThread implements Observer, Runnable {
 			droneCommander.hover();
 			break;
 		case PilotingStates.STATE_6_FLYING:
-			droneCommander.moveDrone(speedx,speedy, speedz, speedspin);
+			droneCommander.moveDrone(speedx, speedy, speedz, speedspin);
 			break;
 		case PilotingStates.STATE_7_LANDING:
 			droneCommander.landing();
@@ -98,7 +103,8 @@ public class SendThread implements Observer, Runnable {
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;
-		if (m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
+		if (state != m.getPilotingState() || m.getPilotingState() == PilotingStates.STATE_3_TAKINGOFF
+				|| m.getPilotingState() == PilotingStates.STATE_4_WAITINGTAKEOFF
 				|| m.getPilotingState() == PilotingStates.STATE_5_HOVERING
 				|| m.getPilotingState() == PilotingStates.STATE_6_FLYING
 				|| m.getPilotingState() == PilotingStates.STATE_7_LANDING) {
@@ -107,27 +113,37 @@ public class SendThread implements Observer, Runnable {
 			speedz = m.getSpeedZ();
 			speedspin = m.getSpeedSpin();
 			state = m.getPilotingState();
-			changed = true;
+			// changed = true;
+			sendCommand();
 		}
 	}
 
 	@Override
 	public void run() {
-		boolean stop = false;
-		while (!stop) {
-			System.out.println("SendThread: "+ System.currentTimeMillis());
-			try {
-				if (changed) {
-					System.out.println(changed);
-					
-					sendCommand();
-					changed = false;
-				}
-				Thread.sleep(rate);
-			} catch (Exception ignore) {
-				stop = true;
-				droneCommander.cleanup();
-			}
-		}
+		// boolean stop = false;
+		// while (!stop) {
+		// System.out.println("SendThread: " + System.currentTimeMillis());
+		// try {
+		// if (changed) {
+		// System.out.println(changed);
+		//
+		// sendCommand();
+		// changed = false;
+		// }
+		// Thread.sleep(rate);
+		// } catch (Exception ignore) {
+		// stop = true;
+		// droneCommander.cleanup();
+		// }
+		// }
 	}
+
+	/**
+	 * 
+	 * @return the name of the thread.
+	 */
+	public String getThreadName() {
+		return threadName;
+	}
+
 }

@@ -34,19 +34,27 @@ import com.quadromotion.model.Model;
 import de.yadrone.base.ARDrone;
 import de.yadrone.base.IARDrone;
 
+/**
+ * This class represent the main view.
+ * 
+ * @author Gabriel Urech
+ *
+ */
 public class MainView extends JFrame {
 
+	/**
+	 * The main view controller.
+	 */
 	private MainViewController controller = null;
 
-	public MainView(Model m) {
-
-	}
-
 	/**
-	 * Constructor II
+	 * Allocates a new <code>ConfigPanel</code> object so that it has
+	 * <code>model</code> as the model, has <code>drone</code> as the drone and
+	 * has <code>controller</code> as the main view controller.
 	 * 
-	 * @param model
-	 * @param drone
+	 * @param model the model.
+	 * @param drone the drone.
+	 * @param controller the main view controller.
 	 */
 	public MainView(Model model, IARDrone drone, MainViewController controller) {
 
@@ -95,7 +103,7 @@ public class MainView extends JFrame {
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		panel.add(connectionButton, gbc);
 		gbc.anchor = GridBagConstraints.WEST;
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 2;

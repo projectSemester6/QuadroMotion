@@ -31,15 +31,21 @@ import com.quadromotion.input.InputController;
 import com.quadromotion.input.KeyBoardCommands;
 import com.quadromotion.model.Model;
 
+/**
+ * This class defines each element in the config panel of the main view.
+ * @author Gabriel Urech
+ *
+ */
 public class ConfigPanel extends JPanel {
 
 	/**
-	 * Constructor
+	 * Allocates a new <code>ConfigPanel</code> object so that it has
+	 * <code>m</code> as the model.
 	 * 
 	 * @param configName
-	 *            the array of all config names
+	 *            the array of all configuration names.
 	 * @param m
-	 *            the model
+	 *            the model.
 	 */
 	public ConfigPanel(Model m) {
 		JRadioButton[] config = { null, null, null, null };
@@ -59,17 +65,17 @@ public class ConfigPanel extends JPanel {
 		}
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		// create a new window for the key board input
 		KeyBoardCommands kbc = new KeyBoardCommands(config);
 		kbc.setInputController(new InputController(m));
-		
+
 		gbc.anchor = GridBagConstraints.WEST;
 		for (int i = 0; i < config.length; i++) {
 			gbc.gridx = 0;
 			gbc.gridy = i;
 			this.add(config[i], gbc);
-			
+
 			config[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 

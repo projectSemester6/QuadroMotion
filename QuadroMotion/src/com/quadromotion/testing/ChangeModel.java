@@ -86,10 +86,7 @@ public class ChangeModel extends Thread {
 				float nz = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 				float nspin = util.limit(util.randomWithRange(minLimit, maxLimit), minLimit, maxLimit);
 
-				model.setSpeedX(nx);
-				model.setSpeedY(ny);
-				model.setSpeedZ(nz);
-				model.setSpeedSpin(nspin);
+				model.setSpeed(nx,ny,nz,nspin);
 
 				if (time == 0)
 					i = 5;
