@@ -22,7 +22,7 @@ import com.quadromotion.app.App;
 /**
  * This class is the main entry of the QuadroMotion application.
  * 
- * @author Gabriel
+ * @author Gabriel Urech
  *
  */
 public class QuadroMotion {
