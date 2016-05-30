@@ -135,6 +135,9 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		this.setSize(300, 150);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -217,6 +220,9 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -236,23 +242,46 @@ public class KeyBoardCommands extends JFrame implements KeyListener {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
 
+	/**
+	 * Anzeigen.
+	 *
+	 * @param v the v
+	 */
 	public void anzeigen(boolean v) {
 		this.setVisible(v);
 	}
 
+	/**
+	 * Sets the input controller.
+	 *
+	 * @param controller the new input controller
+	 */
 	public void setInputController(IInputController controller) {
 		this.controller = controller;
 	}
 
+	/**
+	 * Checks if is exit.
+	 *
+	 * @return true, if is exit
+	 */
 	public boolean isExit() {
 		return exit;
 	}
 
+	/**
+	 * Sets the exit.
+	 *
+	 * @param exit the new exit
+	 */
 	public void setExit(boolean exit) {
 		this.exit = exit;
 	}

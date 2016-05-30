@@ -33,7 +33,7 @@ public class QuadroMotion {
 	private static App app = null;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public QuadroMotion() {
 		initialize();
@@ -54,6 +54,11 @@ public class QuadroMotion {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new QuadroMotion();
 	}

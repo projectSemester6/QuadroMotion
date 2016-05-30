@@ -33,10 +33,19 @@ import de.yadrone.base.IARDrone;
  */
 public class MainViewController {
 
+	/** The model. */
 	private Model model = null;
+	
+	/** The drone. */
 	private IARDrone drone = null;
+	
+	/** The app. */
 	private App app = null;
+	
+	/** The view. */
 	private MainView view = null;
+	
+	/** The connection button. */
 	private JButton connectionButton = null;
 
 	/**
@@ -68,6 +77,11 @@ public class MainViewController {
 		app.run();
 	}
 
+	/**
+	 * Sets the drone connected.
+	 *
+	 * @param connection the new drone connected
+	 */
 	public void setDroneConnected(boolean connection) {
 		model.setDroneConnected(connection);
 	}
@@ -83,10 +97,20 @@ public class MainViewController {
 		app.cleanupDrone();
 	}
 
+	/**
+	 * Gets the model.
+	 *
+	 * @return the model
+	 */
 	public Model getModel() {
 		return model;
 	}
 
+	/**
+	 * Sets the model.
+	 *
+	 * @param model the new model
+	 */
 	public void setModel(Model model) {
 		this.model = model;
 	}
@@ -101,6 +125,11 @@ public class MainViewController {
 		this.app = app;
 	}
 
+	/**
+	 * Connection button changed.
+	 *
+	 * @param connectionButton the connection button
+	 */
 	public void connectionButtonChanged(JButton connectionButton) {
 		if (!getModel().isDroneConnected()) {
 			connectionButton.setSelected(false);
@@ -113,10 +142,20 @@ public class MainViewController {
 
 	}
 
+	/**
+	 * Gets the connection button.
+	 *
+	 * @return the connection button
+	 */
 	public JButton getConnectionButton() {
 		return connectionButton;
 	}
 
+	/**
+	 * Sets the connection button.
+	 *
+	 * @param connectionButton the new connection button
+	 */
 	public void setConnectionButton(JButton connectionButton) {
 		this.connectionButton = connectionButton;
 	}

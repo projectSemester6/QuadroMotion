@@ -204,16 +204,25 @@ public class LeapMotion extends Listener {
 		// System.out.println("LeapMotion: "+ System.currentTimeMillis());
 	}
 
+	/* (non-Javadoc)
+	 * @see com.leapmotion.leap.Listener#onInit(com.leapmotion.leap.Controller)
+	 */
 	public void onInit(Controller controller) {
 		System.out.println("Leap initialized");
 	}
 
+	/* (non-Javadoc)
+	 * @see com.leapmotion.leap.Listener#onConnect(com.leapmotion.leap.Controller)
+	 */
 	public void onConnect(Controller controller) {
 		System.out.println("Connected");
 		services.setLeapState(true);
 		services.computeGestures(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.leapmotion.leap.Listener#onDisconnect(com.leapmotion.leap.Controller)
+	 */
 	public void onDisconnect(Controller controller) {
 		// Note: not dispatched when running in a debugger.
 		System.out.println("Disconnected");
@@ -221,12 +230,16 @@ public class LeapMotion extends Listener {
 		services.computeGestures(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.leapmotion.leap.Listener#onExit(com.leapmotion.leap.Controller)
+	 */
 	public void onExit(Controller controller) {
 		System.out.println("Exited");
 	}
 
 	/**
-	 * 
+	 * Gets the pitch right hand.
+	 *
 	 * @return the pitch of the right hand.
 	 */
 	public float getPitchRightHand() {
@@ -234,7 +247,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the roll right hand.
+	 *
 	 * @return the roll of the right hand.
 	 */
 	public float getRollRightHand() {
@@ -242,7 +256,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the yaw right hand.
+	 *
 	 * @return the yaw of the right hand.
 	 */
 	public float getYawRightHand() {
@@ -250,7 +265,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the thrust right hand.
+	 *
 	 * @return the thrust of the right hand.
 	 */
 	public float getThrustRightHand() {
@@ -258,7 +274,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the sphere radius right hand.
+	 *
 	 * @return the sphere radius of the right hand.
 	 */
 	public float getSphereRadiusRightHand() {
@@ -266,7 +283,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the pitch left hand.
+	 *
 	 * @return the pitch of the left hand.
 	 */
 	public float getPitchLeftHand() {
@@ -274,7 +292,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the roll left hand.
+	 *
 	 * @return the roll of the left hand.
 	 */
 	public float getRollLeftHand() {
@@ -282,7 +301,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the yaw left hand.
+	 *
 	 * @return the yaw of the left hand.
 	 */
 	public float getYawLeftHand() {
@@ -290,7 +310,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the thrust left hand.
+	 *
 	 * @return the thrust of the left hand.
 	 */
 	public float getThrustLeftHand() {
@@ -298,7 +319,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the spehre radius left hand.
+	 *
 	 * @return the sphere radius of the left hand.
 	 */
 	public float getSpehreRadiusLeftHand() {
@@ -306,7 +328,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the anzahl haenden.
+	 *
 	 * @return the number of hands.
 	 */
 	public int getAnzahlHaenden() {
@@ -314,7 +337,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the right hand.
+	 *
 	 * @return true, if the right hand is in the frame<br>
 	 *         false, if the right hand is missing.
 	 */
@@ -323,7 +347,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the left hand.
+	 *
 	 * @return true, if the left hand is in the frame<br>
 	 *         false, if the left hand is missing.
 	 */
@@ -332,7 +357,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the link side.
+	 *
 	 * @return the distance from the left hand to the center of the leap motion in direction x.
 	 */
 	public float getLinkSide() {
@@ -340,7 +366,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the recht side.
+	 *
 	 * @return the distance from the left hand to the center of the leap motion in direction x.
 	 */
 	public float getRechtSide() {
@@ -348,7 +375,8 @@ public class LeapMotion extends Listener {
 	}
 
 	/**
-	 * 
+	 * Gets the link for back.
+	 *
 	 * @return the distance from the left hand to the center of the leap motion in direction z.
 	 */
 	public float getLinkForBack() {
@@ -356,7 +384,8 @@ public class LeapMotion extends Listener {
 	}
 	
 	/**
-	 * 
+	 * Gets the recht for back.
+	 *
 	 * @return the distance from the right hand to the center of the leap motion in direction z.
 	 */
 	public float getRechtForBack() {

@@ -41,11 +41,8 @@ public class ConfigPanel extends JPanel {
 	/**
 	 * Allocates a new <code>ConfigPanel</code> object so that it has
 	 * <code>m</code> as the model.
-	 * 
-	 * @param configName
-	 *            the array of all configuration names.
-	 * @param m
-	 *            the model.
+	 *
+	 * @param m            the model.
 	 */
 	public ConfigPanel(Model m) {
 		JRadioButton[] config = { null, null, null, null };

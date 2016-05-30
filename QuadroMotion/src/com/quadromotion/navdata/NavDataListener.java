@@ -42,7 +42,7 @@ public class NavDataListener {
 	 * @param controller
 	 *            the navigation data controller <code>NavDataController</code>
 	 */
-	public NavDataListener(IARDrone drone, NavDataController controller) {
+	public NavDataListener(IARDrone drone, final NavDataController controller) {
 
 		/*
 		 * Battery Listener

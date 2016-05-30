@@ -74,9 +74,12 @@ public class Config_1_Two_Hands extends ConfigBase {
 		this.converterList = converterList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.config.ConfigBase#convertLeapInput(com.quadromotion.input.LeapMotion)
+	 */
 	public int[] convertLeapInput(LeapMotion leap) {
-		int leapValues[] = { 0, 0, 0, 0 };
-		int outputValues[] = { 0, 0, 0, 0, 0, 0, 0 };
+		int[] leapValues = { 0, 0, 0, 0 };
+		int[] outputValues = { 0, 0, 0, 0, 0, 0, 0 };
 		if (leap.getLeftHand() && leap.getRightHand()) {
 			for (int i = 0; i < 4; i++) {
 				switch (i) {
@@ -122,6 +125,9 @@ public class Config_1_Two_Hands extends ConfigBase {
 		return outputValues;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.config.ConfigBase#getCountHands()
+	 */
 	public int getCountHands() {
 		return COUNT_HANDS;
 	}

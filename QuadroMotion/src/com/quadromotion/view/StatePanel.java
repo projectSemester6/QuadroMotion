@@ -37,10 +37,19 @@ import com.quadromotion.pilotingstates.PilotingStates;
  */
 public class StatePanel extends JPanel implements Observer {
 
+	/** The states. */
 	private JRadioButton[] states = { null, null, null, null, null, null, null };
+
+	/** The state names. */
 	private String[] stateNames = { "Off", "Init", "Bereit", "Abheben", "Schweben", "Fliegen", "Landen" };
+
+	/** The time now. */
 	private long timeNow;
+
+	/** The time stamp. */
 	private long timeStamp = 0;
+
+	/** The rate. */
 	private int rate = 0;
 
 	/**
@@ -53,10 +62,11 @@ public class StatePanel extends JPanel implements Observer {
 	public StatePanel(Model m) {
 		m.addObserver(this);
 		for (int i = 0; i < stateNames.length; i++) {
-			if (i == PilotingStates.STATE_0_OFF)
+			if (i == PilotingStates.STATE_0_OFF) {
 				states[i] = new JRadioButton(stateNames[i], true);
-			else
+			} else {
 				states[i] = new JRadioButton(stateNames[i], false);
+			}
 			states[i].setEnabled(false);
 		}
 
@@ -74,6 +84,11 @@ public class StatePanel extends JPanel implements Observer {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		timeNow = System.currentTimeMillis();
@@ -95,12 +110,32 @@ public class StatePanel extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * Check state.
+	 *
+	 * @param currentState
+	 *            the current state
+	 * @param state
+	 *            the state
+	 * @return true, if successful
+	 */
 	private boolean checkState(int currentState, int state) {
 		if (currentState == state)
 			return true;
 		return false;
 	}
 
+	/**
+	 * Check state.
+	 *
+	 * @param currentState
+	 *            the current state
+	 * @param state1
+	 *            the state1
+	 * @param state2
+	 *            the state2
+	 * @return true, if successful
+	 */
 	private boolean checkState(int currentState, int state1, int state2) {
 		if (currentState == state1 || currentState == state2)
 			return true;

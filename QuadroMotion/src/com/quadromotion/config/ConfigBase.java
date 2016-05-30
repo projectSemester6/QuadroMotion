@@ -31,18 +31,11 @@ public abstract class ConfigBase {
 	 * @param leap the leap motion containing all input values.
 	 * @return The array containing all commands used to navigate the drone.
 	 */
-	public int[] convertLeapInput(LeapMotion leap) {
-		System.err.println("error");
-		int values[] = {};
-		return values;
-	}
+	public abstract int[] convertLeapInput(LeapMotion leap);
 	
 	/**
 	 * 
 	 * @return The number of the hands used in the current configuration.
 	 */
-	public int getCountHands(){
-		System.err.println("error");
-		return 0;
-	}
+	public abstract int getCountHands();
 }
