@@ -72,7 +72,8 @@ public class NavDataController {
 
 	/**
 	 * Stores the control state of the drone.
-	 * @param string
+	 *
+	 * @param string the new control state
 	 */
 	public void setControlState(String string) {
 		if (!string.equals(model.getControlState())) {

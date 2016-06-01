@@ -41,56 +41,89 @@ public class InputController implements IInputController {
 		this.model = model;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#setSpeed(int, int, int, int)
+	 */
 	@Override
 	public void setSpeed(int speedX, int speedY, int speedZ, int speedSpin) {
 		model.setSpeed(speedX, speedY, speedZ, speedSpin);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#getPilotingState()
+	 */
 	@Override
 	public int getPilotingState() {
 		return model.getPilotingState();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#setPilotingState(int)
+	 */
 	@Override
 	public void setPilotingState(int pilotingState) {
 		model.setPilotingState(pilotingState);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#getSelectedConfig()
+	 */
 	@Override
 	public int getSelectedConfig() {
 		return model.getSelectedConfig();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#isInputDeviceConnected()
+	 */
 	@Override
 	public boolean isInputDeviceConnected() {
 		return model.isInputDeviceConnected();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#setInputDeviceState(boolean)
+	 */
 	@Override
 	public void setInputDeviceState(boolean inputDeviceState) {
 		model.setInputDeviceConnected(inputDeviceState);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#getTAKE_OFF_DELAY()
+	 */
 	@Override
 	public int getTAKE_OFF_DELAY() {
 		return model.getTAKE_OFF_DELAY();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#setTimeUntilTakeOff(int)
+	 */
 	@Override
 	public void setTimeUntilTakeOff(int timeUntilTakeOff) {
 		model.setTimeUntilTakeOff(timeUntilTakeOff);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#getTimeUntilTakeOff()
+	 */
 	@Override
 	public int getTimeUntilTakeOff() {
 		return model.getTimeUntilTakeOff();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#setSelectedConfig(int)
+	 */
 	@Override
 	public void setSelectedConfig(int config) {
 		model.setSelectedConfig(config);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.quadromotion.input.IInputController#getControlState()
+	 */
 	@Override
 	public String getControlState() {
 		return model.getControlState();

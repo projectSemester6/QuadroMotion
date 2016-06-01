@@ -30,55 +30,55 @@ public class PilotingStates {
 	 * The off state.<br>
 	 * Indicates that the leap motion device is disconnected.
 	 */
-	public final static int STATE_0_OFF = 0;
+	public static final int STATE_0_OFF = 0;
 
 	/**
 	 * The init state.<br>
 	 * Indicates that the leap motion device is connected.
 	 */
-	public final static int STATE_1_INIT = 1;
+	public static final int STATE_1_INIT = 1;
 
 	/**
 	 * The ready state.<br>
 	 * Indicates that the leap motion device has detected the number of hands
 	 * used for the current configuration.
 	 */
-	public final static int STATE_2_READY = 2;
+	public static final int STATE_2_READY = 2;
 
 	/**
 	 * The taking off state.<br>
 	 * Indicates that the leap motion device has detected the take off command
 	 * for more than the specified time.
 	 */
-	public final static int STATE_3_TAKINGOFF = 3;
+	public static final int STATE_3_TAKINGOFF = 3;
 
 	/**
 	 * The waiting for taking off finished state.<br>
 	 * In this state the system is waiting until the drone has taken off.
 	 */
-	public final static int STATE_4_WAITINGTAKEOFF = 4;
+	public static final int STATE_4_WAITINGTAKEOFF = 4;
 
 	/**
 	 * The hovering state.<br>
 	 * Indicates that the drone is hovering.
 	 */
-	public final static int STATE_5_HOVERING = 5;
+	public static final int STATE_5_HOVERING = 5;
 
 	/**
 	 * The flying state.<br>
 	 * Indicates that the drone is moving around.
 	 */
-	public final static int STATE_6_FLYING = 6;
+	public static final int STATE_6_FLYING = 6;
 
 	/**
 	 * The landing state.<br>
 	 * Indicates that the drone is landing.
 	 */
-	public final static int STATE_7_LANDING = 7;
+	public static final int STATE_7_LANDING = 7;
 
 	/**
 	 * The waiting for landing finished state.<br>
 	 * In this state the system is waiting until the drone has safely landed.
 	 */
-	public final static int STATE_8_WAITINGLANDING = 8;
+	public static final int STATE_8_WAITINGLANDING = 8;
 }

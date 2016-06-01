@@ -74,47 +74,53 @@ public class Services {
 	private final int HOVERING_DELAY = 5; // in Sekunden
 
 	/**
-	 * The position of the speed in direction x in the drone command array
+	 * The position of the speed in direction x in the drone command array.
 	 */
 	private final int speedX = 0;
 
 	/**
-	 * The position of the speed in direction y in the drone command array
+	 * The position of the speed in direction y in the drone command array.
 	 */
 	private final int speedY = 1;
 
 	/**
-	 * The position of the speed in direction z in the drone command array
+	 * The position of the speed in direction z in the drone command array.
 	 */
 	private final int speedZ = 2;
 
 	/**
-	 * The position of the spin speed in the drone command array
+	 * The position of the spin speed in the drone command array.
 	 */
 	private final int speedSpin = 3;
 
 	/**
-	 * The position of the take off command in the drone command array
+	 * The position of the take off command in the drone command array.
 	 */
 	private final int takeOffCommand = 4;
 
 	/**
-	 * The position of the landing command in the drone command array
+	 * The position of the landing command in the drone command array.
 	 */
 	private final int landingCommand = 5;
 
 	/**
-	 * The position of the number of hands in the drone command array
+	 * The position of the number of hands in the drone command array.
 	 */
 	private final int countHands = 6;
 
-	/*
-	 * some helpful variables
-	 */
+	/** The start take off command time. */
 	private long startTakeOffCommandTime = 0;
+	
+	/** The start take off time. */
 	private long startTakeOffTime = 0;
+	
+	/** The start landing time. */
 	private long startLandingTime = 0;
+	
+	/** The start hovering without hands time. */
 	private long startHoveringWithoutHandsTime = 0;
+	
+	/** The hovering duration. */
 	private long hoveringDuration = 0;
 
 	/**
@@ -202,8 +208,9 @@ public class Services {
 			}
 
 			else if (droneCommandArray[countHands] != configList.get(controller.getSelectedConfig()).getCountHands()) {
-				if (startHoveringWithoutHandsTime == 0)
+				if (startHoveringWithoutHandsTime == 0) {
 					startHoveringWithoutHandsTime = System.currentTimeMillis();
+				}
 				long timeNow = System.currentTimeMillis();
 				hoveringDuration = timeNow - startHoveringWithoutHandsTime;
 				if (hoveringDuration > HOVERING_DELAY * 1000) {

@@ -21,6 +21,7 @@ import java.util.Observable;
 
 import com.quadromotion.config.GestureConfig;
 
+// TODO: Auto-generated Javadoc
 /**
  * This class holds the data and extends the <code>Observable</code> class to
  * inform every class which implements the <code>Observer</code> class.
@@ -135,7 +136,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the speed x.
+	 *
 	 * @return the speed x.
 	 */
 	public float getSpeedX() {
@@ -151,7 +153,8 @@ public class Model extends Observable {
 	// }
 
 	/**
-	 * 
+	 * Gets the speed y.
+	 *
 	 * @return the speed y.
 	 */
 	public float getSpeedY() {
@@ -167,7 +170,8 @@ public class Model extends Observable {
 	// }
 
 	/**
-	 * 
+	 * Gets the speed z.
+	 *
 	 * @return the speed z.
 	 */
 	public float getSpeedZ() {
@@ -183,7 +187,8 @@ public class Model extends Observable {
 	// }
 
 	/**
-	 * 
+	 * Gets the speed spin.
+	 *
 	 * @return the spin speed.
 	 */
 	public float getSpeedSpin() {
@@ -199,7 +204,8 @@ public class Model extends Observable {
 	// }
 
 	/**
-	 * 
+	 * Gets the bat level.
+	 *
 	 * @return the battery level of the drone.
 	 */
 	public int getBatLevel() {
@@ -221,7 +227,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the altitude.
+	 *
 	 * @return the altitude of the drone.
 	 */
 	public int getAltitude() {
@@ -229,7 +236,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the altitude string.
+	 *
 	 * @return the altitude of the drone as string.
 	 */
 	public String getAltitudeString() {
@@ -251,7 +259,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the time until take off.
+	 *
 	 * @return the time until the drone takes off.
 	 */
 	public int getTimeUntilTakeOff() {
@@ -273,7 +282,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the take off delay.
+	 *
 	 * @return the take off delay.
 	 */
 	public int getTAKE_OFF_DELAY() {
@@ -281,7 +291,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the selected config.
+	 *
 	 * @return the selected configuration.
 	 */
 	public int getSelectedConfig() {
@@ -299,7 +310,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the piloting state.
+	 *
 	 * @return the current piloting state.
 	 */
 	public int getPilotingState() {
@@ -321,7 +333,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Checks if is input device connected.
+	 *
 	 * @return the connection state of the input device.
 	 */
 	public boolean isInputDeviceConnected() {
@@ -339,7 +352,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Checks if is drone connected.
+	 *
 	 * @return the connection state of the drone.
 	 */
 	public boolean isDroneConnected() {
@@ -360,6 +374,9 @@ public class Model extends Observable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return null;
@@ -380,7 +397,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * 
+	 * Gets the control state.
+	 *
 	 * @return the control state of the drone.
 	 */
 	public String getControlState() {

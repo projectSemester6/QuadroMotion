@@ -18,12 +18,14 @@
 package com.quadromotion.config;
 
 /**
- * The <code>GestureConfig</code> class. This class can be accessed in a static way.
+ * The <code>GestureConfig</code> class. This class can be accessed in a static
+ * way.
+ * 
  * @author Gabriel Urech
  *
  */
 public class GestureConfig {
-	public final static int CONFIG_1_TWO_HANDS = 0;
-	public final static int CONFIG_5_RIGHT_HAND = 1;
-	public final static int CONFIG_2_TWO_HANDS = 2;
+	public static final int CONFIG_1_TWO_HANDS = 0;
+	public static final int CONFIG_5_RIGHT_HAND = 1;
+	public static final int CONFIG_2_TWO_HANDS = 2;
 }

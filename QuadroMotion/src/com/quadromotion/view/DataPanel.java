@@ -31,22 +31,46 @@ import com.quadromotion.model.Model;
 
 /**
  * This class defines each element in the data panel of the main view.
+ * 
  * @author Gabriel Urech
  *
  */
 public class DataPanel extends JPanel implements Observer {
 
-	JProgressBar batteryLevelValue;
-	JLabel speedXValue;
-	JLabel speedYValue;
-	JLabel speedZValue;
-	JLabel speedSpinValue;
-	JLabel altitudeLabel;
-	JLabel altitudeValue;
-	JLabel timeUntilTakeOffLabel;
-	JLabel timeUntilTakeOffValue;
+	/** The battery level value. */
+	private JProgressBar batteryLevelValue;
+
+	/** The speed x value. */
+	private JLabel speedXValue;
+
+	/** The speed y value. */
+	private JLabel speedYValue;
+
+	/** The speed z value. */
+	private JLabel speedZValue;
+
+	/** The speed spin value. */
+	private JLabel speedSpinValue;
+
+	/** The altitude label. */
+	private JLabel altitudeLabel;
+
+	/** The altitude value. */
+	private JLabel altitudeValue;
+
+	/** The time until take off label. */
+	private JLabel timeUntilTakeOffLabel;
+
+	/** The time until take off value. */
+	private JLabel timeUntilTakeOffValue;
+
+	/** The time stamp. */
 	private long timeStamp = 0;
+
+	/** The time now. */
 	private long timeNow = 0;
+
+	/** The rate. */
 	private int rate = 10;
 
 	/**
@@ -169,6 +193,15 @@ public class DataPanel extends JPanel implements Observer {
 		this.add(timeUntilTakeOffValue, gbc);
 	}
 
+	/**
+	 * Creates the progress bar.
+	 *
+	 * @param title
+	 *            the title
+	 * @param value
+	 *            the value
+	 * @return the j progress bar
+	 */
 	private JProgressBar createProgressBar(String title, int value) {
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setValue(value);
@@ -176,6 +209,11 @@ public class DataPanel extends JPanel implements Observer {
 		return progressBar;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		timeNow = System.currentTimeMillis();

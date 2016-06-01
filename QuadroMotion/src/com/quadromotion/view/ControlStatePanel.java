@@ -38,6 +38,11 @@ public class ControlStatePanel extends JPanel implements Observer {
 	JLabel controlState;
 	JLabel connected;
 
+	/**
+	 * Instantiates a new control state panel.
+	 *
+	 * @param m the m
+	 */
 	public ControlStatePanel(Model m) {
 		m.addObserver(this);
 		controlState = new JLabel(m.getControlState());
@@ -62,6 +67,9 @@ public class ControlStatePanel extends JPanel implements Observer {
 		this.add(connected, gbc);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		Model m = (Model) o;

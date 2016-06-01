@@ -80,8 +80,8 @@ public interface IInputController {
 	/**
 	 * Sets the current state of the input device.<br>
 	 * The state can be true or false.
-	 * 
-	 * @param inputDeviceState
+	 *
+	 * @param inputDeviceState the new input device state
 	 */
 	public void setInputDeviceState(boolean inputDeviceState);
 
@@ -94,8 +94,8 @@ public interface IInputController {
 
 	/**
 	 * Sets the time until the drone will take off.
-	 * 
-	 * @param timeUntilTakeOff
+	 *
+	 * @param timeUntilTakeOff the new time until take off
 	 */
 	public void setTimeUntilTakeOff(int timeUntilTakeOff);
 
@@ -107,7 +107,8 @@ public interface IInputController {
 	public int getTimeUntilTakeOff();
 
 	/**
-	 * 
+	 * Gets the control state.
+	 *
 	 * @return the current control state of the ardrone.
 	 */
 	public String getControlState();
